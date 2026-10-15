@@ -1,0 +1,2 @@
+# Documentation tooling for the Senior Engineer Interview Handbook.
+mkdocs-material>=9.5,<10
