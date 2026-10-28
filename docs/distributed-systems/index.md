@@ -10,7 +10,16 @@ updated: 2026-10-15
 
 # Distributed Systems and System Design
 
-**Status: Planned** (Days 4, 8, 12).
+**Status: In progress** — supporting pages added; full scenario lessons still planned.
+
+## Authored pages
+
+| Page | Topic |
+| --- | --- |
+| [Database concurrency and isolation](database-concurrency-and-isolation.md) | Locks, MVCC, atomic SQL |
+| [Distributed locks, fencing, ScyllaDB](distributed-locks-fencing-and-scylladb.md) | Leases, LWT, hot partitions |
+
+Payment idempotency depth: [Concurrency L22](../concurrency/22-backend-concurrency-scenarios.md), [M8 idempotency](../books/01-engineering-mastery/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md).
 
 ## Core topics (roadmap)
 

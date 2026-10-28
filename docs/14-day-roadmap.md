@@ -5,7 +5,7 @@ status: draft
 audience: advanced
 tags: [roadmap, 14-day]
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-18
 ---
 
 # 14-Day Interview Preparation Roadmap
@@ -15,8 +15,8 @@ Within Day 1, finish the Core Java track through **Collections** before Generics
 
 | Day | Focus | Handbook links |
 | --- | --- | --- |
-| **1** | Core Java review; Collections and `HashMap`; arrays and hash-map DSA; complexity | [Java](java/index.md), [DSA](dsa/index.md), [Collections](java/module-04-collections/index.md) |
-| **2** | Streams, `Optional`, JVM basics; two pointers and sliding window | [Streams](java/module-06-java-8-streams/index.md), [DSA](dsa/index.md) |
+| **1** | Core Java review; Collections and `HashMap`; arrays and hash-map DSA; complexity | [Java](java/index.md), [DSA](dsa/index.md), [Collections (Mastery)](books/01-engineering-mastery/core-java/module-04-collections/index.md) |
+| **2** | Streams, `Optional`, JVM basics; two pointers and sliding window | [Streams](books/01-engineering-mastery/core-java/module-06-java-8-streams/index.md), [Optional](books/01-engineering-mastery/core-java/module-07-optional/index.md), [Exceptions](books/01-engineering-mastery/core-java/module-08-exception-handling/index.md), [JVM](books/01-engineering-mastery/core-java/module-09-jvm-basics/index.md), [DSA](dsa/index.md) |
 | **3** | JMM, happens-before, race conditions, `synchronized` | [Concurrency](concurrency/index.md) lessons 1–4 |
 | **4** | `volatile`, locks, atomics, `ConcurrentHashMap`, `ThreadPoolExecutor`; high-level system design | [Concurrency](concurrency/index.md) lessons 5–11, [Distributed systems](distributed-systems/index.md) |
 | **5** | Spring Boot: transactions, REST, validation, DB, microservice comms, timeouts/retries | [Spring / microservices](spring-microservices/index.md) |
@@ -32,4 +32,4 @@ Within Day 1, finish the Core Java track through **Collections** before Generics
 
 ## Progress
 
-See [PROGRESS.md](../PROGRESS.md) — the full 14-day plan is **Planned** until you complete each day.
+See [PROGRESS.md](PROGRESS.md) — the full 14-day plan is **Planned** until you complete each day.

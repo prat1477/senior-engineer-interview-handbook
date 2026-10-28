@@ -10,7 +10,7 @@ updated: 2026-10-15
 
 # Day 14 — Rapid Revision Plan
 
-**Status: Planned.** Question lists grow as topics move to **Covered** in [PROGRESS.md](../../PROGRESS.md).
+**Status: Planned.** Question lists grow as topics move to **Covered** in [PROGRESS.md](../PROGRESS.md).
 
 ## Targets (from roadmap)
 
@@ -36,7 +36,7 @@ Banks are **intentionally empty** until authored per topic. Start with Collectio
 
 ### Collections (available now)
 
-Use lesson **Revision notes** sections in [Module 4](../../java/module-04-collections/index.md).
+Use [Interview Companion — Module 4](../books/02-interview-companion/core-java/module-04-collections/index.md) (**30-second revision** and **Must remember** per lesson), then drill [module practice](../books/02-interview-companion/core-java/module-04-collections/module-interview-practice.md). Depth: [Engineering Mastery — Module 4](../books/01-engineering-mastery/core-java/module-04-collections/index.md).
 
 ## Timed drill log
 

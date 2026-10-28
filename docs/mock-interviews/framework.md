@@ -14,8 +14,8 @@ updated: 2026-10-15
 
 | Block | Duration | Focus |
 | --- | --- | --- |
-| Java depth | 25 min | Collections, equality, map internals — [Module 4](../../java/module-04-collections/index.md) |
-| Coding | 35 min | One medium problem + complexity discussion — [DSA tracker](../../dsa/index.md) |
+| Java depth | 25 min | Collections, equality, map internals — [Module 4 Mastery](../books/01-engineering-mastery/core-java/module-04-collections/index.md); revise with [Companion](../books/02-interview-companion/core-java/module-04-collections/index.md) |
+| Coding | 35 min | One medium problem + complexity discussion — [DSA tracker](../dsa/index.md) |
 | Concurrency | 20 min | JMM, pools, `ConcurrentHashMap` — when studied |
 | Microservices | 20 min | Transactions, outbox, failures |
 | Kafka | 15 min | Semantics, lag, ordering |
@@ -23,7 +23,7 @@ updated: 2026-10-15
 | Lakehouse / Spark gaps | 15 min | Delta, streaming — cross-ref Spark Handbook |
 | Behavioral | 10 min | One STAR story |
 
-Adjust when sections are not yet studied — skip or substitute with revision from [PROGRESS.md](../../PROGRESS.md).
+Adjust when sections are not yet studied — skip or substitute with revision from [PROGRESS.md](../PROGRESS.md).
 
 ## Debrief checklist
 

@@ -46,5 +46,5 @@ Do not jump to payment-system design because a Collections question mentioned th
 
 ## Honest progress
 
-[PROGRESS.md](../PROGRESS.md) distinguishes Covered, In progress, Introduced, and Planned.
+[PROGRESS.md](PROGRESS.md) distinguishes Covered, In progress, Introduced, and Planned.
 No fabricated completion or mock-interview scores.

@@ -1,15 +1,12 @@
 ---
-title: Module 1 — Java Object Model
-description: Planned lesson — classes, objects, references, memory model basics for interviews.
+title: Module 1 (planned)
+description: Planned module — lessons not yet authored in Books.
 status: planned
-audience: advanced
-tags: [java, module-1]
-created: 2026-10-15
-updated: 2026-10-15
+audience: all
+tags: [stub, java]
+updated: 2026-10-18
 ---
 
-# Module 1 — Java Object Model
+# Module 1 — planned
 
-**Status: Planned.** Complete after Collections track per Core Java ordering in [java/index.md](../index.md).
-
-Planned topics: references vs primitives, object layout at interview level, `String` immutability, passing semantics, `record` vs class, when to override `toString`.
+Lessons for this module are **planned**. Follow [Core Java books](../../books/index.md) for Modules 4–9.

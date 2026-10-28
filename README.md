@@ -4,8 +4,9 @@ A versioned, interview-focused handbook for **senior backend and data-platform e
 roles. It preserves interactive study sessions, tracks progress honestly, and follows a
 fixed 14-day preparation sequence without duplicating your existing Spark curriculum.
 
-> **Current focus:** Core Java — **Collections** (in progress). Next: **Generics**, then
-> **Java 8 Streams**, then the concurrency track per the roadmap.
+> **Current focus:** Core Java — **Collections, Generics, Streams, Optional, and Exception
+> handling** (documented). Next: planned modules 1–3, then the **concurrency** track per the
+> roadmap.
 
 ## Who this is for
 
@@ -31,7 +32,8 @@ fixed 14-day preparation sequence without duplicating your existing Spark curric
 | [`docs/index.md`](docs/index.md) | Home and reading map |
 | [`docs/14-day-roadmap.md`](docs/14-day-roadmap.md) | Fixed 14-day sequence (do not reorder days) |
 | [`docs/curriculum/`](docs/curriculum/index.md) | Master curriculum and Core Java track order |
-| [`docs/java/`](docs/java/index.md) | Core Java (Collections documented; Generics/Streams planned) |
+| [`docs/books/`](docs/books/index.md) | **Three-book Core Java** (Mastery, Interview Companion, Production Playbook) for Modules 4–9 |
+| [`docs/java/`](docs/java/index.md) | Core Java hub (legacy lesson paths stub to Books) |
 | [`docs/concurrency/`](docs/concurrency/index.md) | Java concurrency curriculum (24-lesson sequence) |
 | [`docs/spring-microservices/`](docs/spring-microservices/index.md) | Spring Boot and microservice reliability |
 | [`docs/distributed-systems/`](docs/distributed-systems/index.md) | System design and distributed patterns |
@@ -48,7 +50,8 @@ fixed 14-day preparation sequence without duplicating your existing Spark curric
 
 ## Conventions (from Spark Handbook)
 
-- **Modules and lessons:** `module-NN-slug/` with numbered lesson files `NN-lesson-slug.md`.
+- **Three books:** see [`docs/books/index.md`](docs/books/index.md) — Book 1 owns concepts; Book 2 is derived; Book 3 owns runbooks.
+- **Modules and lessons:** `module-NN-slug/` with numbered lesson files `NN-lesson-slug.md` under `docs/books/01-engineering-mastery/core-java/`.
 - **Front matter** on lessons: `title`, `description`, `status`, `audience`, `tags`, dates.
 - **Markdown:** admonitions, Mermaid diagrams (MkDocs Material), comparison tables.
 - **Lesson shape:** Overview → numbered concepts → misconceptions → revision notes →
@@ -56,13 +59,16 @@ fixed 14-day preparation sequence without duplicating your existing Spark curric
 
 ## Local preview
 
-```bash
+```powershell
 cd D:\Github\senior-engineer-interview-handbook
-pip install -r requirements.txt
-mkdocs serve
+py -3 -m venv .venv
+.\.venv\Scripts\pip install -r requirements.txt
+.\.venv\Scripts\mkdocs serve
 ```
 
-Or: `make serve` (see [`Makefile`](Makefile)).
+Open **http://127.0.0.1:8000/PROGRESS/** for the live progress tracker (source: [`PROGRESS.md`](PROGRESS.md) at repo root).
+
+Or: `make serve` (see [`Makefile`](Makefile)) on Unix-like shells.
 
 ## Interactive study contract
 

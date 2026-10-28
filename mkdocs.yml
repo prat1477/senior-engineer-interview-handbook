@@ -34,6 +34,7 @@ markdown_extensions:
 
 plugins:
   - search
+  - include-markdown
 
 nav:
   - Home: index.md
@@ -41,9 +42,19 @@ nav:
       - Philosophy: preparation-philosophy.md
       - 14-day roadmap: 14-day-roadmap.md
       - Curriculum: curriculum/index.md
-      - Progress (repo): ../PROGRESS.md
+      - Progress: PROGRESS.md
   - Core Java:
       - Overview: java/index.md
+      - "Module 2 — equals and hashCode":
+          - java/module-02-equals-and-hashcode/index.md
+          - "L1 Contracts": java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md
+          - "L2 Inheritance and records": java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md
+      - "Module 3 — HashMap internals":
+          - java/module-03-hashmap-internals/index.md
+          - "L1 Table and indexing": java/module-03-hashmap-internals/01-internal-table-and-hash-indexing.md
+          - "L2 put get treeify": java/module-03-hashmap-internals/02-put-get-flow-and-treeify.md
+          - "L3 Resize and threshold": java/module-03-hashmap-internals/03-resize-load-factor-and-threshold.md
+          - "L4 Concurrency": java/module-03-hashmap-internals/04-thread-safety-and-concurrent-patterns.md
       - "Module 4 — Collections":
           - java/module-04-collections/index.md
           - "L1 Framework overview": java/module-04-collections/01-collections-framework-overview.md
@@ -59,11 +70,268 @@ nav:
           - "L11 LinkedHashMap LRU": java/module-04-collections/11-linkedhashmap-lru-cache.md
           - "L12 Concurrent collections": java/module-04-collections/12-concurrent-collections-overview.md
           - "L13 Selecting collections": java/module-04-collections/13-selecting-the-right-collection.md
-      - "Module 5 — Generics (planned)": java/module-05-generics/index.md
-      - "Module 6 — Streams (planned)": java/module-06-java-8-streams/index.md
-  - Concurrency: concurrency/index.md
+          - "L14 Interview practice": java/module-04-collections/14-interview-practice.md
+          - "L14 Answers": java/module-04-collections/15-interview-assessment-answers.md
+      - "Module 5 — Generics":
+          - java/module-05-generics/index.md
+          - "L1 Classes and methods": java/module-05-generics/01-generic-classes-and-methods.md
+          - "L2 Bounded type parameters": java/module-05-generics/02-bounded-type-parameters-and-inference.md
+          - "L3 Wildcards and PECS": java/module-05-generics/03-wildcards-pecs.md
+          - "L4 Erasure and arrays": java/module-05-generics/04-type-erasure-raw-types-arrays.md
+          - "L5 Interview practice": java/module-05-generics/05-interview-practice.md
+          - "L5 Answers": java/module-05-generics/06-interview-assessment-answers.md
+      - "Module 6 — Streams":
+          - java/module-06-java-8-streams/index.md
+          - "L1 Pipeline fundamentals": java/module-06-java-8-streams/01-stream-pipeline-fundamentals.md
+          - "L2 Aggregation": java/module-06-java-8-streams/02-aggregation-collectors.md
+          - "L3 Short-circuit": java/module-06-java-8-streams/03-search-short-circuit-primitives.md
+          - "L4 Parallel and performance": java/module-06-java-8-streams/04-correctness-parallel-performance.md
+          - "L5 Interview practice": java/module-06-java-8-streams/05-interview-practice.md
+          - "L5 Answers": java/module-06-java-8-streams/06-interview-assessment-answers.md
+      - "Module 7 — Optional":
+          - java/module-07-optional/index.md
+          - "L1 Fundamentals": java/module-07-optional/01-optional-fundamentals.md
+          - "L2 Composition": java/module-07-optional/02-optional-composition-and-antipatterns.md
+          - "L3 Interview practice": java/module-07-optional/03-interview-practice.md
+          - "L3 Answers": java/module-07-optional/04-interview-assessment-answers.md
+      - "Module 8 — Exception handling":
+          - java/module-08-exception-handling/index.md
+          - "L1 Hierarchy": java/module-08-exception-handling/01-throwable-hierarchy-and-propagation.md
+          - "L2 TWR and wrapping": java/module-08-exception-handling/02-try-with-resources-and-wrapping.md
+          - "L3 Retries and idempotency": java/module-08-exception-handling/03-production-spring-retries-idempotency.md
+          - "L4 Interview practice": java/module-08-exception-handling/04-interview-practice.md
+          - "L4 Answers": java/module-08-exception-handling/05-interview-assessment-answers.md
+      - "Module 9 — JVM basics and GC":
+          - java/module-09-jvm-basics/index.md
+          - "L1 Architecture and lifecycle": java/module-09-jvm-basics/01-jvm-architecture-and-execution-lifecycle.md
+          - "L2 Runtime memory areas": java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md
+          - "L3 JVM options": java/module-09-jvm-basics/03-jvm-memory-configuration-and-options.md
+          - "L4 GC fundamentals": java/module-09-jvm-basics/04-garbage-collection-fundamentals.md
+          - "L5 Collectors and G1": java/module-09-jvm-basics/05-garbage-collectors-and-g1.md
+          - "L6 Reference types": java/module-09-jvm-basics/06-java-reference-types-and-memory-retention.md
+          - "L7 Diagnosing OOM": java/module-09-jvm-basics/07-diagnosing-outofmemoryerror-in-production.md
+          - "L8 Heap dump analysis": java/module-09-jvm-basics/08-heap-dump-analysis.md
+          - "L9 Spark OOM case study": java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md
+          - "L10 Interview practice": java/module-09-jvm-basics/10-interview-practice.md
+          - "L10 Answers": java/module-09-jvm-basics/11-interview-assessment-answers.md
+  - Books:
+      - Overview: books/index.md
+      - Book 1 — Engineering Mastery: books/01-engineering-mastery/index.md
+      - Book 2 — Interview Companion: books/02-interview-companion/index.md
+      - Book 3 — Production Playbook: books/03-production-playbook/index.md
+      - "M2 equals hashCode (Mastery)":
+          - books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/index.md
+          - "01-equals-and-hashcode-contracts.md": books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md
+          - "02-inheritance-records-and-equality.md": books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md
+      - "M2 equals hashCode (Companion)":
+          - books/02-interview-companion/core-java/module-02-equals-and-hashcode/index.md
+          - "01 contracts": books/02-interview-companion/core-java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md
+          - "02 inheritance records": books/02-interview-companion/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md
+          - Practice: books/02-interview-companion/core-java/module-02-equals-and-hashcode/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-02-equals-and-hashcode/module-interview-assessment-answers.md
+      - "M2 Playbook": books/03-production-playbook/core-java/module-02-equals-and-hashcode-production-playbook.md
+      - "M3 HashMap internals (Mastery)":
+          - books/01-engineering-mastery/core-java/module-03-hashmap-internals/index.md
+          - "01-internal-table-and-hash-indexing.md": books/01-engineering-mastery/core-java/module-03-hashmap-internals/01-internal-table-and-hash-indexing.md
+          - "02-put-get-flow-and-treeify.md": books/01-engineering-mastery/core-java/module-03-hashmap-internals/02-put-get-flow-and-treeify.md
+          - "03-resize-load-factor-and-threshold.md": books/01-engineering-mastery/core-java/module-03-hashmap-internals/03-resize-load-factor-and-threshold.md
+          - "04-thread-safety-and-concurrent-patterns.md": books/01-engineering-mastery/core-java/module-03-hashmap-internals/04-thread-safety-and-concurrent-patterns.md
+      - "M3 HashMap internals (Companion)":
+          - books/02-interview-companion/core-java/module-03-hashmap-internals/index.md
+          - "01 indexing": books/02-interview-companion/core-java/module-03-hashmap-internals/01-internal-table-and-hash-indexing.md
+          - "02 put get treeify": books/02-interview-companion/core-java/module-03-hashmap-internals/02-put-get-flow-and-treeify.md
+          - "03 resize": books/02-interview-companion/core-java/module-03-hashmap-internals/03-resize-load-factor-and-threshold.md
+          - "04 concurrency": books/02-interview-companion/core-java/module-03-hashmap-internals/04-thread-safety-and-concurrent-patterns.md
+          - Practice: books/02-interview-companion/core-java/module-03-hashmap-internals/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-03-hashmap-internals/module-interview-assessment-answers.md
+      - "M3 Playbook": books/03-production-playbook/core-java/module-03-hashmap-internals-production-playbook.md
+      - "M4 Collections (Mastery)":
+          - books/01-engineering-mastery/core-java/module-04-collections/index.md
+          - "01-collections-framework-overview.md": books/01-engineering-mastery/core-java/module-04-collections/01-collections-framework-overview.md
+          - "02-arraylist-vs-linkedlist.md": books/01-engineering-mastery/core-java/module-04-collections/02-arraylist-vs-linkedlist.md
+          - "03-set-implementations.md": books/01-engineering-mastery/core-java/module-04-collections/03-set-implementations.md
+          - "04-map-fundamentals-and-hashmap.md": books/01-engineering-mastery/core-java/module-04-collections/04-map-fundamentals-and-hashmap.md
+          - "05-hashmap-linkedhashmap-treemap.md": books/01-engineering-mastery/core-java/module-04-collections/05-hashmap-linkedhashmap-treemap.md
+          - "06-comparable-and-comparator.md": books/01-engineering-mastery/core-java/module-04-collections/06-comparable-and-comparator.md
+          - "07-iterators-and-modification.md": books/01-engineering-mastery/core-java/module-04-collections/07-iterators-and-modification.md
+          - "08-queue-and-deque.md": books/01-engineering-mastery/core-java/module-04-collections/08-queue-and-deque.md
+          - "09-priorityqueue-and-heaps.md": books/01-engineering-mastery/core-java/module-04-collections/09-priorityqueue-and-heaps.md
+          - "10-blocking-queues-and-backpressure.md": books/01-engineering-mastery/core-java/module-04-collections/10-blocking-queues-and-backpressure.md
+          - "11-linkedhashmap-lru-cache.md": books/01-engineering-mastery/core-java/module-04-collections/11-linkedhashmap-lru-cache.md
+          - "12-concurrent-collections-overview.md": books/01-engineering-mastery/core-java/module-04-collections/12-concurrent-collections-overview.md
+          - "13-selecting-the-right-collection.md": books/01-engineering-mastery/core-java/module-04-collections/13-selecting-the-right-collection.md
+      - "M4 Collections (Companion)":
+          - books/02-interview-companion/core-java/module-04-collections/index.md
+          - "01 collections framework overview": books/02-interview-companion/core-java/module-04-collections/01-collections-framework-overview.md
+          - "02 arraylist vs linkedlist": books/02-interview-companion/core-java/module-04-collections/02-arraylist-vs-linkedlist.md
+          - "03 set implementations": books/02-interview-companion/core-java/module-04-collections/03-set-implementations.md
+          - "04 map fundamentals and hashmap": books/02-interview-companion/core-java/module-04-collections/04-map-fundamentals-and-hashmap.md
+          - "05 hashmap linkedhashmap treemap": books/02-interview-companion/core-java/module-04-collections/05-hashmap-linkedhashmap-treemap.md
+          - "06 comparable and comparator": books/02-interview-companion/core-java/module-04-collections/06-comparable-and-comparator.md
+          - "07 iterators and modification": books/02-interview-companion/core-java/module-04-collections/07-iterators-and-modification.md
+          - "08 queue and deque": books/02-interview-companion/core-java/module-04-collections/08-queue-and-deque.md
+          - "09 priorityqueue and heaps": books/02-interview-companion/core-java/module-04-collections/09-priorityqueue-and-heaps.md
+          - "10 blocking queues and backpressure": books/02-interview-companion/core-java/module-04-collections/10-blocking-queues-and-backpressure.md
+          - "11 linkedhashmap lru cache": books/02-interview-companion/core-java/module-04-collections/11-linkedhashmap-lru-cache.md
+          - "12 concurrent collections overview": books/02-interview-companion/core-java/module-04-collections/12-concurrent-collections-overview.md
+          - "13 selecting the right collection": books/02-interview-companion/core-java/module-04-collections/13-selecting-the-right-collection.md
+          - Practice: books/02-interview-companion/core-java/module-04-collections/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-04-collections/module-interview-assessment-answers.md
+      - "M4 Playbook": books/03-production-playbook/core-java/module-04-collections-production-playbook.md
+      - "M5 Generics (Mastery)":
+          - books/01-engineering-mastery/core-java/module-05-generics/index.md
+          - "01-generic-classes-and-methods.md": books/01-engineering-mastery/core-java/module-05-generics/01-generic-classes-and-methods.md
+          - "02-bounded-type-parameters-and-inference": books/01-engineering-mastery/core-java/module-05-generics/02-bounded-type-parameters-and-inference.md
+          - "03-wildcards-pecs.md": books/01-engineering-mastery/core-java/module-05-generics/03-wildcards-pecs.md
+          - "04-type-erasure-raw-types-arrays.md": books/01-engineering-mastery/core-java/module-05-generics/04-type-erasure-raw-types-arrays.md
+      - "M5 Generics (Companion)":
+          - books/02-interview-companion/core-java/module-05-generics/index.md
+          - "01 generic classes and methods": books/02-interview-companion/core-java/module-05-generics/01-generic-classes-and-methods.md
+          - "02 bounded type parameters and inference": books/02-interview-companion/core-java/module-05-generics/02-bounded-type-parameters-and-inference.md
+          - "03 wildcards pecs": books/02-interview-companion/core-java/module-05-generics/03-wildcards-pecs.md
+          - "04 type erasure raw types arrays": books/02-interview-companion/core-java/module-05-generics/04-type-erasure-raw-types-arrays.md
+          - Practice: books/02-interview-companion/core-java/module-05-generics/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-05-generics/module-interview-assessment-answers.md
+      - "M5 Playbook": books/03-production-playbook/core-java/module-05-generics-production-playbook.md
+      - "M6 Java 8 Streams (Mastery)":
+          - books/01-engineering-mastery/core-java/module-06-java-8-streams/index.md
+          - "01-stream-pipeline-fundamentals.md": books/01-engineering-mastery/core-java/module-06-java-8-streams/01-stream-pipeline-fundamentals.md
+          - "02-aggregation-collectors.md": books/01-engineering-mastery/core-java/module-06-java-8-streams/02-aggregation-collectors.md
+          - "03-search-short-circuit-primitives.md": books/01-engineering-mastery/core-java/module-06-java-8-streams/03-search-short-circuit-primitives.md
+          - "04-correctness-parallel-performance.md": books/01-engineering-mastery/core-java/module-06-java-8-streams/04-correctness-parallel-performance.md
+      - "M6 Java 8 Streams (Companion)":
+          - books/02-interview-companion/core-java/module-06-java-8-streams/index.md
+          - "01 stream pipeline fundamentals": books/02-interview-companion/core-java/module-06-java-8-streams/01-stream-pipeline-fundamentals.md
+          - "02 aggregation collectors": books/02-interview-companion/core-java/module-06-java-8-streams/02-aggregation-collectors.md
+          - "03 search short circuit primitives": books/02-interview-companion/core-java/module-06-java-8-streams/03-search-short-circuit-primitives.md
+          - "04 correctness parallel performance": books/02-interview-companion/core-java/module-06-java-8-streams/04-correctness-parallel-performance.md
+          - Practice: books/02-interview-companion/core-java/module-06-java-8-streams/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-06-java-8-streams/module-interview-assessment-answers.md
+      - "M6 Playbook": books/03-production-playbook/core-java/module-06-java-8-streams-production-playbook.md
+      - "M7 Optional (Mastery)":
+          - books/01-engineering-mastery/core-java/module-07-optional/index.md
+          - "01-optional-fundamentals.md": books/01-engineering-mastery/core-java/module-07-optional/01-optional-fundamentals.md
+          - "02-optional-composition-and-antipatterns": books/01-engineering-mastery/core-java/module-07-optional/02-optional-composition-and-antipatterns.md
+      - "M7 Optional (Companion)":
+          - books/02-interview-companion/core-java/module-07-optional/index.md
+          - "01 optional fundamentals": books/02-interview-companion/core-java/module-07-optional/01-optional-fundamentals.md
+          - "02 optional composition and antipatterns": books/02-interview-companion/core-java/module-07-optional/02-optional-composition-and-antipatterns.md
+          - Practice: books/02-interview-companion/core-java/module-07-optional/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-07-optional/module-interview-assessment-answers.md
+      - "M7 Playbook": books/03-production-playbook/core-java/module-07-optional-production-playbook.md
+      - "M8 Exception handling (Mastery)":
+          - books/01-engineering-mastery/core-java/module-08-exception-handling/index.md
+          - "01-throwable-hierarchy-and-propagation.m": books/01-engineering-mastery/core-java/module-08-exception-handling/01-throwable-hierarchy-and-propagation.md
+          - "02-try-with-resources-and-wrapping.md": books/01-engineering-mastery/core-java/module-08-exception-handling/02-try-with-resources-and-wrapping.md
+          - "03-production-spring-retries-idempotency": books/01-engineering-mastery/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md
+      - "M8 Exception handling (Companion)":
+          - books/02-interview-companion/core-java/module-08-exception-handling/index.md
+          - "01 throwable hierarchy and propagation": books/02-interview-companion/core-java/module-08-exception-handling/01-throwable-hierarchy-and-propagation.md
+          - "02 try with resources and wrapping": books/02-interview-companion/core-java/module-08-exception-handling/02-try-with-resources-and-wrapping.md
+          - "03 production spring retries idempotency": books/02-interview-companion/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md
+          - Practice: books/02-interview-companion/core-java/module-08-exception-handling/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-08-exception-handling/module-interview-assessment-answers.md
+      - "M8 Playbook": books/03-production-playbook/core-java/module-08-exception-handling-production-playbook.md
+      - "M9 JVM basics and GC (Mastery)":
+          - books/01-engineering-mastery/core-java/module-09-jvm-basics/index.md
+          - "01-jvm-architecture-and-execution-lifecy": books/01-engineering-mastery/core-java/module-09-jvm-basics/01-jvm-architecture-and-execution-lifecycle.md
+          - "02-jvm-runtime-memory-areas.md": books/01-engineering-mastery/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md
+          - "03-jvm-memory-configuration-and-options.": books/01-engineering-mastery/core-java/module-09-jvm-basics/03-jvm-memory-configuration-and-options.md
+          - "04-garbage-collection-fundamentals.md": books/01-engineering-mastery/core-java/module-09-jvm-basics/04-garbage-collection-fundamentals.md
+          - "05-garbage-collectors-and-g1.md": books/01-engineering-mastery/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md
+          - "06-java-reference-types-and-memory-reten": books/01-engineering-mastery/core-java/module-09-jvm-basics/06-java-reference-types-and-memory-retention.md
+          - "07-diagnosing-outofmemoryerror-in-produc": books/01-engineering-mastery/core-java/module-09-jvm-basics/07-diagnosing-outofmemoryerror-in-production.md
+          - "08-heap-dump-analysis.md": books/01-engineering-mastery/core-java/module-09-jvm-basics/08-heap-dump-analysis.md
+          - "09-production-oom-case-study-spark-sql-o": books/01-engineering-mastery/core-java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md
+      - "M9 JVM basics and GC (Companion)":
+          - books/02-interview-companion/core-java/module-09-jvm-basics/index.md
+          - "01 jvm architecture and execution lifecy": books/02-interview-companion/core-java/module-09-jvm-basics/01-jvm-architecture-and-execution-lifecycle.md
+          - "02 jvm runtime memory areas": books/02-interview-companion/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md
+          - "03 jvm memory configuration and options": books/02-interview-companion/core-java/module-09-jvm-basics/03-jvm-memory-configuration-and-options.md
+          - "04 garbage collection fundamentals": books/02-interview-companion/core-java/module-09-jvm-basics/04-garbage-collection-fundamentals.md
+          - "05 garbage collectors and g1": books/02-interview-companion/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md
+          - "06 java reference types and memory reten": books/02-interview-companion/core-java/module-09-jvm-basics/06-java-reference-types-and-memory-retention.md
+          - "07 diagnosing outofmemoryerror in produc": books/02-interview-companion/core-java/module-09-jvm-basics/07-diagnosing-outofmemoryerror-in-production.md
+          - "08 heap dump analysis": books/02-interview-companion/core-java/module-09-jvm-basics/08-heap-dump-analysis.md
+          - "09 production oom case study spark sql o": books/02-interview-companion/core-java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md
+          - Practice: books/02-interview-companion/core-java/module-09-jvm-basics/module-interview-practice.md
+          - Answers: books/02-interview-companion/core-java/module-09-jvm-basics/module-interview-assessment-answers.md
+      - "Concurrency (Companion)":
+          - books/02-interview-companion/concurrency/index.md
+          - Quick reference: books/02-interview-companion/concurrency/module-visual-quick-reference.md
+          - Practice: books/02-interview-companion/concurrency/module-interview-practice.md
+          - Answers: books/02-interview-companion/concurrency/module-interview-assessment-answers.md
+          - "C1 Fundamentals": books/02-interview-companion/concurrency/01-concurrency-fundamentals.md
+          - "C2 JMM": books/02-interview-companion/concurrency/02-java-memory-model.md
+          - "C3 Race conditions": books/02-interview-companion/concurrency/03-race-conditions.md
+          - "C4 synchronized": books/02-interview-companion/concurrency/04-synchronized.md
+          - "C5 volatile": books/02-interview-companion/concurrency/05-volatile.md
+          - "C6 Locks": books/02-interview-companion/concurrency/06-locks.md
+          - "C7 Atomics CAS": books/02-interview-companion/concurrency/07-atomics-and-cas.md
+          - "C8 LongAdder": books/02-interview-companion/concurrency/08-longadder.md
+          - "C9 Concurrent collections": books/02-interview-companion/concurrency/09-concurrent-collections.md
+          - "C10 Executors": books/02-interview-companion/concurrency/10-executors-and-thread-pool-executor.md
+          - "C11 Pool sizing": books/02-interview-companion/concurrency/11-thread-pool-sizing-and-backpressure.md
+          - "C12 CompletableFuture": books/02-interview-companion/concurrency/12-completable-future.md
+          - "C13 ForkJoinPool": books/02-interview-companion/concurrency/13-forkjoin-pool.md
+          - "C14 Virtual threads": books/02-interview-companion/concurrency/14-virtual-threads.md
+          - "C15 ThreadLocal ScopedValue": books/02-interview-companion/concurrency/15-threadlocal-and-scoped-value.md
+          - "C16 Coordination": books/02-interview-companion/concurrency/16-coordination-primitives.md
+          - "C17 Producer consumer": books/02-interview-companion/concurrency/17-producer-consumer-patterns.md
+          - "C18 Deadlock": books/02-interview-companion/concurrency/18-deadlock-livelock-starvation.md
+          - "C19 Thread safety": books/02-interview-companion/concurrency/19-thread-safety-patterns.md
+          - "C20 Advanced": books/02-interview-companion/concurrency/20-advanced-concurrency.md
+          - "C21 Production debug": books/02-interview-companion/concurrency/21-production-debugging.md
+          - "C22 Backend scenarios": books/02-interview-companion/concurrency/22-backend-concurrency-scenarios.md
+          - "C23 AI concurrency": books/02-interview-companion/concurrency/23-ai-system-concurrency.md
+          - "C24 Assessment hub": books/02-interview-companion/concurrency/24-senior-interview-assessment.md
+      - "M5 LLD (Mastery)":
+          - books/01-engineering-mastery/lld/module-05-lld/index.md
+          - "L1 LLD foundations": books/01-engineering-mastery/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
+      - "M5 LLD (Companion)":
+          - books/02-interview-companion/lld/module-05-lld/index.md
+          - "L1 LLD foundations": books/02-interview-companion/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
+          - Practice: books/02-interview-companion/lld/module-05-lld/module-interview-practice.md
+          - Answers: books/02-interview-companion/lld/module-05-lld/module-interview-assessment-answers.md
+      - "M5 LLD Playbook": books/03-production-playbook/lld/module-05-lld-production-playbook.md
+      - "M9 Playbook": books/03-production-playbook/core-java/module-09-jvm-basics-production-playbook.md
+  - LLD:
+      - Curriculum: lld/index.md
+      - "L1 LLD foundations (Mastery)": books/01-engineering-mastery/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
+      - "L1 LLD foundations (Companion)": books/02-interview-companion/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
+      - Practice: books/02-interview-companion/lld/module-05-lld/module-interview-practice.md
+      - Answers: books/02-interview-companion/lld/module-05-lld/module-interview-assessment-answers.md
+  - Concurrency:
+      - Curriculum: concurrency/index.md
+      - "L1 Fundamentals": concurrency/01-concurrency-fundamentals.md
+      - "L2 JMM": concurrency/02-java-memory-model.md
+      - "L3 Race conditions": concurrency/03-race-conditions.md
+      - "L4 synchronized": concurrency/04-synchronized.md
+      - "L5 volatile": concurrency/05-volatile.md
+      - "L6 Locks": concurrency/06-locks.md
+      - "L7 Atomics CAS": concurrency/07-atomics-and-cas.md
+      - "L8 LongAdder": concurrency/08-longadder.md
+      - "L9 Concurrent collections": concurrency/09-concurrent-collections.md
+      - "L10 Executors": concurrency/10-executors-and-thread-pool-executor.md
+      - "L11 Pool sizing": concurrency/11-thread-pool-sizing-and-backpressure.md
+      - "L12 CompletableFuture": concurrency/12-completable-future.md
+      - "L13 ForkJoinPool": concurrency/13-forkjoin-pool.md
+      - "L14 Virtual threads": concurrency/14-virtual-threads.md
+      - "L15 ThreadLocal ScopedValue": concurrency/15-threadlocal-and-scoped-value.md
+      - "L16 Coordination": concurrency/16-coordination-primitives.md
+      - "L17 Producer consumer": concurrency/17-producer-consumer-patterns.md
+      - "L18 Deadlock": concurrency/18-deadlock-livelock-starvation.md
+      - "L19 Thread safety": concurrency/19-thread-safety-patterns.md
+      - "L20 Advanced": concurrency/20-advanced-concurrency.md
+      - "L21 Production debug": concurrency/21-production-debugging.md
+      - "L22 Backend scenarios": concurrency/22-backend-concurrency-scenarios.md
+      - "L23 AI concurrency": concurrency/23-ai-system-concurrency.md
+      - "L24 Assessment": concurrency/24-senior-interview-assessment.md
   - Spring and microservices: spring-microservices/index.md
-  - Distributed systems: distributed-systems/index.md
+  - Distributed systems:
+      - distributed-systems/index.md
+      - Database concurrency: distributed-systems/database-concurrency-and-isolation.md
+      - Locks and ScyllaDB: distributed-systems/distributed-locks-fencing-and-scylladb.md
   - Kafka: kafka/index.md
   - Data engineering:
       - data-engineering/index.md
