@@ -1,5 +1,7 @@
 site_name: Senior Engineer Interview Handbook
 site_description: Interview preparation for senior backend and data-platform engineering roles.
+site_url: https://prat1477.github.io/senior-engineer-interview-handbook/
+repo_url: https://github.com/prat1477/senior-engineer-interview-handbook
 docs_dir: docs
 
 validation:

@@ -70,6 +70,16 @@ Open **http://127.0.0.1:8000/PROGRESS/** for the live progress tracker (source: 
 
 Or: `make serve` (see [`Makefile`](Makefile)) on Unix-like shells.
 
+## Published site
+
+Pushes to `main` publish the handbook to GitHub Pages:
+
+**https://prat1477.github.io/senior-engineer-interview-handbook/**
+
+Progress tracker: **https://prat1477.github.io/senior-engineer-interview-handbook/PROGRESS/**
+
+The first publish needs **Settings → Pages → Build and deployment → Source: GitHub Actions**. After that, each push to `main` republishes the site.
+
 ## Interactive study contract
 
 When learning with an assistant:
