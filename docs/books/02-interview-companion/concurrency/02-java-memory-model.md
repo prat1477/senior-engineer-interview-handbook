@@ -63,6 +63,10 @@ flowchart TB
 | Volatile | write v → read v |
 | Thread lifecycle | `start()` → run in child; child end → `join()` return |
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “Without happens-before, I assume **no** cross-thread visibility for plain fields.”

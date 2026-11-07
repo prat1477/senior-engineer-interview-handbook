@@ -1,65 +1,66 @@
 ---
-title: "Companion 2 — Bounded Type Parameters"
-description: "Interview companion for extends bounds, multiple bounds, and invariance of generic types."
+title: "Companion 2 — Bounds and inference"
+description: Interview recall for Bounds and inference.
 status: covered
 audience: advanced
-tags: [interview, companion, module-5, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — Bounded Type Parameters and Invariance
+# Companion 2 — Bounds and inference
 
-**Canonical source:** [Lesson 2 — Bounded Type Parameters](../../../01-engineering-mastery/core-java/module-05-generics/02-bounded-type-parameters-and-inference.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/02-bounded-type-parameters-and-inference.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-extends bounds, multiple bounds, and invariance of generic types.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Bounds limit T (extends); inference picks type arguments from usage.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- <T extends Comparable<T>> for natural order.
+- Multiple bounds with &.
+- Target type inference on assignment.
+- Explicit type witness when inference fails.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- extends means inheritance only — it also allows interfaces.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/02-bounded-type-parameters-and-inference.md) is canonical.
+```mermaid
+flowchart TD
+  t[T extends Number] --> call[sum numbers]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Utility max of employee salaries uses <T extends Comparable<? super T>> style bounds.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Need a capability | Bound T |
+| Inference fails | Type witness |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Write a bound.
+2. Say why.
+3. Mention inference.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Bounds express required methods on T.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **EXT** — extends bound.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

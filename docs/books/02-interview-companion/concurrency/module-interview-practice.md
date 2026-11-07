@@ -123,3 +123,8 @@ Full senior mock: [canonical Lesson 24](../../../concurrency/24-senior-interview
 ## Full mock
 
 43. Complete [canonical Lesson 24](../../../concurrency/24-senior-interview-assessment.md) under exam conditions.
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

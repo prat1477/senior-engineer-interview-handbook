@@ -27,5 +27,6 @@ Derived from [Engineering Mastery](../../../01-engineering-mastery/core-java/mod
 | 12 | [12-concurrent-collections-overview.md](12-concurrent-collections-overview.md) | [Mastery](../../../01-engineering-mastery/core-java/module-04-collections/12-concurrent-collections-overview.md) |
 | 13 | [13-selecting-the-right-collection.md](13-selecting-the-right-collection.md) | [Mastery](../../../01-engineering-mastery/core-java/module-04-collections/13-selecting-the-right-collection.md) |
 
+- [Visual quick reference](module-visual-quick-reference.md)
 - [Interview practice](module-interview-practice.md)
 - [Assessment answers](module-interview-assessment-answers.md)

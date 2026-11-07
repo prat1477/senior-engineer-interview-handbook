@@ -23,5 +23,6 @@ Derived from [Engineering Mastery](../../../01-engineering-mastery/core-java/mod
 | 8 | [08-heap-dump-analysis.md](08-heap-dump-analysis.md) | [Mastery](../../../01-engineering-mastery/core-java/module-09-jvm-basics/08-heap-dump-analysis.md) |
 | 9 | [09-production-oom-case-study-spark-sql-optimizer.md](09-production-oom-case-study-spark-sql-optimizer.md) | [Mastery](../../../01-engineering-mastery/core-java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md) |
 
+- [Visual quick reference](module-visual-quick-reference.md)
 - [Interview practice](module-interview-practice.md)
 - [Assessment answers](module-interview-assessment-answers.md)

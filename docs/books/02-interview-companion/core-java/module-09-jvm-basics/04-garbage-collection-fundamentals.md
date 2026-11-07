@@ -1,67 +1,67 @@
 ---
-title: "Companion 4 — Garbage Collection Fundamentals"
-description: "Interview companion for Reachability, GC roots, generations, System.gc, memory leaks in Java."
+title: "Companion 4 — GC fundamentals"
+description: Interview recall for GC fundamentals.
 status: covered
 audience: advanced
-tags: [interview, companion, module-9, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 4 — Garbage Collection Fundamentals
+# Companion 4 — GC fundamentals
 
-**Canonical source:** [Lesson 4 — Garbage Collection Fundamentals](../../../01-engineering-mastery/core-java/module-09-jvm-basics/04-garbage-collection-fundamentals.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/04-garbage-collection-fundamentals.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Reachability, GC roots, generations, System.gc, memory leaks in Java.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+GC reclaims unreachable objects; pauses and throughput trade off.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Reachability from GC roots.
+- Minor vs major collections depend on collector.
+- Allocation rate drives GC.
+- Finalizers are obsolete.
 
 ## Interview traps
 
-- | "GC runs when I call `finalize`" | `finalize` is deprecated; lifecycle uses cleaner patterns |
-- | "No references in my code means object is dead" | Static collections, thread locals, queues may still hold strong refs |
-- | "Frequent GC always means a leak" | May be **high allocation churn** — see [interview practice](module-interview-practice.md) |
+- GC runs only when heap is 100% — it runs by policy.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/04-garbage-collection-fundamentals.md) is canonical.
+```mermaid
+flowchart TD
+  alloc[Allocate] --> unreachable[Unreachable]
+  unreachable --> reclaim[GC reclaims]
 
-## JDK and debug clues
+```
 
-- GC logs (`-Xlog:gc*`) and `jcmd GC.heap_info` for heap pressure.
-- Heap dump dominators for `char[]`, `byte[]`, or collection backings tied to retention.
+## Scenario bite
 
-## Performance notes
+Caching every Order forever removes reachability — GC cannot help; bound the cache.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| High alloc | Reduce garbage |
+| Long pause | Collector and heap tuning |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Roots and reachability.
+2. Bound caches.
+3. Pause vs throughput.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Unreachable objects are collected; leaks stay reachable.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **ROOT**.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

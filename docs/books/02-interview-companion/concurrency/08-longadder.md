@@ -57,6 +57,10 @@ AtomicLong:  all threads --> one CAS hotspot
 LongAdder:   threads --> cells[] --> sum() rolls up
 ```
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “Striping reduces CAS contention on hot counters.”

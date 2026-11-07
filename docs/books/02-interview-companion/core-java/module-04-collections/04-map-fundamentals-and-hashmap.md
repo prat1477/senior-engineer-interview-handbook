@@ -1,67 +1,70 @@
 ---
-title: "Companion 4 — Map Fundamentals and HashMap Internals"
-description: "Interview companion for Key uniqueness, hashing, collisions, nulls, and mutable key hazards."
+title: "Companion 4 — Map and HashMap"
+description: Interview recall for Map and HashMap.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 4 — Map Fundamentals and HashMap Internals
+# Companion 4 — Map and HashMap
 
-**Canonical source:** [Lesson 4 — Map Fundamentals and HashMap Internals](../../../01-engineering-mastery/core-java/module-04-collections/04-map-fundamentals-and-hashmap.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/04-map-fundamentals-and-hashmap.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Key uniqueness, hashing, collisions, nulls, and mutable key hazards.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Map stores key-value pairs; HashMap uses hashing for average O(1) get/put and allows one null key.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- equals and hashCode contract on keys.
+- Load factor and resize.
+- Not thread-safe.
+- null key allowed; ConcurrentHashMap forbids nulls.
 
 ## Interview traps
 
-- | "`get` null always means missing" | Could be mapped `null` |
-- | "Hash code uniqueness" | Hash codes need not be unique; equality decides |
-- | "TreeMap sorts by value" | Sorts by **key** ordering |
+- Using a mutable key after put.
+- Assuming HashMap iteration order.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/04-map-fundamentals-and-hashmap.md) is canonical.
+```mermaid
+flowchart LR
+  key[Key] --> hash[hashCode spread]
+  hash --> bucket[Bucket index]
+  bucket --> eq[equals walk]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Lookup Employee by id in a request-scoped cache: HashMap if single-threaded; ConcurrentHashMap if shared.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Single thread cache | HashMap |
+| Shared counters | ConcurrentHashMap |
+| Sorted keys | TreeMap |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Hash then equals.
+2. Null key policy.
+3. Not safe for concurrent writers.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- HashMap is hashed buckets; contract on keys; not concurrent.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **HEB** — Hash, Equals, Bucket.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

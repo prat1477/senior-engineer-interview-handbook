@@ -42,3 +42,8 @@ return BigDecimal.ZERO;
 | A | Chain: userId → user → shipping address → zip code as `Optional<String>`. |
 | B | Primary cache `Optional`, fallback DB — use `or()`. |
 | C | Name one JDK version for `isEmpty()` and one for `or()`. |
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

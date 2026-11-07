@@ -1,65 +1,69 @@
 ---
-title: "Companion 7 — Iterators and Modifying Collections During Iteration"
-description: "Interview companion for Fail-fast behavior, safe removal, and ConcurrentModificationException."
+title: "Companion 7 — Iterators and modification"
+description: Interview recall for Iterators and modification.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 7 — Iterators and Modifying Collections During Iteration
+# Companion 7 — Iterators and modification
 
-**Canonical source:** [Lesson 7 — Iterators and Modifying Collections During Iteration](../../../01-engineering-mastery/core-java/module-04-collections/07-iterators-and-modification.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/07-iterators-and-modification.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Fail-fast behavior, safe removal, and ConcurrentModificationException.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Fail-fast iterators track structural modification and throw ConcurrentModificationException if the collection changes during iteration except via the iterator.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- modCount increments on structural change.
+- iterator.remove() is safe.
+- Fail-fast is best-effort, not a concurrency guarantee.
+- Concurrent collections use weakly consistent iterators.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- CME means the map is thread-safe — it does not.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/07-iterators-and-modification.md) is canonical.
+```mermaid
+flowchart TD
+  it[Iterator] --> check{modCount changed?}
+  check -->|yes| cme[ConcurrentModificationException]
+  check -->|no| next[next element]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Removing unpaid orders while looping a list: use iterator.remove or removeIf, not list.remove inside for-each.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Single thread filter | removeIf |
+| Need iterator | iterator.remove |
+| Concurrent map | CHM, no CME contract |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. modCount idea.
+2. Safe removal API.
+3. CME is not a lock.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Don't structurally modify during fail-fast iteration except via the iterator.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **MOD** — Modify only via iterator or removeIf.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

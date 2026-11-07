@@ -1,65 +1,67 @@
 ---
-title: "Companion 3 — Search, Short-Circuiting, and Primitive Streams"
-description: "Interview companion for findFirst, match ops, mapToInt, Stream.generate/iterate, takeWhile."
+title: "Companion 3 — Search and primitives"
+description: Interview recall for Search and primitives.
 status: covered
 audience: advanced
-tags: [interview, companion, module-6, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 3 — Search, Short-Circuiting, and Primitive Streams
+# Companion 3 — Search and primitives
 
-**Canonical source:** [Lesson 3 — Search, Short-Circuiting, and Primitive Streams](../../../01-engineering-mastery/core-java/module-06-java-8-streams/03-search-short-circuit-primitives.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-06-java-8-streams/03-search-short-circuit-primitives.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-findFirst, match ops, mapToInt, Stream.generate/iterate, takeWhile.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Short-circuit ops stop early; primitive streams avoid boxing on numeric pipelines.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- findFirst, anyMatch, limit short-circuit.
+- IntStream for primitive math.
+- Boxing in mapToObj costs.
+- Order of filter before map can cut work.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- anyMatch scans everything always — not if it finds a match.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-06-java-8-streams/03-search-short-circuit-primitives.md) is canonical.
+```mermaid
+flowchart LR
+  f[filter] --> a[anyMatch stops]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Stop when any payment is UNKNOWN: anyMatch on status.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Exists? | anyMatch |
+| First match | findFirst |
+| Sum of ints | mapToInt.sum |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Short-circuit.
+2. Primitive stream.
+3. Filter early.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Short-circuit saves work; primitives avoid boxing.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **SHORT**.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

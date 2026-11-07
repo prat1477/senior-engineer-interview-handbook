@@ -49,3 +49,8 @@ Answers: [06-interview-assessment-answers.md](module-interview-assessment-answer
 | A | Short-circuit: first Engineering employee with salary > 200k. |
 | B | `partitioningBy` for salary > 100k and count each partition. |
 | C | Why must you not use `Stream` twice on the same instance? |
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

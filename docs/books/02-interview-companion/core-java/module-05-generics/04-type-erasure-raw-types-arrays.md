@@ -1,65 +1,66 @@
 ---
-title: "Companion 4 — Type Erasure, Raw Types, and Generic Arrays"
-description: "Interview companion for Compile-time checks, runtime casts, raw types, and why new T[] is forbidden."
+title: "Companion 4 — Erasure and arrays"
+description: Interview recall for Erasure and arrays.
 status: covered
 audience: advanced
-tags: [interview, companion, module-5, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 4 — Type Erasure, Raw Types, and Generic Arrays
+# Companion 4 — Erasure and arrays
 
-**Canonical source:** [Lesson 4 — Type Erasure, Raw Types, and Generic Arrays](../../../01-engineering-mastery/core-java/module-05-generics/04-type-erasure-raw-types-arrays.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/04-type-erasure-raw-types-arrays.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Compile-time checks, runtime casts, raw types, and why new T[] is forbidden.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Generics erase to bounds at runtime; you cannot make a generic array of T directly.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- No new T[n].
+- Heap pollution via raw types and unchecked casts.
+- instanceof List is not instanceof List<Order> at runtime.
+- Prefer lists over generic arrays.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Reified T at runtime.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/04-type-erasure-raw-types-arrays.md) is canonical.
+```mermaid
+flowchart TD
+  compile[List of Order] --> erase[Erased to List]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+A reflective cache cannot new Order[n] from T; use ArrayList<Order> or Array.newInstance with a Class token.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Need runtime class | Class<T> token |
+| Storage | ArrayList |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. What erasure removes.
+2. Why arrays clash.
+3. Class token.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Erasure removes type arguments; arrays are reified.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **ERA** — Erasure, Runtime arrays differ.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

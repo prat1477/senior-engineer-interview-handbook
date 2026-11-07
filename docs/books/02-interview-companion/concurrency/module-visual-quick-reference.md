@@ -11,6 +11,8 @@ updated: 2026-10-25
 
 Use with [companion index](index.md). Canonical depth: [Concurrency curriculum](../../../concurrency/index.md).
 
+Open this site with `mkdocs serve` so Mermaid flowcharts render. Raw editor preview often shows the source only.
+
 ## Coordination primitive picker
 
 | Need | Use | Not |

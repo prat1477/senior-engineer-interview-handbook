@@ -53,3 +53,8 @@ Answers: [module-interview-assessment-answers.md](module-interview-assessment-an
 | A | Name fail-fast behavior on structural modify during iteration. |
 | B | `ArrayList` vs `LinkedList` for random access by index. |
 | C | One concurrent queue: unbounded lock-free vs bounded blocking. |
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

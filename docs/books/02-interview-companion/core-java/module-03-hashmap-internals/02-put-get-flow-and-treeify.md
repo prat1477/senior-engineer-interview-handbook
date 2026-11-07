@@ -1,37 +1,71 @@
 ---
-title: "Companion 2 — put/get and Treeify"
-description: Interview revision for HashMap operations and tree bins.
+title: "Companion 2 — Put, get, treeify"
+description: Interview recall for Put, get, treeify.
 status: covered
 audience: advanced
-tags: [interview, companion, module-3]
-created: 2026-10-20
-updated: 2026-10-20
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — `put`/`get` and Treeify
+# Companion 2 — Put, get, treeify
 
-**Canonical source:** [Mastery L2](../../../01-engineering-mastery/core-java/module-03-hashmap-internals/02-put-get-flow-and-treeify.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-03-hashmap-internals/02-put-get-flow-and-treeify.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
+
+## Definition
+
+put hashes to a bin, walks equals, inserts or replaces; long chains treeify under JDK thresholds.
 
 ## Must remember
 
-- `put`: hash → index → empty slot or match/replace or collision chain/tree.
-- Replace existing key → **no size increase**.
-- Treeify (OpenJDK): chain ≥ **8**, table capacity ≥ **64** — not instant for every bucket at 8 entries.
-- `get`: match hash + `equals`; walk list or tree.
-- Iterator order ≠ sorted.
+- Treeify when chain is long and table is large enough (bin count and capacity thresholds).
+- get uses same hash then equals.
+- Existing key replaces value, size unchanged.
+- Trees revert to lists when small (untreeify).
 
 ## Interview traps
 
-- "Bucket with 8 entries always becomes tree" — needs capacity ≥ 64 and JDK rules.
-- "Treeify makes whole map O(log n)" — per bucket only.
+- Every bucket becomes a tree at length 8 regardless of capacity.
 
-## FAQ
+## Interview flow
 
-- **Q:** How does `get` locate an entry?  
-  **A:** Compute index, compare hash and `equals` on bucket head, else traverse list/tree.
-- **Q:** When can a bucket treeify?  
-  **A:** Long collision chain on put when table is large enough (see `TREEIFY_THRESHOLD`, `MIN_TREEIFY_CAPACITY`).
+```mermaid
+flowchart TD
+  put[put] --> bin[Find bin]
+  bin --> found{equals key?}
+  found -->|yes| repl[Replace value]
+  found -->|no| ins[Insert]
+  ins --> tree{chain too long?}
+  tree -->|yes| t[Treeify]
+
+```
+
+## Scenario bite
+
+Duplicate order id put replaces the previous Order value; size stays the same.
+
+## Decision table
+
+| Situation | Prefer |
+| --- | --- |
+| New key | Insert, maybe resize |
+| Same key | Replace value |
+
+## Explain aloud (whiteboard)
+
+1. Walk equals.
+2. Replace vs insert.
+3. Treeify conditions.
 
 ## 30-second revision
 
-- put/get = index + equals; treeify is collision mitigation on big tables.
+- Hash, then equals; treeify is conditional.
+
+## Memory hook
+
+- **GET** — Go to bin, Equals, Tree if needed.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

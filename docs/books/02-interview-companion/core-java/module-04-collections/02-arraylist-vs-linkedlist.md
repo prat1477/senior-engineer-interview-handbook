@@ -1,66 +1,69 @@
 ---
 title: "Companion 2 — ArrayList vs LinkedList"
-description: "Interview companion for Backing structures, complexity, cache locality, and remove overload pitfalls."
+description: Interview recall for ArrayList vs LinkedList.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — List Implementations: ArrayList vs LinkedList
+# Companion 2 — ArrayList vs LinkedList
 
-**Canonical source:** [Lesson 2 — ArrayList vs LinkedList](../../../01-engineering-mastery/core-java/module-04-collections/02-arraylist-vs-linkedlist.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/02-arraylist-vs-linkedlist.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Backing structures, complexity, cache locality, and remove overload pitfalls.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+ArrayList is a growable array; LinkedList is a doubly linked list — random access and cache behavior differ sharply.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- ArrayList get(i) is O(1); LinkedList get(i) is O(n).
+- Append amortized O(1) on ArrayList; occasional O(n) resize.
+- LinkedList add/remove at a known node is O(1); finding the index is O(n).
+- Prefer ArrayDeque over LinkedList for queues.
 
 ## Interview traps
 
-- | "LinkedList is always faster for insert" | Locating index dominates for `add(i, …)` |
-- | "ArrayList insert at end is always O(1)" | Worst single append can be O(n) on resize; amortized O(1) |
+- LinkedList is always faster for insert — index search dominates.
+- ArrayList append is always O(1) — resize is O(n) occasionally.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/02-arraylist-vs-linkedlist.md) is canonical.
+```mermaid
+flowchart LR
+  idx[Index access] --> arr[ArrayList O1]
+  idx --> link[LinkedList On]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Order history UI pages by index — ArrayList. A queue of pending payments — ArrayDeque, not LinkedList.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Index-heavy | ArrayList |
+| True deque | ArrayDeque |
+| Frequent mid-list edits by iterator | Rare; still measure |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Contrast get(i).
+2. Mention resize amortization.
+3. Reject LinkedList as default queue.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- ArrayList for index; avoid LinkedList unless you hold the node.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **AL** — Array for index, Link for node.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

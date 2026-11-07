@@ -60,6 +60,10 @@ sequenceDiagram
 | `thenCompose` | `T → CompletionStage<U>` |
 | `thenCombine` | two CFs complete → merge |
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “CF composes async **tasks**, not magic network efficiency.”

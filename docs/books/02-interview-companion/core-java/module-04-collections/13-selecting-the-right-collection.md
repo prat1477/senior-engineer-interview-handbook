@@ -1,65 +1,71 @@
 ---
-title: "Companion 13 — Selecting the Right Collection"
-description: "Interview companion for Decision guide by access pattern, scale, concurrency, and job scheduling."
+title: "Companion 13 — Selecting a collection"
+description: Interview recall for Selecting a collection.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 13 — Selecting the Right Collection
+# Companion 13 — Selecting a collection
 
-**Canonical source:** [Lesson 13 — Selecting the Right Collection](../../../01-engineering-mastery/core-java/module-04-collections/13-selecting-the-right-collection.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/13-selecting-the-right-collection.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Decision guide by access pattern, scale, concurrency, and job scheduling.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Selection is requirements first: uniqueness, order, concurrency, bounds, then the concrete class.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- State access pattern before the class name.
+- Thread-safety is a requirement, not a default.
+- Bounds and eviction for caches.
+- Don't default to LinkedList or Hashtable.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Picking ConcurrentHashMap for a local method variable.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/13-selecting-the-right-collection.md) is canonical.
+```mermaid
+flowchart TD
+  q1{Shared mutable?}
+  q1 -->|no| local[HashMap or ArrayList]
+  q1 -->|yes| q2{Single key atomic?}
+  q2 -->|yes| chm[ConcurrentHashMap]
+  q2 -->|no| lock[Lock or DB]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Fraud rules need sorted ranges of amounts: TreeMap. Hot request cache: bounded concurrent cache, not an unbounded HashMap.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Local list | ArrayList |
+| Shared map | CHM |
+| Bounded queue | ArrayBlockingQueue |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Requirements sentence.
+2. Then class.
+3. Name what you rejected.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Requirements, then interface, then implementation.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **RAT** — Requirements, Access, Threads.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

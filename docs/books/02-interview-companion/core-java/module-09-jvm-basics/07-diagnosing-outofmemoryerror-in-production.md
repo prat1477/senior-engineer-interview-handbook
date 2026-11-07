@@ -1,66 +1,70 @@
 ---
-title: "Companion 7 — Diagnosing OutOfMemoryError in Production"
-description: "Interview companion for OOM categories, native vs heap, workflow, jcmd, NMT, container kills."
+title: "Companion 7 — Diagnosing OOM"
+description: Interview recall for Diagnosing OOM.
 status: covered
 audience: advanced
-tags: [interview, companion, module-9, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 7 — Diagnosing `OutOfMemoryError` in Production
+# Companion 7 — Diagnosing OOM
 
-**Canonical source:** [Lesson 7 — Diagnosing OutOfMemoryError in Production](../../../01-engineering-mastery/core-java/module-09-jvm-basics/07-diagnosing-outofmemoryerror-in-production.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/07-diagnosing-outofmemoryerror-in-production.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-OOM categories, native vs heap, workflow, jcmd, NMT, container kills.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+OutOfMemoryError names the area: heap, metaspace, or unable to create thread.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Read the message subtype.
+- Heap dump on heap OOM if policy allows.
+- Thread OOM is often native memory or thread count.
+- Correlate deploy and traffic.
 
 ## Interview traps
 
-- | "Thread dump fixes heap leaks" | Thread dumps show stacks, not full retention graph |
-- | "One histogram proves a leak" | Need trend + dominators + paths to roots |
+- Every OOM is heap.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/07-diagnosing-outofmemoryerror-in-production.md) is canonical.
+```mermaid
+flowchart TD
+  oom[OOM] --> kind{Message}
+  kind -->|Java heap| dump[Heap dump]
+  kind -->|Metaspace| cls[Class loaders]
+  kind -->|thread| native[Native stacks]
 
-## JDK and debug clues
+```
 
-- GC logs (`-Xlog:gc*`) and `jcmd GC.heap_info` for heap pressure.
-- Heap dump dominators for `char[]`, `byte[]`, or collection backings tied to retention.
+## Scenario bite
 
-## Performance notes
+After a deploy, metaspace OOM points at classloader leaks, not a bigger order cache.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Java heap space | Dump and dominators |
+| Metaspace | Class loaders |
+| Unable to create native thread | Thread count |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Read the subtype.
+2. Pick the tool.
+3. Don't just raise Xmx.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- The OOM message selects the investigation.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **MSG** — Message guides the tool.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

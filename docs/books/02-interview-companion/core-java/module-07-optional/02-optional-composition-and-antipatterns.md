@@ -1,65 +1,67 @@
 ---
-title: "Companion 2 — Optional Composition and Anti-Patterns"
-description: "Interview companion for map, flatMap, filter, or(), null mapping traps, interview anti-patterns."
+title: "Companion 2 — Optional composition"
+description: Interview recall for Optional composition.
 status: covered
 audience: advanced
-tags: [interview, companion, module-7, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — Optional Composition and Anti-Patterns
+# Companion 2 — Optional composition
 
-**Canonical source:** [Lesson 2 — Optional Composition and Anti-Patterns](../../../01-engineering-mastery/core-java/module-07-optional/02-optional-composition-and-antipatterns.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-07-optional/02-optional-composition-and-antipatterns.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-map, flatMap, filter, or(), null mapping traps, interview anti-patterns.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+map and flatMap chain Optional without nested null checks.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- map when function returns a value.
+- flatMap when function returns Optional.
+- Don't use Optional.get in streams.
+- filter on Optional for conditional presence.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- optional.map(x -> optionalOf(x)) nests — use flatMap.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-07-optional/02-optional-composition-and-antipatterns.md) is canonical.
+```mermaid
+flowchart LR
+  o[Optional order] --> fm[flatMap customer]
+  fm --> m[map name]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Order to optional customer to email: flatMap then map, never get() in the middle.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Function returns T | map |
+| Function returns Optional | flatMap |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. map vs flatMap.
+2. One chain.
+3. Avoid get.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- flatMap flattens nested Optional.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **FLAT**.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

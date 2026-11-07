@@ -57,6 +57,10 @@ flowchart LR
 submit --> [queue] --> worker pool (core..max)
 ```
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “I name core, max, queue type, and rejection policy together.”

@@ -52,6 +52,10 @@ See [Visual quick reference — primitive picker](module-visual-quick-reference.
 | Semaphore | Yes | Limit concurrent downstream |
 | Phaser | Yes | Variable workers, phases |
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “Latch = one-time gate; barrier = repeating team sync.”

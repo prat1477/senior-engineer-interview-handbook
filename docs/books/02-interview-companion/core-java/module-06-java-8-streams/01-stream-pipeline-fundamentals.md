@@ -1,65 +1,68 @@
 ---
-title: "Companion 1 — Stream Pipeline Fundamentals"
-description: "Interview companion for Sources, intermediate/terminal ops, laziness, filter, map, flatMap, sorted."
+title: "Companion 1 — Stream pipelines"
+description: Interview recall for Stream pipelines.
 status: covered
 audience: advanced
-tags: [interview, companion, module-6, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 1 — Stream Pipeline Fundamentals
+# Companion 1 — Stream pipelines
 
-**Canonical source:** [Lesson 1 — Stream Pipeline Fundamentals](../../../01-engineering-mastery/core-java/module-06-java-8-streams/01-stream-pipeline-fundamentals.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-06-java-8-streams/01-stream-pipeline-fundamentals.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Sources, intermediate/terminal ops, laziness, filter, map, flatMap, sorted.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Streams are lazy pipelines: intermediate ops build a recipe; a terminal op runs it.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- filter/map/flatMap intermediate.
+- collect/forEach/reduce terminal.
+- Source is not mutated by map.
+- One terminal per stream.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Stream runs at map time — it doesn't.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-06-java-8-streams/01-stream-pipeline-fundamentals.md) is canonical.
+```mermaid
+flowchart LR
+  src[Source] --> inter[Intermediate lazy]
+  inter --> term[Terminal runs]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Filter unpaid orders then map to ids — nothing runs until collect.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Transform | map |
+| Flatten lists | flatMap |
+| Need a list | collect |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Lazy vs terminal.
+2. One pipeline.
+3. Don't reuse a consumed stream.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Intermediate lazy, terminal executes.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **LIT** — Lazy intermediate, Terminal.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

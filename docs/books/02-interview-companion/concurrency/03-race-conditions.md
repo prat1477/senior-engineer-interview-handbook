@@ -59,6 +59,10 @@ T1: R(0) ---- write 1 ----
 T2:      R(0) ---- write 1 ----  => final 1 not 2
 ```
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “I name the shared variable and the non-atomic steps.”

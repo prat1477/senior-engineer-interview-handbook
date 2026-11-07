@@ -1,65 +1,68 @@
 ---
 title: "Companion 6 — Comparable and Comparator"
-description: "Interview companion for Natural vs custom order, multi-field comparators, and sorted collections."
+description: Interview recall for Comparable and Comparator.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
 # Companion 6 — Comparable and Comparator
 
-**Canonical source:** [Lesson 6 — Comparable and Comparator](../../../01-engineering-mastery/core-java/module-04-collections/06-comparable-and-comparator.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/06-comparable-and-comparator.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Natural vs custom order, multi-field comparators, and sorted collections.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Comparable is the type's natural order; Comparator is an external order for a specific collection or sort.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- TreeSet/TreeMap need a consistent order with equals for Set semantics.
+- Comparator.comparing for streams and sorts.
+- Inconsistent compareTo vs equals breaks SortedSet.
+- Multiple comparators for different UI sorts.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- compareTo returning 0 for unequal objects in a TreeSet drops entries.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/06-comparable-and-comparator.md) is canonical.
+```mermaid
+flowchart LR
+  type[Type natural order] --> comp[Comparable]
+  external[One-off sort] --> cmp[Comparator]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Sort payments by amount for a report without changing Payment's natural id order — use Comparator.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Natural order in TreeSet | Comparable |
+| Report sort | Comparator |
+| Both | Keep equals aligned with compareTo if used as set |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Natural vs external.
+2. Consistency with equals.
+3. Example: amount vs id.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Comparable lives on the type; Comparator is external.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **NC** — Natural Comparable, Custom Comparator.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

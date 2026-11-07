@@ -1,65 +1,71 @@
 ---
-title: "Companion 3 — Production Handling, Retries, and Idempotency"
-description: "Interview companion for Spring services, retryable failures, payment idempotency scenario."
+title: "Companion 3 — Retries and idempotency"
+description: Interview recall for Retries and idempotency.
 status: covered
 audience: advanced
-tags: [interview, companion, module-8, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 3 — Production Handling, Retries, and Idempotency
+# Companion 3 — Retries and idempotency
 
-**Canonical source:** [Lesson 3 — Production Handling, Retries, and Idempotency](../../../01-engineering-mastery/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Spring services, retryable failures, payment idempotency scenario.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Retries are safe only when the operation is idempotent or the failure happened before any side effect; payments need a stable idempotency key.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Separate retryable (timeout, 503) from fatal (400 validation).
+- Bounded attempts and backoff with jitter.
+- Idempotency key reused across retries — not a new UUID each click.
+- DB transaction cannot roll back an external charge.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Retrying a non-idempotent POST doubles the charge.
+- Infinite retry on a bug.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md) is canonical.
+```mermaid
+flowchart TD
+  call[Call provider] --> ok{Outcome}
+  ok -->|success| store[Store SUCCEEDED]
+  ok -->|timeout| same[Retry SAME idempotency key]
+  same --> call
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Client double-submits Pay with a new UUID each time — unique constraint does not dedupe. Reuse Idempotency-Key or a payment intent id.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Transient 503 | Retry with same key |
+| Validation 400 | Do not retry |
+| Unknown after timeout | Query provider, do not new charge |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Classify the failure.
+2. Same business key on retry.
+3. Effectively-once, not magic exactly-once.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Retry only idempotent or keyed operations; persist outcome before assuming success.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **KEY** — Keep the same idempotency key.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

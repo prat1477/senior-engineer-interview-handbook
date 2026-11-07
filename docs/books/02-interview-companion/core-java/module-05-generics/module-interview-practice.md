@@ -66,3 +66,8 @@ public static void addAll(List<Object> dest, List<Object> src) {
 | C | Name one thing you **cannot** do because of erasure. |
 
 Answers: [06-interview-assessment-answers.md](module-interview-assessment-answers.md).
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

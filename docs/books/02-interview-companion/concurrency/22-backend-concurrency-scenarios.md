@@ -61,6 +61,10 @@ stateDiagram-v2
 | 429 storm | Rate limit + jittered backoff |
 | Debit | Conditional SQL or version column |
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “Two instances break JVM locks — durable idempotency key is the dedup identity.”

@@ -121,20 +121,10 @@ flowchart TD
 ## Concept map (compact)
 
 ```mermaid
-mindmap
-  root((LLD L1))
-    Interview
-      clarify
-      sequence
-      tradeoffs
-    Parking
-      switch
-      strategy
-      registry
-    Spring
-      List injection
-      fail fast
-    Quality
-      BigDecimal
-      unsupported vs misconfig
+flowchart TB
+  interview[Clarify then sequence]
+  parking[Switch or strategy]
+  spring[List injection to map]
+  quality[Startup duplicate vs request unsupported]
+  interview --> parking --> spring --> quality
 ```

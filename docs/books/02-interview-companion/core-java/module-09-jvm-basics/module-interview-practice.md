@@ -60,3 +60,8 @@ Answers: [module-interview-assessment-answers.md](module-interview-assessment-an
 | A | Write `jcmd` to capture a heap dump for PID `12345` to `/tmp/app.hprof`. |
 | B | One flag to enable GC logging on JDK 17+. |
 | C | One sentence: Java memory leak definition. |
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

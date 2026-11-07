@@ -56,6 +56,10 @@ flowchart LR
 | `count++` | No |
 | `if (ready) use(x)` multi-field | No without sync |
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “Volatile establishes a HB edge between write and read of **that** field.”

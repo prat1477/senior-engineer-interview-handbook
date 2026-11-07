@@ -1,65 +1,68 @@
 ---
-title: "Companion 9 — PriorityQueue and Binary Heaps"
-description: "Interview companion for Heap structure, min/max heap, complexities, and iteration vs poll order."
+title: "Companion 9 — PriorityQueue and heaps"
+description: Interview recall for PriorityQueue and heaps.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 9 — PriorityQueue and Binary Heaps
+# Companion 9 — PriorityQueue and heaps
 
-**Canonical source:** [Lesson 9 — PriorityQueue and Binary Heaps](../../../01-engineering-mastery/core-java/module-04-collections/09-priorityqueue-and-heaps.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/09-priorityqueue-and-heaps.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Heap structure, min/max heap, complexities, and iteration vs poll order.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+PriorityQueue is a binary heap: peek/poll the extreme by comparator, not sorted iteration.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Offer/poll O(log n).
+- No stable full sort until you drain.
+- Top-K largest uses a size-K min-heap.
+- Not thread-safe.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Iterating a heap yields sorted order — it does not.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/09-priorityqueue-and-heaps.md) is canonical.
+```mermaid
+flowchart TD
+  stream[Candidates] --> heap[Size K min-heap]
+  heap --> top[K largest remain]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Top 10 orders by amount in a stream: min-heap of size 10, evict smaller roots.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Top-K | Bounded heap |
+| Full sort | List sort or TreeSet |
+| Thread-safe priority | PriorityBlockingQueue |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Heap property.
+2. Top-K min-heap trick.
+3. Iteration is not sorted.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Heap gives the extreme fast; bound the size for Top-K.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **TOPK** — Tiny min-heap keeps the biggest K.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

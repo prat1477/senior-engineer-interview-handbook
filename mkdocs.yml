@@ -125,6 +125,7 @@ nav:
           - "02-inheritance-records-and-equality.md": books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md
       - "M2 equals hashCode (Companion)":
           - books/02-interview-companion/core-java/module-02-equals-and-hashcode/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-02-equals-and-hashcode/module-visual-quick-reference.md
           - "01 contracts": books/02-interview-companion/core-java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md
           - "02 inheritance records": books/02-interview-companion/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md
           - Practice: books/02-interview-companion/core-java/module-02-equals-and-hashcode/module-interview-practice.md
@@ -138,6 +139,7 @@ nav:
           - "04-thread-safety-and-concurrent-patterns.md": books/01-engineering-mastery/core-java/module-03-hashmap-internals/04-thread-safety-and-concurrent-patterns.md
       - "M3 HashMap internals (Companion)":
           - books/02-interview-companion/core-java/module-03-hashmap-internals/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-03-hashmap-internals/module-visual-quick-reference.md
           - "01 indexing": books/02-interview-companion/core-java/module-03-hashmap-internals/01-internal-table-and-hash-indexing.md
           - "02 put get treeify": books/02-interview-companion/core-java/module-03-hashmap-internals/02-put-get-flow-and-treeify.md
           - "03 resize": books/02-interview-companion/core-java/module-03-hashmap-internals/03-resize-load-factor-and-threshold.md
@@ -162,6 +164,7 @@ nav:
           - "13-selecting-the-right-collection.md": books/01-engineering-mastery/core-java/module-04-collections/13-selecting-the-right-collection.md
       - "M4 Collections (Companion)":
           - books/02-interview-companion/core-java/module-04-collections/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-04-collections/module-visual-quick-reference.md
           - "01 collections framework overview": books/02-interview-companion/core-java/module-04-collections/01-collections-framework-overview.md
           - "02 arraylist vs linkedlist": books/02-interview-companion/core-java/module-04-collections/02-arraylist-vs-linkedlist.md
           - "03 set implementations": books/02-interview-companion/core-java/module-04-collections/03-set-implementations.md
@@ -186,6 +189,7 @@ nav:
           - "04-type-erasure-raw-types-arrays.md": books/01-engineering-mastery/core-java/module-05-generics/04-type-erasure-raw-types-arrays.md
       - "M5 Generics (Companion)":
           - books/02-interview-companion/core-java/module-05-generics/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-05-generics/module-visual-quick-reference.md
           - "01 generic classes and methods": books/02-interview-companion/core-java/module-05-generics/01-generic-classes-and-methods.md
           - "02 bounded type parameters and inference": books/02-interview-companion/core-java/module-05-generics/02-bounded-type-parameters-and-inference.md
           - "03 wildcards pecs": books/02-interview-companion/core-java/module-05-generics/03-wildcards-pecs.md
@@ -201,6 +205,7 @@ nav:
           - "04-correctness-parallel-performance.md": books/01-engineering-mastery/core-java/module-06-java-8-streams/04-correctness-parallel-performance.md
       - "M6 Java 8 Streams (Companion)":
           - books/02-interview-companion/core-java/module-06-java-8-streams/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-06-java-8-streams/module-visual-quick-reference.md
           - "01 stream pipeline fundamentals": books/02-interview-companion/core-java/module-06-java-8-streams/01-stream-pipeline-fundamentals.md
           - "02 aggregation collectors": books/02-interview-companion/core-java/module-06-java-8-streams/02-aggregation-collectors.md
           - "03 search short circuit primitives": books/02-interview-companion/core-java/module-06-java-8-streams/03-search-short-circuit-primitives.md
@@ -214,6 +219,7 @@ nav:
           - "02-optional-composition-and-antipatterns": books/01-engineering-mastery/core-java/module-07-optional/02-optional-composition-and-antipatterns.md
       - "M7 Optional (Companion)":
           - books/02-interview-companion/core-java/module-07-optional/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-07-optional/module-visual-quick-reference.md
           - "01 optional fundamentals": books/02-interview-companion/core-java/module-07-optional/01-optional-fundamentals.md
           - "02 optional composition and antipatterns": books/02-interview-companion/core-java/module-07-optional/02-optional-composition-and-antipatterns.md
           - Practice: books/02-interview-companion/core-java/module-07-optional/module-interview-practice.md
@@ -226,6 +232,7 @@ nav:
           - "03-production-spring-retries-idempotency": books/01-engineering-mastery/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md
       - "M8 Exception handling (Companion)":
           - books/02-interview-companion/core-java/module-08-exception-handling/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-08-exception-handling/module-visual-quick-reference.md
           - "01 throwable hierarchy and propagation": books/02-interview-companion/core-java/module-08-exception-handling/01-throwable-hierarchy-and-propagation.md
           - "02 try with resources and wrapping": books/02-interview-companion/core-java/module-08-exception-handling/02-try-with-resources-and-wrapping.md
           - "03 production spring retries idempotency": books/02-interview-companion/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md
@@ -245,6 +252,7 @@ nav:
           - "09-production-oom-case-study-spark-sql-o": books/01-engineering-mastery/core-java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md
       - "M9 JVM basics and GC (Companion)":
           - books/02-interview-companion/core-java/module-09-jvm-basics/index.md
+          - "Quick reference": books/02-interview-companion/core-java/module-09-jvm-basics/module-visual-quick-reference.md
           - "01 jvm architecture and execution lifecy": books/02-interview-companion/core-java/module-09-jvm-basics/01-jvm-architecture-and-execution-lifecycle.md
           - "02 jvm runtime memory areas": books/02-interview-companion/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md
           - "03 jvm memory configuration and options": books/02-interview-companion/core-java/module-09-jvm-basics/03-jvm-memory-configuration-and-options.md
@@ -288,9 +296,28 @@ nav:
       - "M5 LLD (Mastery)":
           - books/01-engineering-mastery/lld/module-05-lld/index.md
           - "L1 LLD foundations": books/01-engineering-mastery/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
+          - "L2 Requirements": books/01-engineering-mastery/lld/module-05-lld/02-requirement-clarification-and-scope.md
+          - "L3 Domain model": books/01-engineering-mastery/lld/module-05-lld/03-domain-modeling-and-class-responsibilities.md
+          - "L4 Encapsulation": books/01-engineering-mastery/lld/module-05-lld/04-encapsulation-invariants-and-tell-dont-ask.md
+          - "L5 Patterns": books/01-engineering-mastery/lld/module-05-lld/05-abstraction-composition-and-pattern-selection.md
+          - "L6 OCP and DIP": books/01-engineering-mastery/lld/module-05-lld/06-ocp-and-dip.md
+          - "L7 State transitions": books/01-engineering-mastery/lld/module-05-lld/07-state-modeling-and-transitions.md
+          - "L8 Failure modeling": books/01-engineering-mastery/lld/module-05-lld/08-error-handling-and-failure-modeling.md
+          - "L9 Practice transfer": books/01-engineering-mastery/lld/module-05-lld/09-practice-transfer-problems.md
+          - "L10 Performance": books/01-engineering-mastery/lld/module-05-lld/10-performance-scalability-and-optimization.md
       - "M5 LLD (Companion)":
           - books/02-interview-companion/lld/module-05-lld/index.md
+          - "Quick reference": books/02-interview-companion/lld/module-05-lld/module-visual-quick-reference.md
           - "L1 LLD foundations": books/02-interview-companion/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
+          - "L2 Requirements": books/02-interview-companion/lld/module-05-lld/02-requirement-clarification-and-scope.md
+          - "L3 Domain model": books/02-interview-companion/lld/module-05-lld/03-domain-modeling-and-class-responsibilities.md
+          - "L4 Encapsulation": books/02-interview-companion/lld/module-05-lld/04-encapsulation-invariants-and-tell-dont-ask.md
+          - "L5 Patterns": books/02-interview-companion/lld/module-05-lld/05-abstraction-composition-and-pattern-selection.md
+          - "L6 OCP and DIP": books/02-interview-companion/lld/module-05-lld/06-ocp-and-dip.md
+          - "L7 State transitions": books/02-interview-companion/lld/module-05-lld/07-state-modeling-and-transitions.md
+          - "L8 Failure modeling": books/02-interview-companion/lld/module-05-lld/08-error-handling-and-failure-modeling.md
+          - "L9 Practice transfer": books/02-interview-companion/lld/module-05-lld/09-practice-transfer-problems.md
+          - "L10 Performance": books/02-interview-companion/lld/module-05-lld/10-performance-scalability-and-optimization.md
           - Practice: books/02-interview-companion/lld/module-05-lld/module-interview-practice.md
           - Answers: books/02-interview-companion/lld/module-05-lld/module-interview-assessment-answers.md
       - "M5 LLD Playbook": books/03-production-playbook/lld/module-05-lld-production-playbook.md
@@ -299,6 +326,25 @@ nav:
       - Curriculum: lld/index.md
       - "L1 LLD foundations (Mastery)": books/01-engineering-mastery/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
       - "L1 LLD foundations (Companion)": books/02-interview-companion/lld/module-05-lld/01-lld-foundations-what-senior-lld-interviews-evaluate.md
+      - "L2 Requirements (Mastery)": books/01-engineering-mastery/lld/module-05-lld/02-requirement-clarification-and-scope.md
+      - "L2 Requirements (Companion)": books/02-interview-companion/lld/module-05-lld/02-requirement-clarification-and-scope.md
+      - "L3 Domain model (Mastery)": books/01-engineering-mastery/lld/module-05-lld/03-domain-modeling-and-class-responsibilities.md
+      - "L3 Domain model (Companion)": books/02-interview-companion/lld/module-05-lld/03-domain-modeling-and-class-responsibilities.md
+      - "L4 Encapsulation (Mastery)": books/01-engineering-mastery/lld/module-05-lld/04-encapsulation-invariants-and-tell-dont-ask.md
+      - "L4 Encapsulation (Companion)": books/02-interview-companion/lld/module-05-lld/04-encapsulation-invariants-and-tell-dont-ask.md
+      - "L5 Patterns (Mastery)": books/01-engineering-mastery/lld/module-05-lld/05-abstraction-composition-and-pattern-selection.md
+      - "L5 Patterns (Companion)": books/02-interview-companion/lld/module-05-lld/05-abstraction-composition-and-pattern-selection.md
+      - "L6 OCP and DIP (Mastery)": books/01-engineering-mastery/lld/module-05-lld/06-ocp-and-dip.md
+      - "L6 OCP and DIP (Companion)": books/02-interview-companion/lld/module-05-lld/06-ocp-and-dip.md
+      - "L7 State transitions (Mastery)": books/01-engineering-mastery/lld/module-05-lld/07-state-modeling-and-transitions.md
+      - "L7 State transitions (Companion)": books/02-interview-companion/lld/module-05-lld/07-state-modeling-and-transitions.md
+      - "L8 Failure modeling (Mastery)": books/01-engineering-mastery/lld/module-05-lld/08-error-handling-and-failure-modeling.md
+      - "L8 Failure modeling (Companion)": books/02-interview-companion/lld/module-05-lld/08-error-handling-and-failure-modeling.md
+      - "L9 Practice transfer (Mastery)": books/01-engineering-mastery/lld/module-05-lld/09-practice-transfer-problems.md
+      - "L9 Practice transfer (Companion)": books/02-interview-companion/lld/module-05-lld/09-practice-transfer-problems.md
+      - "L10 Performance (Mastery)": books/01-engineering-mastery/lld/module-05-lld/10-performance-scalability-and-optimization.md
+      - "L10 Performance (Companion)": books/02-interview-companion/lld/module-05-lld/10-performance-scalability-and-optimization.md
+      - "LLD quick reference": books/02-interview-companion/lld/module-05-lld/module-visual-quick-reference.md
       - Practice: books/02-interview-companion/lld/module-05-lld/module-interview-practice.md
       - Answers: books/02-interview-companion/lld/module-05-lld/module-interview-assessment-answers.md
   - Concurrency:
@@ -330,6 +376,7 @@ nav:
   - Spring and microservices: spring-microservices/index.md
   - Distributed systems:
       - distributed-systems/index.md
+      - "Interview cheat sheet": books/02-interview-companion/distributed-systems/module-visual-quick-reference.md
       - Database concurrency: distributed-systems/database-concurrency-and-isolation.md
       - Locks and ScyllaDB: distributed-systems/distributed-locks-fencing-and-scylladb.md
   - Kafka: kafka/index.md

@@ -1,65 +1,71 @@
 ---
-title: "Companion 1 — Throwable Hierarchy and Propagation"
-description: "Interview companion for Checked vs unchecked, throw vs throws, catch ordering, finally traps."
+title: "Companion 1 — Throwable hierarchy"
+description: Interview recall for Throwable hierarchy.
 status: covered
 audience: advanced
-tags: [interview, companion, module-8, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 1 — Throwable Hierarchy and Propagation
+# Companion 1 — Throwable hierarchy
 
-**Canonical source:** [Lesson 1 — Throwable Hierarchy and Propagation](../../../01-engineering-mastery/core-java/module-08-exception-handling/01-throwable-hierarchy-and-propagation.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-08-exception-handling/01-throwable-hierarchy-and-propagation.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Checked vs unchecked, throw vs throws, catch ordering, finally traps.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Java errors and exceptions form a hierarchy: Error, Exception, checked vs unchecked — propagation follows the call stack until caught or the thread dies.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Throwable → Error (JVM) vs Exception.
+- Checked exceptions must be declared or caught; RuntimeException is unchecked.
+- Catch the narrowest type you can handle; do not swallow.
+- Use exceptions for exceptional paths, not control flow in hot loops.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Catching Exception hides bugs — catch specific types.
+- Error is not for application catch-all (OutOfMemoryError).
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-08-exception-handling/01-throwable-hierarchy-and-propagation.md) is canonical.
+```mermaid
+flowchart TD
+  throw[throw] --> stack[Unwind stack]
+  stack --> caught{catch matches?}
+  caught -->|yes| handle[Handle or wrap]
+  caught -->|no| caller[Propagate to caller]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Payment API throws a checked validation failure at the controller boundary; a NullPointerException deeper in mapping should not be mapped to the same 400.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Client mistake | Unchecked or domain exception → 4xx |
+| Dependency down | Wrap and retry policy, often 503 |
+| Programmer bug | Let unchecked fail fast, fix code |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Name checked vs unchecked.
+2. Show stack unwind until a handler.
+3. Say what you would not catch (Error, broad Exception).
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Checked must be handled; unchecked signals bugs or domain policy you choose to declare.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **CUE** — Checked, Unchecked, Error.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

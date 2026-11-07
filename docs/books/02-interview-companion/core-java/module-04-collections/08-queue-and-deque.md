@@ -1,65 +1,68 @@
 ---
-title: "Companion 8 — Queue and Deque Fundamentals"
-description: "Interview companion for FIFO, deque operations, ArrayDeque vs legacy Stack, and complexity."
+title: "Companion 8 — Queue and Deque"
+description: Interview recall for Queue and Deque.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 8 — Queue and Deque Fundamentals
+# Companion 8 — Queue and Deque
 
-**Canonical source:** [Lesson 8 — Queue and Deque Fundamentals](../../../01-engineering-mastery/core-java/module-04-collections/08-queue-and-deque.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/08-queue-and-deque.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-FIFO, deque operations, ArrayDeque vs legacy Stack, and complexity.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Queue is FIFO (or priority); Deque supports both ends. ArrayDeque is the usual non-thread-safe deque.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Offer/poll vs add/remove exception policy.
+- ArrayDeque no nulls, faster than LinkedList.
+- Do not use Stack class; use Deque.
+- PriorityQueue is not FIFO.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- LinkedList as the default queue.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/08-queue-and-deque.md) is canonical.
+```mermaid
+flowchart LR
+  tail[offer tail] --> q[Deque]
+  q --> head[poll head]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Undo stack of order edits: ArrayDeque as stack (push/pop).
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| FIFO in one thread | ArrayDeque |
+| Blocking producers | BlockingQueue |
+| Priority | PriorityQueue |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Ends of a deque.
+2. ArrayDeque over LinkedList.
+3. Exception vs null poll.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- ArrayDeque for stack and queue in one thread.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **DEQ** — Double-ended queue.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

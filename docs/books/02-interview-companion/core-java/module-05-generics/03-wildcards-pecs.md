@@ -1,65 +1,67 @@
 ---
 title: "Companion 3 — Wildcards and PECS"
-description: "Interview companion for ? extends", "? super", Producer Extends Consumer Super, assignment traps."
+description: Interview recall for Wildcards and PECS.
 status: covered
 audience: advanced
-tags: [interview, companion, module-5, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
 # Companion 3 — Wildcards and PECS
 
-**Canonical source:** [Lesson 3 — Wildcards and PECS](../../../01-engineering-mastery/core-java/module-05-generics/03-wildcards-pecs.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/03-wildcards-pecs.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-? extends", "? super", Producer Extends Consumer Super, assignment traps.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+PECS: producer extends, consumer super — wildcards for flexible method parameters.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- List<? extends Order> read-only producer.
+- List<? super Order> can accept Order.
+- Do not use wildcard as a return type casually.
+- Invariant generics: List<Order> is not List<Object>.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- List<Order> passed where List<Object> is required.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/03-wildcards-pecs.md) is canonical.
+```mermaid
+flowchart LR
+  prod["? extends T read"] --> get[get T]
+  cons["? super T write"] --> add[add T]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Copy orders into a list of Object: destination is List<? super Order>.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Read from source | ? extends |
+| Write into dest | ? super |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Say PECS.
+2. Give copy example.
+3. Invariance.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Producer extends, consumer super.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **PECS**.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

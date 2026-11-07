@@ -70,3 +70,8 @@ Answers: [module-interview-assessment-answers.md](module-interview-assessment-an
 19. How do you unit-test pricing without `@SpringBootTest`?
 
 20. Senior follow-up: “We deploy plugins as separate JARs.” What changes in your design?
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

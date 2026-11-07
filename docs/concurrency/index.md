@@ -12,7 +12,7 @@ updated: 2026-10-25
 
 Study **after** [Core Java Modules 2–9](../books/01-engineering-mastery/index.md). Lesson order is **fixed** — do not reorder.
 
-**Interview revision:** [Book 2 — Concurrency Companion](../books/02-interview-companion/concurrency/index.md) (diagrams, whiteboard scripts, [visual quick reference](../books/02-interview-companion/concurrency/module-visual-quick-reference.md), [practice](../books/02-interview-companion/concurrency/module-interview-practice.md)).
+**Interview revision (diagrams live here, not in these canonical pages):** [Book 2 — Concurrency Companion](../books/02-interview-companion/concurrency/index.md) — [visual quick reference](../books/02-interview-companion/concurrency/module-visual-quick-reference.md), [practice](../books/02-interview-companion/concurrency/module-interview-practice.md).
 
 | # | Lesson | File | Status |
 | --- | --- | --- | --- |

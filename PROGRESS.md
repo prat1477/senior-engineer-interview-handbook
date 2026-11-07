@@ -180,8 +180,19 @@ Companion chapters and playbooks are in place; deepening is incremental in [Engi
 | Lesson | Topic | Status |
 | --- | --- | --- |
 | 1 | LLD foundations — senior interview evaluation | **Covered** (Mastery + Companion + Playbook) |
+| 2 | Requirement clarification and scope | **Covered** (Mastery + Companion) |
+| 3 | Domain modeling and class responsibilities | **Covered** (Mastery + Companion) |
+| 4 | Encapsulation, invariants, Tell-Don't-Ask | **Covered** (Mastery + Companion) |
+| 5 | Abstraction, composition, pattern selection | **Covered** (Mastery + Companion) |
+| 6 | OCP and DIP — pricing rules and payment providers | **Covered** (Mastery + Companion) |
+| 7 | State modeling and state transitions | **Covered** (Mastery + Companion) |
+| 8 | Error handling and failure modeling | **Covered** (Mastery + Companion) |
+| 9 | Practice — curriculum gaps and transfer problems | **In progress** (written; drills not yet done) |
+| 10 | Performance, scalability, and optimization | **Covered** (Mastery + Companion) |
 
-**Interview revision:** [Book 2 LLD Companion](docs/books/02-interview-companion/lld/module-05-lld/index.md).
+**Interview revision:** [Book 2 LLD Companion](docs/books/02-interview-companion/lld/module-05-lld/index.md) including [visual quick reference](docs/books/02-interview-companion/lld/module-05-lld/module-visual-quick-reference.md).
+
+**Book 2 visual pass (2026-10-28):** Core Java M2–M9 companions rewritten with flowcharts, scenario bites, and per-module [cheat sheets](docs/books/02-interview-companion/index.md). Diagrams render under `mkdocs serve`, not in every raw Markdown preview.
 
 ---
 
@@ -196,7 +207,7 @@ Companion chapters and playbooks are in place; deepening is incremental in [Engi
 | AWS and infrastructure | **Planned** |
 | DSA and coding | **Planned** (external DSA Handbook not linked yet) |
 | Behavioral | **Planned** |
-| LLD (module 05) | **In progress** — [L1 Companion](docs/books/02-interview-companion/lld/module-05-lld/index.md) |
+| LLD (module 05) | **In progress** — Lessons 1–8 and 10 **Covered**; Lesson 9 practice set written, drills not done. [Module index](docs/books/02-interview-companion/lld/module-05-lld/index.md) |
 | Mock interviews (Day 13) | **Planned** |
 | Rapid revision (Day 14) | **Planned** |
 

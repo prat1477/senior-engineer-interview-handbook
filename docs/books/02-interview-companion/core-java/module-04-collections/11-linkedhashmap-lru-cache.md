@@ -1,65 +1,68 @@
 ---
-title: "Companion 11 — LinkedHashMap Access Order and LRU Caching"
-description: "Interview companion for accessOrder constructor, get() reordering, and removeEldestEntry patterns."
+title: "Companion 11 — LinkedHashMap LRU"
+description: Interview recall for LinkedHashMap LRU.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 11 — LinkedHashMap Access Order and LRU Caching
+# Companion 11 — LinkedHashMap LRU
 
-**Canonical source:** [Lesson 11 — LinkedHashMap Access Order and LRU Caching](../../../01-engineering-mastery/core-java/module-04-collections/11-linkedhashmap-lru-cache.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/11-linkedhashmap-lru-cache.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-accessOrder constructor, get() reordering, and removeEldestEntry patterns.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+LinkedHashMap with accessOrder and removeEldestEntry implements a simple LRU cache.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Constructor accessOrder true.
+- removeEldestEntry when size exceeds cap.
+- Not thread-safe — wrap or use Caffeine for prod.
+- Equals/hashCode of keys still apply.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Access-order map without a size cap is not an LRU cache.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/11-linkedhashmap-lru-cache.md) is canonical.
+```mermaid
+flowchart TD
+  get[get promotes] --> eldest{size over cap?}
+  eldest -->|yes| evict[removeEldestEntry]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Cache last 1000 Order summaries per node: LinkedHashMap LRU; for multi-thread use a concurrent cache.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Single-thread LRU | LinkedHashMap |
+| Concurrent prod cache | Caffeine or CHM plus policy |
+| Sorted eviction | Not LinkedHashMap |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. accessOrder flag.
+2. Evict eldest.
+3. Not concurrent by itself.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Access-order LinkedHashMap plus eldest removal is a teaching LRU.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **LRU** — Least Recently Used eldest.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

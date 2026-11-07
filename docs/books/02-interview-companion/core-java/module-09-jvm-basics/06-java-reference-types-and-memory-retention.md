@@ -1,67 +1,67 @@
 ---
-title: "Companion 6 — Java Reference Types and Memory Retention"
-description: "Interview companion for Strong, soft, weak, phantom, ReferenceQueue, WeakHashMap, caches."
+title: "Companion 6 — Reference types"
+description: Interview recall for Reference types.
 status: covered
 audience: advanced
-tags: [interview, companion, module-9, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 6 — Java Reference Types and Memory Retention
+# Companion 6 — Reference types
 
-**Canonical source:** [Lesson 6 — Java Reference Types and Memory Retention](../../../01-engineering-mastery/core-java/module-09-jvm-basics/06-java-reference-types-and-memory-retention.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/06-java-reference-types-and-memory-retention.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Strong, soft, weak, phantom, ReferenceQueue, WeakHashMap, caches.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Strong refs keep objects; soft, weak, and phantom refs allow earlier collection or post-mortem cleanup.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Strong is the default.
+- WeakHashMap drops entries when keys are weakly reachable.
+- Soft refs are cache-ish but not a size cap.
+- Don't build caches only from soft refs.
 
 ## Interview traps
 
-- | "`WeakHashMap` frees entries automatically" | Values must not strongly retain keys |
-- | "`PhantomReference.get()` returns the object" | Always **null** by design |
-- | "Soft refs = LRU cache" | No ordering guarantee; pressure-dependent clearing |
+- WeakHashMap as an LRU.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/06-java-reference-types-and-memory-retention.md) is canonical.
+```mermaid
+flowchart TD
+  strong[Strong ref] --> live[Stays]
+  weak[Weak ref] --> gone[Collectable]
 
-## JDK and debug clues
+```
 
-- GC logs (`-Xlog:gc*`) and `jcmd GC.heap_info` for heap pressure.
-- Heap dump dominators for `char[]`, `byte[]`, or collection backings tied to retention.
+## Scenario bite
 
-## Performance notes
+A metadata cache keyed by Class should not pin class loaders; weak keys can help, but still cap size.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Must stay | Strong |
+| Optional cache | Bounded strong cache, not only soft |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Four reference strengths briefly.
+2. WeakHashMap caveat.
+3. Prefer explicit eviction.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Strong refs retain; weak refs do not replace a capacity policy.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **SWE** — Strong, Weak, Evict explicitly.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

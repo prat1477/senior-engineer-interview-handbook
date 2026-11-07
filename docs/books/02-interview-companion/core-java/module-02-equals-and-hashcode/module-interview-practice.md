@@ -40,3 +40,8 @@ Answers: [module-interview-assessment-answers.md](module-interview-assessment-an
 ## Scenario
 
 10. Team uses `Order` entity with `@Id Long id` as `HashMap` key but `equals` includes mutable `status`. What production symptom do you expect?
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

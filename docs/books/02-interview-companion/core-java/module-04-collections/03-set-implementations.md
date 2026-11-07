@@ -1,65 +1,69 @@
 ---
-title: "Companion 3 — Set Implementations"
-description: "Interview companion for HashSet, LinkedHashSet, TreeSet, equality, and comparator membership traps."
+title: "Companion 3 — Set implementations"
+description: Interview recall for Set implementations.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 3 — Set Implementations
+# Companion 3 — Set implementations
 
-**Canonical source:** [Lesson 3 — Set Implementations](../../../01-engineering-mastery/core-java/module-04-collections/03-set-implementations.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/03-set-implementations.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-HashSet, LinkedHashSet, TreeSet, equality, and comparator membership traps.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Set forbids duplicates by equals; HashSet, LinkedHashSet, and TreeSet differ in order and cost.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- HashSet: average O(1), no order.
+- LinkedHashSet: insertion order.
+- TreeSet: sorted, O(log n), needs Comparable or Comparator.
+- Mutable elements that change hashCode corrupt the set.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- TreeSet without a total order throws or mis-orders.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/03-set-implementations.md) is canonical.
+```mermaid
+flowchart TD
+  uniq[Unique elements] --> hash[HashSet]
+  uniq --> ins[LinkedHashSet order]
+  uniq --> sort[TreeSet sorted]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Dedupe SKUs in an order import: HashSet. Audit trail of first-seen SKUs: LinkedHashSet.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| No order needed | HashSet |
+| Insertion order | LinkedHashSet |
+| Sorted range | TreeSet |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Uniqueness via equals/hashCode.
+2. Name ordering.
+3. Warn on mutable keys.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Hash unordered, linked insertion, tree sorted.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **HLT** — Hash, Linked, Tree.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

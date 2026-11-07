@@ -1,65 +1,69 @@
 ---
-title: "Companion 1 — Optional Fundamentals"
-description: "Interview companion for Creating Optional, presence checks, orElse vs orElseGet, orElseThrow."
+title: "Companion 1 — Optional fundamentals"
+description: Interview recall for Optional fundamentals.
 status: covered
 audience: advanced
-tags: [interview, companion, module-7, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 1 — Optional Fundamentals
+# Companion 1 — Optional fundamentals
 
-**Canonical source:** [Lesson 1 — Optional Fundamentals](../../../01-engineering-mastery/core-java/module-07-optional/01-optional-fundamentals.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-07-optional/01-optional-fundamentals.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Creating Optional, presence checks, orElse vs orElseGet, orElseThrow.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Optional is a return type for a value that may be absent — not a field or parameter default.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- orElse vs orElseGet (eager vs lazy).
+- Do not call get() without presence check.
+- orElseThrow for required values.
+- Empty means absent, not null inside.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Optional as a field in JPA entities.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-07-optional/01-optional-fundamentals.md) is canonical.
+```mermaid
+flowchart TD
+  repo[find order] --> opt{present?}
+  opt -->|yes| map[map]
+  opt -->|no| empty[orElse default]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Order lookup by id returns Optional; controller uses orElseThrow for 404.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Default cheap | orElse |
+| Default expensive | orElseGet |
+| Must exist | orElseThrow |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Return type only.
+2. orElse vs orElseGet.
+3. No get().
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Optional for absence at API boundaries.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **OPT** — OrElse, Presence, Throw.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

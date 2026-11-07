@@ -59,3 +59,8 @@ throw new OrderProcessingException("Unable to process order", e);
 | A | Order catch blocks for `SQLException` then `Exception`. |
 | B | Access suppressed exception from caught `IOException`. |
 | C | One sentence: retry policy should depend on what? |
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

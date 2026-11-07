@@ -59,6 +59,10 @@ stateDiagram-v2
 Request threads --> shared heap (maps, counters) --> need HB or confinement
 ```
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “I separate **concurrency** (tasks in flight) from **parallelism** (cores busy).”

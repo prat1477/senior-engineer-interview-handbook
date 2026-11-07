@@ -1,44 +1,67 @@
 ---
-title: "Companion 2 — Inheritance, Records, and Equality"
-description: Interview revision for subclass traps and records.
+title: "Companion 2 — Inheritance and records"
+description: Interview recall for Inheritance and records.
 status: covered
 audience: advanced
-tags: [interview, companion, module-2]
-created: 2026-10-20
-updated: 2026-10-20
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — Inheritance, Records, and Equality
+# Companion 2 — Inheritance and records
 
-**Canonical source:** [Mastery L2](../../../01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Subclass `equals` can violate symmetry; records generate component-wise equality with **shallow** immutability.
+Equality across inheritance is fragile; records generate equals and hashCode from components.
 
 ## Must remember
 
-- `ColorPoint` / `Point` breaks symmetry if `equals` uses `instanceof` asymmetrically.
-- Prefer composition or `final` classes for value keys.
-- Records: all components in `equals`/`hashCode`.
-- `List.copyOf` — unmodifiable list, not deep freeze of elements.
+- Subclass adding fields breaks symmetry if superclass equals is used.
+- Prefer composition.
+- Records are shallow equals on components.
+- Don't mix getClass and instanceof casually.
 
 ## Interview traps
 
-- "Records are always safe as HashMap keys" — only if components are immutable.
-- "Inheritance is fine for DTO equality" — often breaks contract.
+- instanceof equals in a parent and child both ways.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** How can inheritance violate symmetry?  
-  **A:** Parent accepts child type in `equals`; child rejects parent type.
-- **Q:** What do records generate?  
-  **A:** `equals`/`hashCode`/`toString` from all record components.
+```mermaid
+flowchart TD
+  parent[Parent equals] --> child[Child extra field]
+  child --> break[Symmetry breaks]
+
+```
+
+## Scenario bite
+
+Order subclass ExpressOrder with extra fee: don't use Order.equals that ignores fee if both types share a set.
+
+## Decision table
+
+| Situation | Prefer |
+| --- | --- |
+| Need subclass | Composition or sealed types with care |
+| DTO | record |
+
+## Explain aloud (whiteboard)
+
+1. Show symmetry break.
+2. Recommend composition.
+3. Records are component equality.
 
 ## 30-second revision
 
-- Avoid inherited `equals`; defensive-copy mutable record fields; shallow immutability.
+- Inheritance plus equals is a trap; records fit simple values.
 
-## Memory hooks
+## Memory hook
 
-- **Compose, don't subclass** value equality.
+- **SYM** — Symmetry first.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

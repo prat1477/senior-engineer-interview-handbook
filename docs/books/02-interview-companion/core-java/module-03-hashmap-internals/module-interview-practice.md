@@ -41,3 +41,8 @@ Answers: [module-interview-assessment-answers.md](module-interview-assessment-an
 13. After 12 distinct `put`s on new `HashMap()`, does `size()` return 12 before any resize? (default path)
 
 14. Two threads both `put(k, getOrDefault(k,0)+1)` — possible final value?
+## Whiteboard (use the cheat sheet)
+
+1. Draw the module flowchart from the visual quick reference without notes.
+2. Give one production scenario and the decision-table row you would choose.
+3. Name one interview trap and the correction.

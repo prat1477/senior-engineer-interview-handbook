@@ -1,31 +1,67 @@
 ---
-title: "Companion 3 — Resize and Threshold"
-description: Interview revision for load factor and 13th insertion.
+title: "Companion 3 — Resize and load factor"
+description: Interview recall for Resize and load factor.
 status: covered
 audience: advanced
-tags: [interview, companion, module-3]
-created: 2026-10-20
-updated: 2026-10-20
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 3 — Resize and Threshold
+# Companion 3 — Resize and load factor
 
-**Canonical source:** [Mastery L3](../../../01-engineering-mastery/core-java/module-03-hashmap-internals/03-resize-load-factor-and-threshold.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-03-hashmap-internals/03-resize-load-factor-and-threshold.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
+
+## Definition
+
+Threshold is capacity times load factor; exceeding it doubles the table and rehashes entries.
 
 ## Must remember
 
-- Default capacity **16**, load factor **0.75**, threshold **12**.
-- **13th distinct** mapping can trigger resize (not bucket 13).
-- Threshold uses **size**, not occupied bucket count.
-- Collision alone ≠ resize; replace value ≠ size++.
+- Default load factor 0.75.
+- Size is mappings, not occupied buckets.
+- Resize is O(n) occasionally.
+- Pre-size when you know cardinality.
 
-## FAQ
+## Interview traps
 
-- **Q:** Why 13th insertion resize?  
-  **A:** After 12 mappings `size ≤ threshold`; 13th distinct key makes `size > 12`.
-- **Q:** What happens on resize?  
-  **A:** Capacity doubles; entries reindexed (often same index or + oldCapacity).
+- Threshold equals number of non-empty buckets.
+
+## Interview flow
+
+```mermaid
+flowchart TD
+  add[size exceeds threshold] --> dbl[Double capacity]
+  dbl --> re[Rehash bins]
+
+```
+
+## Scenario bite
+
+Bulk-loading 1e6 employees: new HashMap<>(expected) to avoid repeated resizes.
+
+## Decision table
+
+| Situation | Prefer |
+| --- | --- |
+| Known size | Presize |
+| Unknown | Default 0.75 |
+
+## Explain aloud (whiteboard)
+
+1. Define threshold.
+2. Double and rehash.
+3. Presize for bulk.
 
 ## 30-second revision
 
-- resize when size > threshold; threshold = capacity × load factor.
+- Resize when size passes capacity times load factor.
+
+## Memory hook
+
+- **075** — three quarters full, grow.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

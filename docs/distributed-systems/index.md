@@ -12,6 +12,8 @@ updated: 2026-10-15
 
 **Status: In progress** — supporting pages added; full scenario lessons still planned.
 
+**Interview cheat sheet (diagrams):** [Book 2 distributed quick reference](../books/02-interview-companion/distributed-systems/module-visual-quick-reference.md).
+
 ## Authored pages
 
 | Page | Topic |

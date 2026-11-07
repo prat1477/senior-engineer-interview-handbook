@@ -1,65 +1,69 @@
 ---
-title: "Companion 10 — PriorityBlockingQueue, ArrayBlockingQueue, and Backpressure"
-description: "Interview companion for Thread-safe queues, blocking semantics, bounded capacity, and overload."
+title: "Companion 10 — Blocking queues and backpressure"
+description: Interview recall for Blocking queues and backpressure.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 10 — PriorityBlockingQueue, ArrayBlockingQueue, and Backpressure
+# Companion 10 — Blocking queues and backpressure
 
-**Canonical source:** [Lesson 10 — PriorityBlockingQueue, ArrayBlockingQueue, and Backpressure](../../../01-engineering-mastery/core-java/module-04-collections/10-blocking-queues-and-backpressure.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/10-blocking-queues-and-backpressure.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Thread-safe queues, blocking semantics, bounded capacity, and overload.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+BlockingQueue blocks producers when full and consumers when empty — capacity is backpressure.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- put/take vs offer/poll with timeout.
+- ArrayBlockingQueue is bounded.
+- Unbounded queue hides overload.
+- Capacity is not consumer parallelism.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Unbounded LinkedBlockingQueue under spike — latency explodes.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/10-blocking-queues-and-backpressure.md) is canonical.
+```mermaid
+flowchart LR
+  p[Producer put] --> full{full?}
+  full -->|yes| block[Block backpressure]
+  full -->|no| slot[Enqueue]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Payment webhook workers: bounded ArrayBlockingQueue plus a fixed pool; reject or caller-runs when saturated.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Need bound | ArrayBlockingQueue |
+| Handoff | SynchronousQueue |
+| Priority plus block | PriorityBlockingQueue |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Full queue blocks producer.
+2. Separate consumer count.
+3. Timeouts for shutdown.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Bounded blocking queue is in-process backpressure.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **PUT** — Producers unblock when consumers take.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

@@ -1,65 +1,68 @@
 ---
-title: "Companion 2 — Aggregation and Collectors"
-description: "Interview companion for reduce, collect, groupingBy, toMap merge, downstream collectors."
+title: "Companion 2 — Collectors"
+description: Interview recall for Collectors.
 status: covered
 audience: advanced
-tags: [interview, companion, module-6, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — Aggregation and Collectors
+# Companion 2 — Collectors
 
-**Canonical source:** [Lesson 2 — Aggregation and Collectors](../../../01-engineering-mastery/core-java/module-06-java-8-streams/02-aggregation-collectors.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-06-java-8-streams/02-aggregation-collectors.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-reduce, collect, groupingBy, toMap merge, downstream collectors.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Collectors accumulate stream elements into lists, maps, groups, and summaries.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- toList, groupingBy, partitioningBy.
+- Downstream collectors (counting, summing).
+- toMap needs a merge function on key clash.
+- groupingBy is not thread-safe unless concurrent collector.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- toMap without merge on duplicate keys.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-06-java-8-streams/02-aggregation-collectors.md) is canonical.
+```mermaid
+flowchart TD
+  orders[Orders] --> grp[groupingBy department]
+  grp --> map[Map of lists]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Group orders by employee id for a payroll report: groupingBy(Order::employeeId).
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| List | toList |
+| Group | groupingBy |
+| Duplicate keys | toMap merge |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Name the collector.
+2. Duplicate key policy.
+3. Downstream if needed.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Collectors are the terminal accumulation strategy.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **GRP** — Group, Reduce, Partition.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

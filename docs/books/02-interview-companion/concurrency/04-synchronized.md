@@ -56,6 +56,10 @@ flowchart LR
 Thread A: [ lock obj ] work [ unlock ] --HB--> Thread B: [ lock obj ]
 ```
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “Monitor = built-in lock on an object; only one thread in the block.”

@@ -18,3 +18,4 @@ updated: 2026-10-20
 | 4 | [Concurrency](04-thread-safety-and-concurrent-patterns.md) |
 
 - [Module practice](module-interview-practice.md) · [Answers](module-interview-assessment-answers.md)
+- [Visual quick reference](module-visual-quick-reference.md)

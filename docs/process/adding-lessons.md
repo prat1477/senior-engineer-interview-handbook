@@ -22,7 +22,20 @@ paths are stubs that point to the books.
 | Production Playbook | `docs/books/03-production-playbook/core-java/module-NN-*-production-playbook.md` |
 
 Templates (repo root): `templates/chapter-engineering-mastery.md`,
-`templates/chapter-interview-companion.md`, `templates/chapter-production-playbook.md`.
+`templates/chapter-interview-companion.md`,
+`templates/chapter-interview-companion-core-java.md` (diagrams + scenario + decision table),
+`templates/chapter-interview-companion-concurrency.md`,
+`templates/chapter-production-playbook.md`.
+
+## Interview Companion visuals (Book 2)
+
+Book 2 is the **interview cram surface**. Each companion lesson should include:
+
+- A Mermaid `flowchart`, `sequenceDiagram`, or `stateDiagram-v2` (or a tight ASCII timeline).
+- A **scenario bite** and a **decision table**.
+- A link to that module’s `module-visual-quick-reference.md`.
+
+**Mermaid in MkDocs:** fences must be ` ```mermaid ` (Material + `pymdownx.superfences`). Prefer `flowchart` / `sequenceDiagram` / `stateDiagram-v2`. Avoid `mindmap` unless you have confirmed it renders in the browser — Cursor chat may render diagrams that MkDocs does not. Diagrams appear on the served site (`mkdocs serve`), not in every raw Markdown preview.
 
 ## After each interactive session
 

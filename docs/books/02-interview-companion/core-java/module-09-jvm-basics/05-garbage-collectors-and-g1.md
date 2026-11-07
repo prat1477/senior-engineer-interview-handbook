@@ -1,67 +1,67 @@
 ---
-title: "Companion 5 — Garbage Collectors and G1 GC"
-description: "Interview companion for STW pauses, Parallel vs G1 vs ZGC, regions, mixed GC, humongous objects."
+title: "Companion 5 — Collectors and G1"
+description: Interview recall for Collectors and G1.
 status: covered
 audience: advanced
-tags: [interview, companion, module-9, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 5 — Garbage Collectors and G1 GC
+# Companion 5 — Collectors and G1
 
-**Canonical source:** [Lesson 5 — Garbage Collectors and G1 GC](../../../01-engineering-mastery/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-STW pauses, Parallel vs G1 vs ZGC, regions, mixed GC, humongous objects.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+G1 is a regional collector aimed at pause goals; other collectors optimize throughput or latency differently.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- G1 uses regions and a pause target.
+- Know your JDK default.
+- Don't tune blindly.
+- ZGC/Shenandoah are low-pause options on newer JDKs.
 
 ## Interview traps
 
-- | "Switch to ZGC for every service" | Measure pause vs throughput vs JDK support |
-- | "G1 never does full GC" | Full GC can still occur under pressure or mis-tuning |
-- | "Humongous regions are rare in business apps" | Large `byte[]`, serialized plans, buffers can trigger them |
+- One collector is best for every service.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md) is canonical.
+```mermaid
+flowchart LR
+  regions[G1 regions] --> evac[Evacuate]
+  evac --> pause[Pause goal]
 
-## JDK and debug clues
+```
 
-- GC logs (`-Xlog:gc*`) and `jcmd GC.heap_info` for heap pressure.
-- Heap dump dominators for `char[]`, `byte[]`, or collection backings tied to retention.
+## Scenario bite
 
-## Performance notes
+Latency-sensitive payment API: measure p99 pause; consider G1 pause target or a low-latency collector if the JDK supports it.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Throughput batch | Measure, maybe throughput collector |
+| Tight p99 | Low-pause collector |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Name G1 idea.
+2. Measure first.
+3. JDK version matters.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Pick a collector from pause and throughput goals, then measure.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **G1** — regions and pause goals.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

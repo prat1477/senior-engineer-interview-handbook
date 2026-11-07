@@ -61,6 +61,10 @@ flowchart TD
 Method thread-safe + workflow check-then-act = still broken
 ```
 
+## Scenario bite
+
+Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
 ## Explain aloud (whiteboard)
 
 1. “I pick immutability or confinement first.”

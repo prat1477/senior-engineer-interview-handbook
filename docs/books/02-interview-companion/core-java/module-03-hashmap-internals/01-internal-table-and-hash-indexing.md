@@ -1,40 +1,68 @@
 ---
-title: "Companion 1 — Table, Spread Hash, Index"
-description: Interview revision for HashMap indexing.
+title: "Companion 1 — Hash indexing"
+description: Interview recall for Hash indexing.
 status: covered
 audience: advanced
-tags: [interview, companion, module-3]
-created: 2026-10-20
-updated: 2026-10-20
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 1 — Table, Spread Hash, Index
+# Companion 1 — Hash indexing
 
-**Canonical source:** [Mastery L1](../../../01-engineering-mastery/core-java/module-03-hashmap-internals/01-internal-table-and-hash-indexing.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-03-hashmap-internals/01-internal-table-and-hash-indexing.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-OpenJDK `HashMap` maps keys to buckets via spread `hashCode` and bitmask index `(capacity - 1) & hash`.
+HashMap spreads hashCode and masks with table length minus one to pick a bucket.
 
 ## Must remember
 
-- **Capacity** = bucket array length (power of 2).
-- **Size** = mapping count.
-- Spread: `h ^ (h >>> 16)` (implementation).
-- Index: `(n - 1) & spread`.
+- index = (n - 1) & spread.
+- spread mixes high bits of hashCode.
+- Capacity is power of two.
+- Poor hashCode clusters buckets.
 
 ## Interview traps
 
-- Confusing **size** with **capacity** or occupied buckets.
-- Treating spread/index formulas as public API guarantees.
+- Using raw hashCode as the index.
 
-## FAQ
+## Interview flow
 
-- **Q:** How is bucket index calculated?  
-  **A:** `(table.length - 1) & spreadHash`, with spread mixing high bits of `hashCode()`.
-- **Q:** Why spread bits?  
-  **A:** Better distribution when only low bits select buckets.
+```mermaid
+flowchart LR
+  h[hashCode] --> mix[spread]
+  mix --> mask["and length-1"]
+  mask --> b[bucket]
+
+```
+
+## Scenario bite
+
+Employee ids that differ only in high bits still need spread so small tables do not collide.
+
+## Decision table
+
+| Situation | Prefer |
+| --- | --- |
+| Need bucket | Explain spread and mask |
+| Need collision story | equals walk |
+
+## Explain aloud (whiteboard)
+
+1. Write the index formula.
+2. Why XOR shift.
+3. Power-of-two mask.
 
 ## 30-second revision
 
-- power-of-two capacity → bitmask index; spread before mask.
+- Spread then mask into a power-of-two table.
+
+## Memory hook
+
+- **SIM** — Spread, Index, Mask.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

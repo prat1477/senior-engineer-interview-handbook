@@ -1,65 +1,71 @@
 ---
-title: "Companion 2 — Try-with-Resources and Exception Wrapping"
-description: "Interview companion for AutoCloseable, suppressed exceptions, cause chains, logging."
+title: "Companion 2 — Try-with-resources and wrapping"
+description: Interview recall for Try-with-resources and wrapping.
 status: covered
 audience: advanced
-tags: [interview, companion, module-8, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — Try-with-Resources and Exception Wrapping
+# Companion 2 — Try-with-resources and wrapping
 
-**Canonical source:** [Lesson 2 — Try-with-Resources and Exception Wrapping](../../../01-engineering-mastery/core-java/module-08-exception-handling/02-try-with-resources-and-wrapping.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-08-exception-handling/02-try-with-resources-and-wrapping.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-AutoCloseable, suppressed exceptions, cause chains, logging.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+try-with-resources closes AutoCloseable in reverse order and can suppress secondary exceptions; wrapping preserves the cause chain.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Resources close even when the body throws.
+- Suppressed exceptions attach to the primary via getSuppressed().
+- Wrap with cause: new ServiceException(msg, cause).
+- Do not lose the original stack when translating to HTTP.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Empty catch after close — leaks the real failure.
+- Wrapping without cause drops diagnostics.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-08-exception-handling/02-try-with-resources-and-wrapping.md) is canonical.
+```mermaid
+flowchart LR
+  open[Open resource] --> body[Use]
+  body --> close[Auto close]
+  close --> primary[Primary exception]
+  close --> suppressed[Suppressed on close failure]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Reading an order export file: if parsing throws and close also throws, the parse exception stays primary and close is suppressed.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Need deterministic close | try-with-resources |
+| Translate to API type | Wrap with cause |
+| Log and continue | Only if failure is truly optional |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Open, use, auto-close order.
+2. Primary vs suppressed.
+3. Always pass cause when wrapping.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- try-with-resources closes reliably; wrapping must keep the cause.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **WRAP** — With cause, Reverse close, Attach suppressed, Primary wins.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

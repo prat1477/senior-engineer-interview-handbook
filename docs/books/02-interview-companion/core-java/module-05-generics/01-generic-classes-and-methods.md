@@ -1,67 +1,67 @@
 ---
-title: "Companion 1 — Generic Classes and Methods"
-description: "Interview companion for Type parameters, generic methods, and method type inference."
+title: "Companion 1 — Generic classes and methods"
+description: Interview recall for Generic classes and methods.
 status: covered
 audience: advanced
-tags: [interview, companion, module-5, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 1 — Generic Classes and Methods
+# Companion 1 — Generic classes and methods
 
-**Canonical source:** [Lesson 1 — Generic Classes and Methods](../../../01-engineering-mastery/core-java/module-05-generics/01-generic-classes-and-methods.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/01-generic-classes-and-methods.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Type parameters, generic methods, and method type inference.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Generics parameterize types so the compiler checks element types before erasure.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- class Box<T>, methods <T> T id(T x).
+- Avoid raw types.
+- Prefer generic methods when only the method needs T.
+- Diamond operator infers.
 
 ## Interview traps
 
-- | "Generics are only for collections" | Any class/method can be generic |
-- | "`List<String>` and `List` are the same at runtime" | Erasure removes type args; see erasure lesson |
-- | "I can use `T` in static fields" | Instance type params are not available in static context |
+- Raw List stores anything and fails later at cast.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-05-generics/01-generic-classes-and-methods.md) is canonical.
+```mermaid
+flowchart LR
+  src[List of Order] --> compiler[Compiler checks]
+  compiler --> ok[No heap pollution]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Repository method List<Order> findByEmployee — callers cannot add a Payment without a compile error.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| API returns entities | Generic type |
+| Legacy interop | Isolate raw types at the edge |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Declare T.
+2. Show a compile error you want.
+3. No raw types.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Generics move type errors to compile time.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **GEN** — Generic, Early, No raw.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

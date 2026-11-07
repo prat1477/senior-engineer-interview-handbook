@@ -16,5 +16,6 @@ Derived from [Engineering Mastery](../../../01-engineering-mastery/core-java/mod
 | 1 | [01-optional-fundamentals.md](01-optional-fundamentals.md) | [Mastery](../../../01-engineering-mastery/core-java/module-07-optional/01-optional-fundamentals.md) |
 | 2 | [02-optional-composition-and-antipatterns.md](02-optional-composition-and-antipatterns.md) | [Mastery](../../../01-engineering-mastery/core-java/module-07-optional/02-optional-composition-and-antipatterns.md) |
 
+- [Visual quick reference](module-visual-quick-reference.md)
 - [Interview practice](module-interview-practice.md)
 - [Assessment answers](module-interview-assessment-answers.md)

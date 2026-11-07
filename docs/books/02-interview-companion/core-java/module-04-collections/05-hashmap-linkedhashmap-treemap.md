@@ -1,65 +1,70 @@
 ---
-title: "Companion 5 — HashMap vs LinkedHashMap vs TreeMap"
-description: "Interview companion for Ordering modes, complexity trade-offs, and when to sort on demand."
+title: "Companion 5 — HashMap, LinkedHashMap, TreeMap"
+description: Interview recall for HashMap, LinkedHashMap, TreeMap.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 5 — HashMap vs LinkedHashMap vs TreeMap
+# Companion 5 — HashMap, LinkedHashMap, TreeMap
 
-**Canonical source:** [Lesson 5 — HashMap vs LinkedHashMap vs TreeMap](../../../01-engineering-mastery/core-java/module-04-collections/05-hashmap-linkedhashmap-treemap.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/05-hashmap-linkedhashmap-treemap.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Ordering modes, complexity trade-offs, and when to sort on demand.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+These maps trade order and cost: hash speed, insertion/access order, or sorted keys.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- LinkedHashMap accessOrder=true enables LRU.
+- TreeMap navigable ranges.
+- HashMap fastest average lookups.
+- TreeMap forbids null keys.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- Expecting HashMap to stay sorted.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/05-hashmap-linkedhashmap-treemap.md) is canonical.
+```mermaid
+flowchart TD
+  m{Order?}
+  m -->|none| h[HashMap]
+  m -->|insertion or access| l[LinkedHashMap]
+  m -->|sorted| t[TreeMap]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+LRU of recent Order ids: LinkedHashMap with access order and removeEldestEntry.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Plain cache | HashMap |
+| LRU | LinkedHashMap |
+| Range query on keys | TreeMap |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. State the order guarantee.
+2. LRU flag.
+3. log n vs amortized O(1).
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Hash speed, linked order, tree sort.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **HLT maps**.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

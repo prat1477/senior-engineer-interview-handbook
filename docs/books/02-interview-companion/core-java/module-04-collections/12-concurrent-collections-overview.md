@@ -1,65 +1,68 @@
 ---
-title: "Companion 12 — Concurrent Collections Overview"
-description: "Interview companion for High-level ConcurrentHashMap and why HashMap is not for concurrent structure changes."
+title: "Companion 12 — Concurrent collections overview"
+description: Interview recall for Concurrent collections overview.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 12 — Concurrent Collections Overview
+# Companion 12 — Concurrent collections overview
 
-**Canonical source:** [Lesson 12 — Concurrent Collections Overview](../../../01-engineering-mastery/core-java/module-04-collections/12-concurrent-collections-overview.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/12-concurrent-collections-overview.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-High-level ConcurrentHashMap and why HashMap is not for concurrent structure changes.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+java.util.concurrent collections allow concurrent access with specific atomicity — not multi-key transactions.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- CHM merge and computeIfAbsent are single-key atomic.
+- containsKey plus put races.
+- Weakly consistent iterators.
+- CopyOnWrite for rare writes.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- CHM makes every business workflow atomic.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/12-concurrent-collections-overview.md) is canonical.
+```mermaid
+flowchart TD
+  race[containsKey then put] --> bad[Lost update]
+  merge[merge or computeIfAbsent] --> ok[Single key atomic]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Count payments per status: CHM.merge(status, 1L, Long::sum), not get-plus-put.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Single-key update | CHM atomic method |
+| Multi-key transfer | Lock or DB transaction |
+| Snapshot reads | Accept weak consistency or copy |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Name the race.
+2. Name the atomic API.
+3. Limit of single-key.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Concurrent collections give specific atomic ops, not full transactions.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **PCM** — putIfAbsent, compute, merge.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

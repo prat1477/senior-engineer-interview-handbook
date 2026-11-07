@@ -1,67 +1,68 @@
 ---
-title: "Companion 2 — JVM Runtime Memory Areas"
-description: "Interview companion for Heap, stacks, method area, Metaspace, PC registers, native stacks, OOM vs SOE."
+title: "Companion 2 — Runtime memory areas"
+description: Interview recall for Runtime memory areas.
 status: covered
 audience: advanced
-tags: [interview, companion, module-9, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 2 — JVM Runtime Memory Areas
+# Companion 2 — Runtime memory areas
 
-**Canonical source:** [Lesson 2 — JVM Runtime Memory Areas](../../../01-engineering-mastery/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Heap, stacks, method area, Metaspace, PC registers, native stacks, OOM vs SOE.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Heap holds objects; stacks hold frames; metaspace holds class metadata.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Heap shared; stacks per thread.
+- Metaspace is native, not the old perm gen.
+- GC manages heap.
+- Thread stacks size is configurable.
 
 ## Interview traps
 
-- | "All variables live on the heap" | Locals and parameters live in **stack frames**; objects live on heap |
-- | "Static fields are on the stack" | Static fields are associated with the class (method area / Metaspace + heap objects they reference) |
-- | "Heap OOM means buy more RAM" | Classify OOM type and **retention** first |
+- All memory is heap.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md) is canonical.
+```mermaid
+flowchart TB
+  heap[Heap objects]
+  stack[Thread stacks]
+  meta[Metaspace classes]
 
-## JDK and debug clues
+```
 
-- GC logs (`-Xlog:gc*`) and `jcmd GC.heap_info` for heap pressure.
-- Heap dump dominators for `char[]`, `byte[]`, or collection backings tied to retention.
+## Scenario bite
 
-## Performance notes
+Many virtual threads with deep stacks still use memory; large ThreadLocals sit on the heap.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Object leak | Heap |
+| Class leak | Metaspace |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Name three areas.
+2. What GC collects.
+3. Per-thread stack.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Heap, stacks, metaspace — different leaks.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **HSM** — Heap, Stack, Metaspace.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

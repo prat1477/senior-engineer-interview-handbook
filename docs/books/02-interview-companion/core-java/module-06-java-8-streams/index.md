@@ -18,5 +18,6 @@ Derived from [Engineering Mastery](../../../01-engineering-mastery/core-java/mod
 | 3 | [03-search-short-circuit-primitives.md](03-search-short-circuit-primitives.md) | [Mastery](../../../01-engineering-mastery/core-java/module-06-java-8-streams/03-search-short-circuit-primitives.md) |
 | 4 | [04-correctness-parallel-performance.md](04-correctness-parallel-performance.md) | [Mastery](../../../01-engineering-mastery/core-java/module-06-java-8-streams/04-correctness-parallel-performance.md) |
 
+- [Visual quick reference](module-visual-quick-reference.md)
 - [Interview practice](module-interview-practice.md)
 - [Assessment answers](module-interview-assessment-answers.md)

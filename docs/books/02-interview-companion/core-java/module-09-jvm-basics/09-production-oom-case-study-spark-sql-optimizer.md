@@ -1,65 +1,67 @@
 ---
-title: "Companion 9 — Production OOM Case Study: Spark SQL Optimizer"
-description: "Interview companion for Documented Spark workload OOM investigation and constraint propagation mitigation."
+title: "Companion 9 — OOM case study"
+description: Interview recall for OOM case study.
 status: covered
 audience: advanced
-tags: [interview, companion, module-9, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 9 — Production OOM Case Study: Spark SQL Optimizer
+# Companion 9 — OOM case study
 
-**Canonical source:** [Lesson 9 — Production OOM Case Study: Spark SQL Optimizer](../../../01-engineering-mastery/core-java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Documented Spark workload OOM investigation and constraint propagation mitigation.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+Large query plans can exhaust memory during optimization — a production pattern of unbounded in-memory structures.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Symptom, evidence, cause, fix.
+- Bound plan complexity or memory.
+- Don't only raise heap.
+- Separate this story from generic leaks.
 
 ## Interview traps
 
-- Assuming interface Big-O equals every implementation — read the implementation javadoc.
+- The only fix is a bigger cluster.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/09-production-oom-case-study-spark-sql-optimizer.md) is canonical.
+```mermaid
+flowchart LR
+  query[Huge SQL] --> opt[Optimizer structures]
+  opt --> oom[Heap OOM]
 
-## JDK and debug clues
+```
 
-- GC logs (`-Xlog:gc*`) and `jcmd GC.heap_info` for heap pressure.
-- Heap dump dominators for `char[]`, `byte[]`, or collection backings tied to retention.
+## Scenario bite
 
-## Performance notes
+A generated query with huge IN lists builds a giant plan; bound inputs and simplify SQL.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Unbounded structure | Cap input |
+| Need capacity | Size after the cap |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Tell symptom then cause.
+2. Bound the input.
+3. Heap increase is secondary.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- OOM case studies need a retainer and a bound.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **CAP** — Cap the input.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

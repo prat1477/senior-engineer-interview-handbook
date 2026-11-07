@@ -1,67 +1,67 @@
 ---
-title: "Companion 1 — JVM Architecture and Java Execution Lifecycle"
-description: "Interview companion for Compilation, class loading, linking, initialization, class loaders, interpreter vs JIT."
+title: "Companion 1 — JVM architecture"
+description: Interview recall for JVM architecture.
 status: covered
 audience: advanced
-tags: [interview, companion, module-9, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 1 — JVM Architecture and Java Execution Lifecycle
+# Companion 1 — JVM architecture
 
-**Canonical source:** [Lesson 1 — JVM Architecture and Java Execution Lifecycle](../../../01-engineering-mastery/core-java/module-09-jvm-basics/01-jvm-architecture-and-execution-lifecycle.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/01-jvm-architecture-and-execution-lifecycle.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Compilation, class loading, linking, initialization, class loaders, interpreter vs JIT.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+The JVM loads bytecode, verifies, interprets or JIT-compiles, and runs threads on the host OS.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Class loaders, bytecode, JIT.
+- java vs javac.
+- Shutdown hooks are last resort.
+- Platform threads map toward OS threads.
 
 ## Interview traps
 
-- | "Bytecode runs directly on the CPU" | JVM interprets or JIT-compiles to native code |
-- | "`Class.forName` never runs static blocks" | Default `forName(name)` **initializes** the class |
-- | "Failed init is forgotten on next use" | JVM records failed initialization; subsequent uses can fail with `NoClassDefFoundError` |
+- JIT means every method is native immediately.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-09-jvm-basics/01-jvm-architecture-and-execution-lifecycle.md) is canonical.
+```mermaid
+flowchart LR
+  src[Bytecode] --> load[Class load]
+  load --> exec[Interpret or JIT]
 
-## JDK and debug clues
+```
 
-- GC logs (`-Xlog:gc*`) and `jcmd GC.heap_info` for heap pressure.
-- Heap dump dominators for `char[]`, `byte[]`, or collection backings tied to retention.
+## Scenario bite
 
-## Performance notes
+A payment service cold start is slow until JIT warms hot methods.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Startup | Class loading |
+| Steady state | JIT |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Load then execute.
+2. JIT warms up.
+3. Not the same as OS.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- JVM loads and executes bytecode, optimizing hot paths.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **JIT**.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)

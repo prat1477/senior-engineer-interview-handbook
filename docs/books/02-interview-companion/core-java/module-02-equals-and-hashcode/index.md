@@ -16,3 +16,4 @@ updated: 2026-10-20
 | 2 | [Inheritance and records](02-inheritance-records-and-equality.md) |
 
 - [Module practice](module-interview-practice.md) · [Answers](module-interview-assessment-answers.md)
+- [Visual quick reference](module-visual-quick-reference.md)

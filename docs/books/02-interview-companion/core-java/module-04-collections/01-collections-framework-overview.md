@@ -1,67 +1,70 @@
 ---
-title: "Companion 1 — Java Collections Framework Overview"
-description: "Interview companion for Interfaces, hierarchy, Map vs Collection, and choosing implementations."
+title: "Companion 1 — Collections framework"
+description: Interview recall for Collections framework.
 status: covered
 audience: advanced
-tags: [interview, companion, module-4, java]
-created: 2026-10-18
-updated: 2026-10-18
+tags: [interview, companion, java]
+updated: 2026-10-28
 ---
 
-# Companion 1 — Java Collections Framework Overview
+# Companion 1 — Collections framework
 
-**Canonical source:** [Lesson 1 — Java Collections Framework Overview](../../../01-engineering-mastery/core-java/module-04-collections/01-collections-framework-overview.md).
+**Canonical source:** [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/01-collections-framework-overview.md).
+
+**Cheat sheet:** [Module visual quick reference](module-visual-quick-reference.md).
 
 ## Definition
 
-Interfaces, hierarchy, Map vs Collection, and choosing implementations.
-
-## Why it exists
-
-Backend services need predictable in-memory data semantics; this topic encodes the contract
-and the trade-offs senior engineers defend in design reviews.
+The Collections Framework is interfaces (Collection, List, Set, Queue, Map) plus implementations with different complexity and ordering.
 
 ## Must remember
 
-- Program to interfaces; justify implementations with complexity, ordering, and thread-safety.
-- `Employee` / `Order` / `Payment` examples tie this lesson to payroll and commerce flows.
+- Program to interfaces.
+- Map does not extend Collection.
+- Choose by access pattern and thread-safety.
+- Fail-fast iterators detect structural modification.
 
 ## Interview traps
 
-- | "`Collection` includes maps" | Maps are parallel hierarchy under `Map` |
-- | "Iteration order equals sort order" | Only for sorted implementations or explicit ordering modes |
-- | "Pick `LinkedList` for all insertions" | Middle insert on linked lists still requires locating the index — often `O(n)` |
+- Interface Big-O equals every implementation — read the class javadoc.
 
-## Frequently asked questions
+## Interview flow
 
-- **Q:** What JDK version do examples target?
-  **A:** JDK 17+ OpenJDK unless the mastery lesson states otherwise.
-- **Q:** Where is the full depth?
-  **A:** The [Mastery lesson](../../../01-engineering-mastery/core-java/module-04-collections/01-collections-framework-overview.md) is canonical.
+```mermaid
+flowchart TD
+  need{Need} --> list[List ordered index]
+  need --> set[Set uniqueness]
+  need --> map[Map key value]
+  need --> q[Queue FIFO or priority]
 
-## JDK and debug clues
+```
 
-- Stack traces mentioning this lesson's types (`java.util.*`, `java.lang.*`) — map frame to contract violation.
-- Enable `-XX:+HeapDumpOnOutOfMemoryError` when symptoms involve unbounded structures from this module.
+## Scenario bite
 
-## Performance notes
+Payroll groups employees by department: Map, not a List scan, when lookup by key dominates.
 
-- Name the dominant operation before naming a concrete class.
-- Watch hidden `O(n)` scans (`contains`, `indexOf`) inside loops.
+## Decision table
 
-## Production notes
+| Situation | Prefer |
+| --- | --- |
+| Random access | ArrayList |
+| Unique keys | Set or Map |
+| FIFO tasks | Queue |
 
-- Bound in-memory maps and caches; log size metrics where feasible.
-- Document nullability and ordering guarantees on public APIs.
+## Explain aloud (whiteboard)
 
-## Staff engineer notes
-
-- Separate **semantic requirements** (unique keys, sorted traversal) from **favorite classes**.
+1. Name the interface first.
+2. Then the implementation.
+3. State one complexity.
 
 ## 30-second revision
 
-- Read the mastery tables once, then rehearse answering "why this implementation?" aloud.
+- Interfaces first; Map is separate; pick implementation by access.
 
-## Memory hooks
+## Memory hook
 
-- **LOMS** — **L**ist order, **O**rdering mode, **M**ap vs Collection, **S**election by access pattern.
+- **LSMQ** — List, Set, Map, Queue.
+
+## Cross-links
+
+- [Module visual quick reference](module-visual-quick-reference.md)
