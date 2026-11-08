@@ -19,8 +19,8 @@ Modules 1–10 you already completed elsewhere.
 
 1. Read [Preparation philosophy](preparation-philosophy.md) (70/30, sequence, interactive style).
 2. Open the fixed [14-day roadmap](14-day-roadmap.md).
-3. Core Java Modules 4–9: read via [The Three Books](books/index.md) (Mastery → Companion → Playbook).
-   Modules 1–3 remain planned; legacy [`docs/java/`](java/index.md) URLs stub to the books.
+3. Core Java: [The Three Books](books/index.md). Module 1 object-model lessons are in progress (records still planned). Modules 2–9 are covered.
+   Legacy [`docs/java/`](java/index.md) URLs stub to the books.
 4. Track honesty in [PROGRESS.md](PROGRESS.md).
 
 ## Reading map
@@ -58,7 +58,7 @@ flowchart TD
 
 | Order | Module |
 | --- | --- |
-| 1 | [Object model](java/module-01-java-object-model/index.md) — planned |
+| 1 | [Object model](books/01-engineering-mastery/core-java/module-01-java-object-model/index.md) — lessons **covered**; records **planned** |
 | 2 | [`equals()` / `hashCode()`](books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/index.md) — **covered** |
 | 3 | [`HashMap` internals](books/01-engineering-mastery/core-java/module-03-hashmap-internals/index.md) — **covered** |
 | 4 | [**Collections**](books/01-engineering-mastery/core-java/module-04-collections/index.md) — **covered** |

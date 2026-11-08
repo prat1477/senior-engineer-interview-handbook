@@ -19,6 +19,7 @@ Cram from this book: each module has a **visual quick reference** (diagrams rend
 
 | Module | Companion index | Cheat sheet | Practice |
 | --- | --- | --- | --- |
+| 1 | [Object model](core-java/module-01-java-object-model/index.md) | [quick ref](core-java/module-01-java-object-model/module-visual-quick-reference.md) | — (no separate drill set this session) |
 | 2 | [equals / hashCode](core-java/module-02-equals-and-hashcode/index.md) | [quick ref](core-java/module-02-equals-and-hashcode/module-visual-quick-reference.md) | [practice](core-java/module-02-equals-and-hashcode/module-interview-practice.md) |
 | 3 | [HashMap internals](core-java/module-03-hashmap-internals/index.md) | [quick ref](core-java/module-03-hashmap-internals/module-visual-quick-reference.md) | [practice](core-java/module-03-hashmap-internals/module-interview-practice.md) |
 | 4 | [Collections](core-java/module-04-collections/index.md) | [quick ref](core-java/module-04-collections/module-visual-quick-reference.md) | [practice](core-java/module-04-collections/module-interview-practice.md) |

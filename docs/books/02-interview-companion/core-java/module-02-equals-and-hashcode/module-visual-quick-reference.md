@@ -17,7 +17,7 @@ flowchart TD
 
 | Rule | Line |
 | --- | --- |
-| Contract | reflexive, symmetric, transitive, consistent |
+| Contract | RSTCN — reflexive, symmetric, transitive, consistent, non-null |
 | Hash | equal ⇒ same hash; unequal may collide |
 | Inheritance | prefer composition; records for component equality |
 

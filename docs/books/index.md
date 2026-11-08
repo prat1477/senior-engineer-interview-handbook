@@ -10,7 +10,7 @@ updated: 2026-10-18
 
 # The Three Books — Core Java
 
-Modules **4–9** are delivered as three complementary books (Spark-aligned layout):
+Modules **1–9** are delivered as three complementary books (Spark-aligned layout). Module 1 has Mastery and Companion lessons only; it has no playbook yet. Records are not written.
 
 | # | Book | Purpose |
 | --- | --- | --- |
@@ -37,6 +37,6 @@ Module indexes reference `Employee`, `Order`, and `Payment` records for consiste
 
 ## Learning order
 
-1. Read Mastery lessons in module order (4 → 9).
+1. Read Mastery lessons in module order (1 → 9). Module 1 records are still planned.
 2. Revise with the Companion before mocks.
 3. Skim the module Playbook for production debugging scenarios.

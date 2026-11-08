@@ -12,7 +12,7 @@ updated: 2026-10-15
 
 | Domain | Path | Notes |
 | --- | --- | --- |
-| Core Java | [books/index.md](../books/index.md) (Mastery + Companion + Playbook) | Modules 2–9 covered; module 1 planned ([java hub](../java/index.md)) |
+| Core Java | [books/index.md](../books/index.md) (Mastery + Companion + Playbook) | Module 1 lessons and Java Records are covered; Modules 2–9 covered ([java hub](../java/index.md)) |
 | Concurrency | [concurrency/index.md](../concurrency/index.md) | 24-lesson sequence |
 | LLD | [lld/index.md](../lld/index.md) | Module 05-lld — Lessons 1–8 and 10 covered; Lesson 9 is the transfer-practice set |
 | Spring & microservices | [spring-microservices/index.md](../spring-microservices/index.md) | Senior scenarios |

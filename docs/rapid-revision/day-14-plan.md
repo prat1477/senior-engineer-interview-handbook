@@ -5,7 +5,7 @@ status: planned
 audience: advanced
 tags: [revision, day-14]
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-11-08
 ---
 
 # Day 14 — Rapid Revision Plan
@@ -33,6 +33,36 @@ updated: 2026-10-15
 ## Question banks
 
 Banks are **intentionally empty** until authored per topic. Start with Collections via [interview quick reference](../90-reference/interview-quick-reference.md).
+
+### Core Java memory triggers (2026-11-07, 3–5 minutes)
+
+Cues only. Depth: [Module 1](../books/01-engineering-mastery/core-java/module-01-java-object-model/index.md) and [Module 2 contracts](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md).
+
+- **A PIE** — OOP principles.
+- **IS-A vs HAS-A** — inheritance vs composition.
+- Interface = contract; abstract class = shared foundation.
+- **RSTCN** — equals contract.
+- Equal objects must have equal hash codes.
+- Never mutate `HashMap` key fields used by equality.
+- `final` reference is not an immutable object.
+- `List.copyOf()` = unmodifiable shallow copy.
+- Immutable nested objects can safely be shared.
+- Immutable update = return a new object.
+- Record = transparent data carrier.
+- Record components = private final fields.
+- Compact constructor = validate and normalize.
+- Jackson = JSON/object conversion.
+- `@Valid` = trigger Bean Validation.
+- Entity = persistence model.
+- Record DTO = API contract.
+- Enum singleton != thread-safe; `count++` != atomic.
+- High concurrency != high contention; `AtomicInteger` = exact CAS updates, `LongAdder` = contested counter throughput.
+- `name()` = declared identifier; `toString()` = display; `ordinal()` != explicit business code.
+- Enum = fixed code-owned set; configurable domain model = runtime metadata plus an adapter.
+- Annotation = metadata, not behavior. Retention: SOURCE / CLASS / RUNTIME.
+- Reflection discovers metadata; annotation processing generates at compile time; `@Inherited` does not traverse interfaces.
+- Spring proxy intercepts `@Transactional`; `this` self-invocation bypasses it.
+- Caught exceptions may commit; rollback-only completion can produce `UnexpectedRollbackException`.
 
 ### Collections (available now)
 

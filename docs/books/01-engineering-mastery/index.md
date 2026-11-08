@@ -1,20 +1,21 @@
 ---
 title: Book 1 — Core Java Engineering Mastery
-description: Canonical Core Java lessons for Modules 4–9.
+description: Canonical Core Java lessons for Modules 1–9, including Module 1 runtime-metadata coverage and records in Module 2.
 status: covered
 audience: practitioner
 tags: [book, mastery, java]
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-11-08
 ---
 
 # Book 1 — Core Java Engineering Mastery
 
-Single source of truth for Core Java Modules **2–9**.
+Single source of truth for Core Java Modules **1–9**. Java Records are covered in Module 2; Module 1 includes enums, annotations, reflection, and Spring AOP.
 Each lesson follows the `templates/chapter-engineering-mastery.md` layout at the repository root.
 
 | Module | Index |
 | --- | --- |
+| 1 — Java Object Model | [module-01-java-object-model](core-java/module-01-java-object-model/index.md) |
 | 2 — `equals()` / `hashCode()` | [module-02-equals-and-hashcode](core-java/module-02-equals-and-hashcode/index.md) |
 | 3 — HashMap internals | [module-03-hashmap-internals](core-java/module-03-hashmap-internals/index.md) |
 | 4 — Collections | [module-04-collections](core-java/module-04-collections/index.md) |
