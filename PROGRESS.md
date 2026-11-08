@@ -11,8 +11,8 @@ Update this file after each study session. Status meanings:
 | **Deferred** | Belongs to a later curriculum (e.g. deep concurrency internals during Collections) |
 | **Needs revision** | Studied but you want another pass |
 
-**Last updated:** 2026-10-25  
-**Current position:** Core Java Modules 2–9 **Covered** in the [three-book layout](docs/books/index.md). [Java concurrency](docs/concurrency/index.md) lessons **1–24 documented** (handbook pass; deepen L1–11 as you study). Distributed-systems support pages: [DB concurrency](docs/distributed-systems/database-concurrency-and-isolation.md), [locks / Scylla](docs/distributed-systems/distributed-locks-fencing-and-scylladb.md). Module 1 object model still **Planned**.
+**Last updated:** 2026-11-08
+**Current position:** Next planned topic on the fixed roadmap is **Day 1 DSA — arrays and hash maps** ([DSA tracker](docs/dsa/index.md)). Java Records are **Covered** in [Module 2 Lesson 2](docs/books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md); Core Java Modules 2–9 stay **Covered**. Module 1 object-model lessons from 2026-11-07 are **Covered**. [Java concurrency](docs/concurrency/index.md) lessons **1–24 documented** (handbook pass; not marked newly complete). Week 1 plan: [week-01](docs/week-01-core-java-spring.md). Skill scores: [mastery matrix](docs/tracking/mastery-matrix.md).
 
 ### Three-book rewrite (layout vs depth)
 
@@ -29,7 +29,7 @@ Companion chapters and playbooks are in place; deepening is incremental in [Engi
 
 | Day | Theme | Status |
 | --- | --- | --- |
-| 1 | Core Java, Collections, HashMap, DSA arrays/hash maps | **In progress** (Collections **Covered**; Object model / dedicated HashMap module still **Planned**) |
+| 1 | Core Java, Collections, HashMap, DSA arrays/hash maps | **In progress** (Collections, HashMap, object-model lessons, and Java Records **Covered**; DSA arrays/hash maps still **Planned**) |
 | 2 | Streams, Optional, JVM basics, two pointers / sliding window | **In progress** (Streams, Optional, JVM basics **Covered**; DSA two pointers / sliding window **Planned**) |
 | 3 | Concurrency foundations (JMM, happens-before, race, `synchronized`) | **In progress** (L1–11 handbook **Covered**; study + drill) |
 | 4 | Advanced concurrency + high-level system design | **In progress** (L12–24 handbook **Covered**; study + drill) |
@@ -50,8 +50,8 @@ Companion chapters and playbooks are in place; deepening is incremental in [Engi
 
 | # | Module | Status |
 | --- | --- | --- |
-| 1 | Java Object Model | **Planned** |
-| 2 | **`equals()` and `hashCode()`** | **Covered** |
+| 1 | Java Object Model | **In progress** (lessons below **Covered**; Java Records are covered in Module 2 Lesson 2) |
+| 2 | **`equals()` and `hashCode()`** | **Covered** (contracts deepened 2026-11-07; module not re-scored as mastered) |
 | 3 | **`HashMap` internals (deepening)** | **Covered** (foundational map usage also in Collections M4 L4) |
 | 4 | **Collections** | **Covered** |
 | 5 | **Generics** | **Covered** |
@@ -60,12 +60,24 @@ Companion chapters and playbooks are in place; deepening is incremental in [Engi
 | 8 | **Exception handling** | **Covered** |
 | 9 | **JVM basics, GC, and production diagnostics** | **Covered** |
 
+### Module 1 — Java Object Model
+
+Coverage below is lesson status. Scores are in the [mastery matrix](docs/tracking/mastery-matrix.md). Java Records are covered in Module 2 Lesson 2 because that existing lesson owns their equality and immutability context.
+
+| Lesson | Topic | Status |
+| --- | --- | --- |
+| 01 | OOP principles | **Covered** |
+| 02 | Composition vs inheritance | **Covered** |
+| 03 | Interfaces vs abstract classes | **Covered** |
+| 04 | Immutability and defensive copying | **Covered** |
+| — | Records (Module 2 Lesson 2) | **Covered** |
+
 ### Module 2 — equals / hashCode
 
 | Lesson | Topic | Status |
 | --- | --- | --- |
-| 01 | Contracts and `hashCode` | **Covered** |
-| 02 | Inheritance, records, composition | **Covered** |
+| 01 | Contracts and `hashCode` | **Covered** (2026-11-07 session: `PaymentRequest`, RSTCN, mutable-key nuance, inconsistent `hashCode`) |
+| 02 | Inheritance, records, composition | **Covered** (Java Records fundamentals, compact-constructor validation, Jackson, and Spring MVC DTO exercise documented 2026-11-08) |
 | — | Companion practice + answers | **Covered** |
 
 ### Module 3 — HashMap internals

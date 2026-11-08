@@ -1,16 +1,16 @@
 ---
 title: Core Java Track
-description: Hub for Core Java — Modules 4–9 live in the three-book layout.
+description: Hub for Core Java. Module 1 lessons live in the three-book layout; Java Records are covered in Module 2 Lesson 2.
 status: stable
 audience: advanced
 tags: [java, core-java]
 created: 2026-10-15
-updated: 2026-10-18
+updated: 2026-11-08
 ---
 
 # Core Java Track
 
-Modules **2–9** are authored in the **[Three Books](../books/index.md)** layout:
+Modules **1–9** are authored in the **[Three Books](../books/index.md)** layout. Java Records are covered in Module 2 Lesson 2, where equality and shallow immutability are taught together.
 
 | Book | Start here |
 | --- | --- |
@@ -24,7 +24,7 @@ Legacy lesson URLs under `docs/java/module-*` remain as **stubs** for old links.
 
 | # | Module | Mastery index |
 | --- | --- | --- |
-| 1 | Java Object Model | [planned](module-01-java-object-model/index.md) |
+| 1 | **Java Object Model** | [module-01](../books/01-engineering-mastery/core-java/module-01-java-object-model/index.md) |
 | 2 | **`equals()` and `hashCode()`** | [module-02](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/index.md) |
 | 3 | **`HashMap` internals** | [module-03](../books/01-engineering-mastery/core-java/module-03-hashmap-internals/index.md) |
 | 4 | **Collections** | [module-04](../books/01-engineering-mastery/core-java/module-04-collections/index.md) |
@@ -44,6 +44,7 @@ After module 9, continue to [Concurrency](../concurrency/index.md) per the 14-da
 
 | Topic A | Topic B |
 | --- | --- |
+| [Object model (M1)](../books/01-engineering-mastery/core-java/module-01-java-object-model/index.md) | [`equals()` / `hashCode()` (M2)](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/index.md) |
 | [`equals()` / `hashCode()` (M2)](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/index.md) | [HashMap internals (M3)](../books/01-engineering-mastery/core-java/module-03-hashmap-internals/index.md) · [Map fundamentals (M4)](../books/01-engineering-mastery/core-java/module-04-collections/04-map-fundamentals-and-hashmap.md) |
 | [Streams (M6)](../books/01-engineering-mastery/core-java/module-06-java-8-streams/index.md) | [Optional (M7)](../books/01-engineering-mastery/core-java/module-07-optional/index.md) |
 | [Exceptions (M8)](../books/01-engineering-mastery/core-java/module-08-exception-handling/index.md) | [JVM diagnostics (M9)](../books/01-engineering-mastery/core-java/module-09-jvm-basics/07-diagnosing-outofmemoryerror-in-production.md) |

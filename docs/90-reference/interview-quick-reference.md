@@ -5,20 +5,30 @@ status: draft
 audience: advanced
 tags: [reference, revision]
 created: 2026-10-15
-updated: 2026-10-18
+updated: 2026-11-07
 ---
 
 # Interview Quick Reference
 
 Only **Covered** material is summarized here. Full module revision:
-[Interview Companion](../books/02-interview-companion/index.md) (Modules 2–9).
+[Interview Companion](../books/02-interview-companion/index.md) (Modules 1–9).
 Canonical depth: [Engineering Mastery](../books/01-engineering-mastery/index.md).
+
+## Object model (M1, 2026-11-07)
+
+| Cue | Recall |
+| --- | --- |
+| A PIE | Hide implementation; many implementations; IS-A; protect state |
+| HAS-A | Composition. Default interface methods cannot be `final` |
+| Interface / abstract class | Contract / shared foundation. Default method evolves a contract |
+| `List.copyOf` | Unmodifiable shallow copy, not a deep copy |
+| Update | Return a new object |
 
 ## equals / hashCode (M2)
 
 | Rule | Recall |
 | --- | --- |
-| Contract | Reflexive, symmetric, transitive, consistent, non-null |
+| Contract | RSTCN — reflexive, symmetric, transitive, consistent, non-null |
 | E⇒H | `equals` true ⇒ same `hashCode`; not reversible |
 | Override | Both together for hash collections |
 | Records | All components; shallow immutability — copy mutable lists |

@@ -5,7 +5,7 @@ status: covered
 audience: practitioner
 tags: [java, equals, hashcode, module-2, lesson-1]
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-11-07
 ---
 
 # Lesson 1 — `equals()` and `hashCode()` Contracts
@@ -69,6 +69,8 @@ For any non-null reference `x`, `y`, `z` of types where equality is defined:
 | **Transitive** | If `x.equals(y)` and `y.equals(z)`, then `x.equals(z)` |
 | **Consistent** | Repeated calls return the same result if state used in `equals` is unchanged |
 | **Non-null** | `x.equals(null)` is `false` |
+
+**Memory aid — RSTCN:** Reflexive, Symmetric, Transitive, Consistent, Non-null.
 
 Violations break collections, caches, and distributed idempotency keys that rely on stable equality.
 
@@ -182,14 +184,86 @@ var map = new HashMap<MutableId, String>();
 var key = new MutableId(1);
 map.put(key, "v");
 key.id = 2;
-System.out.println(map.get(key)); // often null — key no longer matches stored entry
+System.out.println(map.get(key)); // may miss; not guaranteed null
 ```
 
 **Production rule:** use **immutable** keys (`Long`, `String`, records with final components, UUID strings).
 
+The lookup outcome is **not** “always null.” `HashMap` chooses a bucket from the current hash, then uses equality inside candidate entries. After `key.id = 2`:
+
+- A later `get` with the **same mutated instance** recomputes the hash from the new id. If that hash indexes a different bucket from the one chosen at `put`, the search misses the entry, which still sits in the old bucket.
+- If the new hash happens to index the **same** bucket, the walk can still find the entry, because the stored key and the lookup key are the same object and `equals` sees the new id.
+- A **different** instance that equals the mutated key is found only when its hash selects the bucket where the entry was stored.
+
+Say “lookup may fail, depending on bucket placement and hash comparison,” not “`get` always returns null.”
+
 ## 10. Hash collisions
 
 Collisions are normal. Correctness relies on `equals` after `hashCode` narrows the bucket. Poor hash functions increase chain/tree depth and hurt performance — not the same as breaking the equals/hashCode contract.
+
+## 11. Session implementation — `PaymentRequest`
+
+Equality for this type is the transaction id, not the whole payment payload.
+
+```java
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) {
+        return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+        return false;
+    }
+    PaymentRequest other = (PaymentRequest) obj;
+    return Objects.equals(transactionId, other.transactionId);
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(transactionId);
+}
+```
+
+`getClass() != obj.getClass()` requires the same runtime class. A subclass instance is not equal. That keeps symmetry when a subclass would otherwise add fields. `instanceof` accepts subclasses and needs a careful design so both directions agree. The symmetry problem is worked in [Lesson 2](02-inheritance-records-and-equality.md).
+
+For a single field, `return Objects.hashCode(transactionId);` is a suitable simpler implementation. It is null-safe and returns that object's hash code (or `0` when the id is null). `Objects.hash(transactionId)` also preserves the contract, but it mixes the value through the varargs formula (`31 * 1 + hash`), so the two calls are not the same integer. Either is fine. Do not mix them across equal instances of the same class. Use `Objects.hash` when several fields participate.
+
+## 12. Inconsistent `hashCode` — equal objects, different codes
+
+Interview setup: `equals` uses only the employee id. `hashCode` uses the employee id **and** the name.
+
+```java
+public final class EmployeeKey {
+    private final String id;
+    private final String name;
+
+    public EmployeeKey(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        EmployeeKey other = (EmployeeKey) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name); // name is not part of equals
+    }
+}
+```
+
+`new EmployeeKey("E1", "Asha")` and `new EmployeeKey("E1", "Asha K")` compare equal and can hash differently. `HashSet` is backed by a `HashMap`. It only treats two keys as the same when they land in the same candidate chain **and** `equals` returns true. Different hash codes send them to different buckets, so the set can contain both. The contract failure is the mismatch, not a mysterious `HashSet` bug.
+
+Fields that participate in equality must be enough to force equal hash codes. The practical rule is to hash the same state `equals` uses. Extra fields in `hashCode` are only safe when equal objects cannot differ on those fields.
 
 ## Hands-on — contract check
 
@@ -211,7 +285,7 @@ public static void assertEqualsContract(Object x, Object y) {
 
 | Symptom | Likely cause |
 | --- | --- |
-| `get` returns null for “same” key instance | Mutable key mutated; or missing `hashCode` override |
+| `get` misses a key that `equals` would accept | Mutable key field changed after `put`, or `hashCode` was not overridden. Misses depend on the bucket; they are not guaranteed |
 | Duplicate “equal” entries in a `Set` | Broken `hashCode` contract |
 | Flaky cache hits | Equality includes non-stable fields (timestamp) |
 
@@ -229,9 +303,9 @@ public static void assertEqualsContract(Object x, Object y) {
 ## Key takeaways
 
 - `==` is identity; `equals` is logical sameness per class definition.
-- Five contract properties; breaking them breaks collections.
-- `equals` ⇒ equal `hashCode`; collisions do not imply equality.
-- `HashMap`/`HashSet` need both methods aligned; mutable keys are hazardous.
+- **RSTCN:** reflexive, symmetric, transitive, consistent, non-null.
+- `equals` ⇒ equal `hashCode`; collisions do not imply equality. Inconsistent hashes let a `HashSet` hold logically equal objects.
+- `HashMap` buckets by hash and confirms with `equals`. Mutating a key field may make lookup fail; it does not always return null.
 
 ## See also
 
