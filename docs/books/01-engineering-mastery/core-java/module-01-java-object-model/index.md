@@ -1,11 +1,11 @@
 ---
 title: Module 1 — Java Object Model
-description: OOP principles, composition, interfaces, and immutability for backend design.
-status: in-progress
+description: OOP, composition, interfaces, immutability, enums, and runtime metadata for backend design.
+status: covered
 audience: practitioner
 tags: [java, oop, immutability, module-1]
 created: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-08
 ---
 
 # Module 1 — Java Object Model
@@ -18,6 +18,7 @@ Canonical **Engineering Mastery** module. Studied lessons below are from the 202
 | 2 | Composition vs inheritance | [02-composition-vs-inheritance.md](02-composition-vs-inheritance.md) |
 | 3 | Interfaces vs abstract classes | [03-interfaces-vs-abstract-classes.md](03-interfaces-vs-abstract-classes.md) |
 | 4 | Immutability and defensive copying | [04-immutability-and-defensive-copying.md](04-immutability-and-defensive-copying.md) |
+| 5 | Enums, annotations, reflection, and Spring AOP | [05-enums-annotations-reflection-and-spring-aop.md](05-enums-annotations-reflection-and-spring-aop.md) |
 
 **Companion:** [Interview Companion](../../../02-interview-companion/core-java/module-01-java-object-model/index.md)
 

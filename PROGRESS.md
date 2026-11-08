@@ -50,7 +50,7 @@ Companion chapters and playbooks are in place; deepening is incremental in [Engi
 
 | # | Module | Status |
 | --- | --- | --- |
-| 1 | Java Object Model | **In progress** (lessons below **Covered**; Java Records are covered in Module 2 Lesson 2) |
+| 1 | Java Object Model | **Covered** (Java Records are covered in Module 2 Lesson 2) |
 | 2 | **`equals()` and `hashCode()`** | **Covered** (contracts deepened 2026-11-07; module not re-scored as mastered) |
 | 3 | **`HashMap` internals (deepening)** | **Covered** (foundational map usage also in Collections M4 L4) |
 | 4 | **Collections** | **Covered** |
@@ -70,6 +70,7 @@ Coverage below is lesson status. Scores are in the [mastery matrix](docs/trackin
 | 02 | Composition vs inheritance | **Covered** |
 | 03 | Interfaces vs abstract classes | **Covered** |
 | 04 | Immutability and defensive copying | **Covered** |
+| 05 | Enums, annotations, reflection, and Spring AOP | **Covered** (enum design and concurrency; annotation metadata, reflection, processing, proxies, and transactional rollback behavior) |
 | — | Records (Module 2 Lesson 2) | **Covered** |
 
 ### Module 2 — equals / hashCode

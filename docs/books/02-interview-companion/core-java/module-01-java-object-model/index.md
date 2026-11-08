@@ -5,12 +5,12 @@ status: in-progress
 audience: advanced
 tags: [interview, companion, module-1]
 created: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-08
 ---
 
 # Module 1 — Interview Companion
 
-Derived from [Engineering Mastery](../../../01-engineering-mastery/core-java/module-01-java-object-model/index.md). Records are not in this pass.
+Derived from [Engineering Mastery](../../../01-engineering-mastery/core-java/module-01-java-object-model/index.md). Records live in Module 2; this module also covers enums and runtime metadata.
 
 | # | Chapter |
 | --- | --- |
@@ -18,5 +18,6 @@ Derived from [Engineering Mastery](../../../01-engineering-mastery/core-java/mod
 | 2 | [Composition vs inheritance](02-composition-vs-inheritance.md) |
 | 3 | [Interfaces vs abstract classes](03-interfaces-vs-abstract-classes.md) |
 | 4 | [Immutability and defensive copying](04-immutability-and-defensive-copying.md) |
+| 5 | [Enums, annotations, reflection, and Spring AOP](05-enums-annotations-reflection-and-spring-aop.md) |
 
 - [Visual quick reference](module-visual-quick-reference.md)

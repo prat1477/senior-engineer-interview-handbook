@@ -55,6 +55,7 @@ nav:
           - "L2 Composition vs inheritance": java/module-01-java-object-model/02-composition-vs-inheritance.md
           - "L3 Interfaces vs abstract classes": java/module-01-java-object-model/03-interfaces-vs-abstract-classes.md
           - "L4 Immutability": java/module-01-java-object-model/04-immutability-and-defensive-copying.md
+          - "L5 Enums, annotations, reflection": java/module-01-java-object-model/05-enums-annotations-reflection-and-spring-aop.md
       - "Module 2 — equals and hashCode":
           - java/module-02-equals-and-hashcode/index.md
           - "L1 Contracts": java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md
@@ -135,6 +136,7 @@ nav:
           - "02-composition-vs-inheritance.md": books/01-engineering-mastery/core-java/module-01-java-object-model/02-composition-vs-inheritance.md
           - "03-interfaces-vs-abstract-classes.md": books/01-engineering-mastery/core-java/module-01-java-object-model/03-interfaces-vs-abstract-classes.md
           - "04-immutability-and-defensive-copying.md": books/01-engineering-mastery/core-java/module-01-java-object-model/04-immutability-and-defensive-copying.md
+          - "05-enums-annotations-reflection-and-spring-aop.md": books/01-engineering-mastery/core-java/module-01-java-object-model/05-enums-annotations-reflection-and-spring-aop.md
       - "M1 Object model (Companion)":
           - books/02-interview-companion/core-java/module-01-java-object-model/index.md
           - "Quick reference": books/02-interview-companion/core-java/module-01-java-object-model/module-visual-quick-reference.md
@@ -142,6 +144,7 @@ nav:
           - "02 composition": books/02-interview-companion/core-java/module-01-java-object-model/02-composition-vs-inheritance.md
           - "03 interfaces": books/02-interview-companion/core-java/module-01-java-object-model/03-interfaces-vs-abstract-classes.md
           - "04 immutability": books/02-interview-companion/core-java/module-01-java-object-model/04-immutability-and-defensive-copying.md
+          - "05 enums annotations reflection": books/02-interview-companion/core-java/module-01-java-object-model/05-enums-annotations-reflection-and-spring-aop.md
       - "M2 equals hashCode (Mastery)":
           - books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/index.md
           - "01-equals-and-hashcode-contracts.md": books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md

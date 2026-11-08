@@ -24,7 +24,7 @@ Log items here when practice reveals gaps. Link to the **Engineering Mastery** l
 | Fail-fast guarantees thread safety | Fail-fast is best-effort single-threaded detection | [L7](../books/01-engineering-mastery/core-java/module-04-collections/07-iterators-and-modification.md) |
 | Concurrency detour during Collections = concurrency module done | JMM/CAS/volatile only **Introduced** | [L12](../books/01-engineering-mastery/core-java/module-04-collections/12-concurrent-collections-overview.md) |
 
-## Object model, equality, and records (2026-11-07 and 2026-11-08)
+## Object model, equality, records, and runtime metadata (2026-11-07 and 2026-11-08)
 
 Corrections from that session only. Correct answers are not listed here.
 
@@ -41,6 +41,11 @@ Corrections from that session only. Correct answers are not listed here.
 | Jackson and validation | Assuming JSON deserialization proves Bean Validation succeeded | Jackson calls the canonical constructor; `@Valid` triggers Jakarta Bean Validation | Convert != validate |
 | Serialization | Treating serialization as network transmission | Serialization converts to JSON (or another representation); HTTP transports it | Convert != transmit |
 | Record DTOs | Treating records as replacements for every regular class or conventional JPA entity | Use record DTOs as API contracts; persistence entities have different lifecycle and ORM needs | DTO != entity |
+| Enum singleton | Assuming one enum instance makes its mutable fields thread-safe | Mutable enum fields are shared state; `count++` has races | Singleton != thread-safe |
+| Enum persistence | Persisting `ordinal()` as a business identifier | Persist explicit stable codes; declaration order can change | Position != identity |
+| Annotation | Assuming an annotation runs business logic by itself | Metadata needs a framework, processor, interceptor, or custom reader | Metadata != behavior |
+| Retention | Treating `@Inherited` as interface or method inheritance | It applies only to class annotations through superclasses | Superclass only |
+| Transactions | Assuming reflection performs rollback or every annotated call is intercepted | A Spring proxy/interceptor and transaction manager act; self-invocation bypasses the proxy | `this` skips proxy |
 
 Lessons: [composition](../books/01-engineering-mastery/core-java/module-01-java-object-model/02-composition-vs-inheritance.md), [interfaces](../books/01-engineering-mastery/core-java/module-01-java-object-model/03-interfaces-vs-abstract-classes.md), [immutability](../books/01-engineering-mastery/core-java/module-01-java-object-model/04-immutability-and-defensive-copying.md), [`equals` / `hashCode`](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md), and [Java Records](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md).
 

@@ -4,12 +4,12 @@ description: Stub pointer to Books.
 status: stable
 audience: all
 tags: [stub, java]
-updated: 2026-11-07
+updated: 2026-11-08
 ---
 
 # Module 1 — Java Object Model
 
-Lessons live in the three-book layout. Records are not part of the 2026-11-07 pass.
+Lessons live in the three-book layout. Records are covered in Module 2; enums, annotations, reflection, and Spring AOP are Lesson 5.
 
 | Book | Link |
 | --- | --- |
@@ -22,3 +22,4 @@ Lessons live in the three-book layout. Records are not part of the 2026-11-07 pa
 | 2 | [02-composition-vs-inheritance.md](02-composition-vs-inheritance.md) |
 | 3 | [03-interfaces-vs-abstract-classes.md](03-interfaces-vs-abstract-classes.md) |
 | 4 | [04-immutability-and-defensive-copying.md](04-immutability-and-defensive-copying.md) |
+| 5 | [05-enums-annotations-reflection-and-spring-aop.md](05-enums-annotations-reflection-and-spring-aop.md) |

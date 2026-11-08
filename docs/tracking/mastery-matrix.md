@@ -39,6 +39,8 @@ Assessed **2026-11-08**. These scores are that session only. There is no schedul
 | `equals()` and `hashCode()` | 3 | 3 | 3 | 2 | No |
 | Immutability and defensive copying | 3 | 3 | 3 | 3 | Yes, for the assessed scope below |
 | Java Records | 3 | 3 | 3 | 3 | Yes, for the assessed scope below |
+| Java Enums | 3 | 3 | Not assessed | 3 | No; implementation was deliberately not assessed |
+| Java Annotations and Reflection | 3 | 3 | Not assessed | 3 | No; implementation was not required |
 
 ## What each score is based on
 
@@ -48,6 +50,8 @@ Assessed **2026-11-08**. These scores are that session only. There is no schedul
 - **`equals()` and `hashCode()`.** An implementation was independently submitted and passed. Interview score 2 does not mean every inheritance or concurrency follow-up was attempted.
 - **Immutability and defensive copying.** The immutable `Employee` implementation was independently submitted and passed, including the functional `addRole` update. Interview dimensions reached 3 on the questions and follow-ups actually attempted.
 - **Java Records.** The user independently implemented an `Employee` record with compact-constructor validation, request and response records, and a Spring MVC controller using `@Valid` with a `201 Created` response. Runtime application execution and integration testing were not demonstrated.
+- **Java Enums.** The user demonstrated singleton semantics, fields and constructors, mutable shared state and contention, CAS / `AtomicInteger` / `LongAdder`, built-in APIs, Jackson handling, explicit codes, and the boundary between fixed enums and dynamic provider models. A standalone implementation was deliberately not assessed.
+- **Java Annotations and Reflection.** The user demonstrated annotation metadata and meta-annotations, reflection and annotation processing, and Spring AOP transaction interception, self-invocation, and rollback behavior. Implementation was not required for this lesson.
 
 ## Known gaps (not future dates)
 

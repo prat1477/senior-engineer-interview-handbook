@@ -55,6 +55,14 @@ Cues only. Depth: [Module 1](../books/01-engineering-mastery/core-java/module-01
 - `@Valid` = trigger Bean Validation.
 - Entity = persistence model.
 - Record DTO = API contract.
+- Enum singleton != thread-safe; `count++` != atomic.
+- High concurrency != high contention; `AtomicInteger` = exact CAS updates, `LongAdder` = contested counter throughput.
+- `name()` = declared identifier; `toString()` = display; `ordinal()` != explicit business code.
+- Enum = fixed code-owned set; configurable domain model = runtime metadata plus an adapter.
+- Annotation = metadata, not behavior. Retention: SOURCE / CLASS / RUNTIME.
+- Reflection discovers metadata; annotation processing generates at compile time; `@Inherited` does not traverse interfaces.
+- Spring proxy intercepts `@Transactional`; `this` self-invocation bypasses it.
+- Caught exceptions may commit; rollback-only completion can produce `UnexpectedRollbackException`.
 
 ### Collections (available now)
 
