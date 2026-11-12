@@ -214,6 +214,44 @@ double engPayroll = employees.stream()
 Primitive `mapToDouble` avoids boxing in the aggregation path.
 
 
+## Practice extension — maximum salary per department
+
+```java
+Map<String, Optional<Employee>> topByDepartment = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::department,
+        Collectors.maxBy(Comparator.comparingInt(Employee::salary))));
+
+Map<String, Employee> requiredTopByDepartment = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::department,
+        Collectors.collectingAndThen(
+            Collectors.maxBy(Comparator.comparingInt(Employee::salary)),
+            Optional::orElseThrow)));
+```
+
+The downstream collector runs separately for each group. `maxBy` returns `Optional` because it
+is a general collector and an empty input has no maximum. Every group created by ordinary
+`groupingBy` received at least one employee, so unwrapping inside `collectingAndThen` is sound
+for this particular pipeline; it is not a claim that arbitrary `maxBy` results are nonempty.
+`collectingAndThen` performs a finishing conversion after the downstream collector completes.
+
+This is **O(n)** time and **O(g)** result space, where `g` is the number of departments; it does
+not sort each group. Ties return one encountered maximum (do not claim a deterministic business
+tie-break unless the comparator or a secondary rule specifies one). Add an explicit tie-breaker
+or collect all tied candidates when the domain requires it.
+
+### What I should say in an interview
+
+“`groupingBy` builds the department buckets and `maxBy` is the downstream reduction. I avoid
+sorting because a running maximum is linear; I only unwrap the Optional after explaining why each
+group is known to be nonempty.”
+
+### What not to say
+
+- “`maxBy` cannot be empty because I grouped first.” It can be empty in other collector contexts.
+- “A maximum resolves equal salaries.” It selects one unless the business rule handles ties.
+
 ## Key takeaways
 
 - Re-read the comparison tables and misconceptions in the canonical section.

@@ -145,6 +145,37 @@ employees.sort(
 | Type should always be orderable by ID | Sort by salary for reports only |
 
 
+## Practice extension — comparator composition and mutation
+
+```java
+List<Employee> ranked = employees.stream()
+    .sorted(Comparator.comparingInt(Employee::salary)
+        .reversed()
+        .thenComparing(Employee::name))
+    .toList();
+```
+
+This means salary descending, then name ascending for equal salaries. Put `reversed()` directly
+after the salary comparator: calling it after `thenComparing` reverses the *entire* composed
+comparator, including the name tie-break. `List.sort()` mutates its list; `Stream.sorted()`
+returns a new ordered stream, and Java 17 `toList()` creates an unmodifiable result list.
+
+A comparator must be antisymmetric, transitive, and consistent enough for its target collection;
+do not subtract integers to compare them because overflow can violate the ordering contract.
+Use `comparingInt`, `Long.compare`, or `Comparator.comparing`. Practice note: the initial sorting
+pipeline omitted its terminal `toList()`; `sorted()` is still an intermediate operation.
+
+### What I should say in an interview
+
+“`Comparable` declares the one natural order on the type; `Comparator` expresses a caller's
+ordering policy. For a report I use a composed Comparator so the domain model is not forced to
+adopt report-specific ordering.”
+
+### What not to say
+
+- “`sorted()` returns a list.” It returns a lazy stream.
+- “`reversed()` reverses only the last criterion.” It reverses the comparator built so far.
+
 ## Key takeaways
 
 - Re-read the comparison tables and misconceptions in the canonical section.

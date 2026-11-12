@@ -25,12 +25,15 @@ Shared maps and queues in servers need safe publication, atomic single-key updat
 - **Atomic single-key:** `putIfAbsent`, `computeIfAbsent`, `merge` — not multi-key transactions.
 - `if (!map.containsKey(k)) map.put(k,v)` on CHM is **not** atomic.
 - Queues: `ArrayBlockingQueue` (bounded), `LinkedBlockingQueue`, `ConcurrentLinkedQueue` (unbounded lock-free), `PriorityBlockingQueue`.
+- `computeIfAbsent(k, new ArrayList<>()).add(...)` is unsafe: mapping is atomic, mutable value mutation is not.
+- `CopyOnWriteArrayList` is for read-mostly snapshots, not high-rate appends.
 - Deepens [Collections M4 L12](../../../books/01-engineering-mastery/core-java/module-04-collections/12-concurrent-collections-overview.md).
 
 ## Interview traps
 
 - CHM makes every compound workflow atomic — only single-key ops are.
 - Using `ConcurrentHashMap` size as exact count under heavy writes without understanding weak consistency.
+- Calling modern CHM “segment locked”; Java 17 uses bins, CAS, and localized synchronization.
 
 ## Frequently asked questions
 

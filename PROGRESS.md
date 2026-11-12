@@ -12,7 +12,7 @@ Update this file after each study session. Status meanings:
 | **Needs revision** | Studied but you want another pass |
 
 **Last updated:** 2026-11-08
-**Current position:** Next planned topic on the fixed roadmap is **Day 1 DSA — arrays and hash maps** ([DSA tracker](docs/dsa/index.md)). Java Records are **Covered** in [Module 2 Lesson 2](docs/books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md); Core Java Modules 2–9 stay **Covered**. Module 1 object-model lessons from 2026-11-07 are **Covered**. [Java concurrency](docs/concurrency/index.md) lessons **1–24 documented** (handbook pass; not marked newly complete). Week 1 plan: [week-01](docs/week-01-core-java-spring.md). Skill scores: [mastery matrix](docs/tracking/mastery-matrix.md).
+**Current position:** Next Spring Core topic is **Lesson 2 — Spring Bean Lifecycle** ([Spring track](docs/spring-microservices/index.md)); Lesson 1 IoC and DI is **Covered** conceptually. [DSA arrays and hash maps](docs/dsa/index.md) remain planned. Java Records are **Covered** in [Module 2 Lesson 2](docs/books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md); Core Java Modules 2–9 stay **Covered**. [Java concurrency](docs/concurrency/index.md) lessons **1–24 documented** (handbook pass; not marked newly complete). Week 1 plan: [week-01](docs/week-01-core-java-spring.md). Skill scores: [mastery matrix](docs/tracking/mastery-matrix.md).
 
 ### Three-book rewrite (layout vs depth)
 
@@ -33,9 +33,9 @@ Companion chapters and playbooks are in place; deepening is incremental in [Engi
 | 2 | Streams, Optional, JVM basics, two pointers / sliding window | **In progress** (Streams, Optional, JVM basics **Covered**; DSA two pointers / sliding window **Planned**) |
 | 3 | Concurrency foundations (JMM, happens-before, race, `synchronized`) | **In progress** (L1–11 handbook **Covered**; study + drill) |
 | 4 | Advanced concurrency + high-level system design | **In progress** (L12–24 handbook **Covered**; study + drill) |
-| 5 | Spring Boot and backend fundamentals | **Planned** |
+| 5 | Spring Boot and backend fundamentals | **In progress** (Spring Core L1 IoC and DI **Covered** conceptually; implementation assessment separate) |
 | 6 | Microservice reliability | **Planned** |
-| 7 | Kafka deep dive | **Planned** |
+| 7 | Kafka deep dive | **In progress** (per-account ordering, consumer coordination, idempotency and outbox reasoning documented; broker tuning and implementation practice remain pending) |
 | 8 | Distributed system design (payments, fraud, idempotency) | **Planned** |
 | 9 | Lakehouse and Spark (remaining modules) | **Planned** |
 | 10 | Databricks, orchestration, SQL | **Planned** |
@@ -213,9 +213,9 @@ Coverage below is lesson status. Scores are in the [mastery matrix](docs/trackin
 
 | Track | Status |
 | --- | --- |
-| Spring Boot and microservices | **Planned** |
+| Spring Boot and microservices | **In progress** ([Spring Core L1 IoC and DI](docs/spring-microservices/01-ioc-and-dependency-injection.md) **Covered** conceptually; Bean Lifecycle, Scopes, BeanFactory vs ApplicationContext, and remaining Spring lessons **Planned**) |
 | Distributed systems and system design | **In progress** ([DB concurrency](docs/distributed-systems/database-concurrency-and-isolation.md), [locks / Scylla](docs/distributed-systems/distributed-locks-fencing-and-scylladb.md); broader design track **Planned**) |
-| Kafka | **Planned** |
+| Kafka | **In progress** ([ordering, idempotency, and outbox foundations](docs/kafka/index.md) documented; tuning and implementation practice pending) |
 | Data engineering / lakehouse | **Planned** (Spark Modules 1–10 + most of 11 **Covered** in Spark Handbook) |
 | AWS and infrastructure | **Planned** |
 | DSA and coding | **Planned** (external DSA Handbook not linked yet) |
@@ -225,6 +225,26 @@ Coverage below is lesson status. Scores are in the [mastery matrix](docs/trackin
 | Rapid revision (Day 14) | **Planned** |
 
 ---
+
+## November 11–12 practice update
+
+This update records documentation and practice evidence without upgrading all topics to mastery.
+
+| Area | Evidence-based status | Notes |
+| --- | --- | --- |
+| Stock-trading greedy exercises | **Implemented after guidance** / **independently implemented** | One transaction required guided discovery; unlimited transactions final solution was independently implemented. |
+| Streams, collectors, comparators | **Explained and understood** | Needs independent mock validation; sorting terminal-operation mistake logged. |
+| JMM, atomics, collections, TPE | **Explained and understood** | Detailed CHM internals and deeper ReentrantLock internals remain **pending** for independent validation. |
+| Kafka ordering, SQL debit, idempotency, outbox | **Explained and understood** | Full distributed transaction implementation remains **pending**. |
+| JVM memory, G1, MAT, P99 | **Explained and understood** | Advanced G1 tuning, native-memory investigation, production GC-log analysis, and a JVM incident mock remain **pending**. |
+
+### Remaining high-priority preparation
+
+- Spring Boot pull-request code review exercise and additional independent concurrency coding.
+- Deeper locks and coordination primitives; full JVM production incident mock.
+- Additional Java coding/debugging exercises and full system-design interview execution.
+- Python and Agentic AI mocks.
+- Before the November 17 interview: focused revision of Java 21, Java 25 LTS, and relevant newer Java language/platform features.
 
 ## Spark Handbook alignment
 

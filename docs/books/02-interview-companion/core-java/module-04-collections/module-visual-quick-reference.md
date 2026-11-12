@@ -36,6 +36,26 @@ flowchart TD
 | CHM | `merge` / `computeIfAbsent`, not contains+put |
 | Queue capacity | Bounds memory, not consumer parallelism |
 
+## Comparator recall
+
+```java
+employees.stream()
+    .sorted(Comparator.comparingInt(Employee::salary)
+        .reversed()
+        .thenComparing(Employee::name))
+    .toList();
+```
+
+| Concept | Interview line |
+| --- | --- |
+| `Comparable` | One natural order, declared by the type via `compareTo`. |
+| `Comparator` | External, use-case-specific order via `compare`. |
+| `List.sort()` | Mutates the existing list. |
+| `Stream.sorted()` | Returns a stream; add a terminal operation. |
+| Reversal trap | Reverse salary before `thenComparing`; otherwise both criteria reverse. |
+
+**Memory trick:** **Natural = Comparable; custom = Comparator.**
+
 ## Lessons
 
 | # | Page |

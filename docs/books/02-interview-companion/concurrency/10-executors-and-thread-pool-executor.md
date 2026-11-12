@@ -23,6 +23,7 @@ Reuse threads, cap parallelism, and apply overload policy instead of unbounded `
 
 - Knobs: `corePoolSize`, `maximumPoolSize`, `keepAlive`, **queue**, **RejectedExecutionHandler**.
 - Bounded queue + `CallerRunsPolicy` pushes backpressure to submitter.
+- Admission order: core workers, queue, extra workers up to max, then rejection.
 - `Executors.newVirtualThreadPerTaskExecutor()` — one VT per task ([Companion 14](14-virtual-threads.md)).
 - `ForkJoinPool.commonPool()` shared by parallel streams and default CF async ([Companion 12–13](12-completable-future.md)).
 
@@ -30,6 +31,7 @@ Reuse threads, cap parallelism, and apply overload policy instead of unbounded `
 
 - `Executors.newFixedThreadPool` with unbounded queue — hides overload until OOM/latency explosion.
 - Shutting down JVM without `shutdown()` / `awaitTermination`.
+- Saying `maximumPoolSize` means “additional threads”; it is the total worker ceiling.
 
 ## Frequently asked questions
 
@@ -60,6 +62,9 @@ submit --> [queue] --> worker pool (core..max)
 ## Scenario bite
 
 Payments or order processing on more than one instance: apply this lesson at the right layer (JVM primitive vs database vs provider), and say the failure mode aloud before naming the API.
+
+**130-task check:** `core=5`, `max=20`, queue `100`, no tasks finish -> 5 core + 100 queued +
+15 additional = 120 accepted; 10 are rejected by `AbortPolicy`.
 
 ## Explain aloud (whiteboard)
 

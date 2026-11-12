@@ -35,3 +35,28 @@ flowchart TD
 ## When both appear
 
 Kafka between services; database conditional update for money; in-process queue only inside one JVM.
+
+## Kafka, idempotency, and outbox recall
+
+| Topic | 30-second interview line | Trap |
+| --- | --- | --- |
+| Kafka ordering | Order is per partition; key by `accountId` for an account sequence. | `transactionId` usually disperses one account's events. |
+| Debit | One conditional `UPDATE ... WHERE balance >= amount`; check row count. | SELECT then UPDATE races across instances. |
+| Duplicate replay | Unique `transactionId` claim makes retry/replay idempotent. | Exactly-once business effect is not exactly-once delivery. |
+| Flush | Sends deferred SQL; does not commit. | `save()` always proves unique claim now. |
+| Outbox | Business update and event intent commit together; CDC publishes later. | CDC outage rolls back an already committed DB transaction. |
+
+```mermaid
+sequenceDiagram
+  participant K as Kafka
+  participant C as Consumer
+  participant D as PostgreSQL
+  participant O as Outbox/CDC
+  K->>C: record (accountId, transactionId)
+  C->>D: claim id + conditional debit + outbox row
+  D-->>C: commit
+  C->>K: acknowledge input offset
+  D->>O: committed outbox captured
+```
+
+**Memory trick:** **Key -> Claim -> Debit -> Outbox -> Ack.**

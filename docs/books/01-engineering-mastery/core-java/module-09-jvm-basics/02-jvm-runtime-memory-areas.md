@@ -174,6 +174,45 @@ The **Java heap is not the entire JVM process footprint**. A process also includ
 
 In containers, **`kubectl top` / cgroup limit** can kill the pod even when **heap usage is below `-Xmx`**.
 
+## Process RSS, reservation, commitment, and reclamation
+
+`-Xms2g -Xmx4g` limits the Java heap, not the entire native process. A **6 GB RSS** is possible:
+the heap's committed pages, Metaspace, JIT code cache, GC structures, direct buffers, native
+libraries/JNI allocations, and thread stacks all contribute. Reservation is address space made
+available, commitment is memory the JVM/OS has committed to use, and RSS is resident physical
+memory currently mapped into the process; they are related but not interchangeable.
+
+| Area | Typical reclamation mechanism |
+| --- | --- |
+| Heap | Garbage collector |
+| Java stack | Stack-frame return and thread termination |
+| Metaspace | Class unloading when class loader/classes become unreachable; JVM allocator |
+| Direct buffers | Cleaner/native resource lifecycle; do not rely on prompt collection |
+| Code cache | JVM code-cache management |
+| JNI allocations | Native allocator/free lifecycle; arbitrary native memory is not magically freed by GC |
+
+References on a stack do not live “inside” their heap objects; a frame can keep an object live.
+Class-loader retention can prevent unloading and manifest as Metaspace growth. Non-heap areas do
+not necessarily receive the moving/compacting treatment associated with heap collectors.
+
+## JVM threads and CPU scheduling
+
+Platform threads map to native threads scheduled by the operating system. Eight cores can have
+dozens of runnable application, JIT, and GC threads; the OS time-slices/preempts them. GC neither
+needs an idle core nor uses `ForkJoinPool.commonPool()`—HotSpot creates and schedules its own
+parallel-pause and concurrent GC workers. CPU contention can therefore slow both application and
+concurrent GC work.
+
+```mermaid
+flowchart TD
+  process[JVM process RSS] --> heap[Java heap: Xms to Xmx]
+  process --> stacks[thread stacks]
+  process --> meta[Metaspace]
+  process --> code[code cache]
+  process --> direct[direct buffers / native libraries]
+  process --> gc[GC internal structures]
+```
+
 ## Comparison table
 
 | Memory area | Purpose | Shared / per-thread | Typical diagnostic signal |

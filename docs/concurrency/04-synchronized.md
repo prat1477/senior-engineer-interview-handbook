@@ -26,6 +26,24 @@ synchronized (lock) {
 - No try/timeout (use `ReentrantLock`).
 - On virtual threads: may **pin** carrier during blocking (JDK-dependent) — [Lesson 14](14-virtual-threads.md).
 
+## Compound operations and collection wrappers
+
+`Collections.synchronizedList` serializes its individual methods on a common monitor. It does
+not make a check-then-act sequence atomic, and its iterator must be used under that monitor:
+
+```java
+List<Integer> numbers = Collections.synchronizedList(new ArrayList<>());
+
+synchronized (numbers) {
+    if (!numbers.contains(100)) {
+        numbers.add(100);
+    }
+}
+```
+
+The same lock covers the check and update, preventing two threads from both seeing absence and
+adding. Iteration uses the same pattern: `synchronized (numbers) { for (...) { ... } }`.
+
 ## Cross-links
 
 - [Lesson 6 — Locks](06-locks.md)

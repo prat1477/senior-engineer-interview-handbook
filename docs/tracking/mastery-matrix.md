@@ -41,6 +41,7 @@ Assessed **2026-11-08**. These scores are that session only. There is no schedul
 | Java Records | 3 | 3 | 3 | 3 | Yes, for the assessed scope below |
 | Java Enums | 3 | 3 | Not assessed | 3 | No; implementation was deliberately not assessed |
 | Java Annotations and Reflection | 3 | 3 | Not assessed | 3 | No; implementation was not required |
+| Spring IoC and Dependency Injection | Pending assessment | Pending assessment | Not assessed | Pending assessment | No; conceptual lesson coverage only |
 
 ## What each score is based on
 
@@ -52,6 +53,7 @@ Assessed **2026-11-08**. These scores are that session only. There is no schedul
 - **Java Records.** The user independently implemented an `Employee` record with compact-constructor validation, request and response records, and a Spring MVC controller using `@Valid` with a `201 Created` response. Runtime application execution and integration testing were not demonstrated.
 - **Java Enums.** The user demonstrated singleton semantics, fields and constructors, mutable shared state and contention, CAS / `AtomicInteger` / `LongAdder`, built-in APIs, Jackson handling, explicit codes, and the boundary between fixed enums and dynamic provider models. A standalone implementation was deliberately not assessed.
 - **Java Annotations and Reflection.** The user demonstrated annotation metadata and meta-annotations, reflection and annotation processing, and Spring AOP transaction interception, self-invocation, and rollback behavior. Implementation was not required for this lesson.
+- **Spring IoC and Dependency Injection.** The lesson is documented as conceptually covered. No reliable independent-recall, senior-reasoning, or implementation assessment record was supplied, so those dimensions remain pending; implementation assessment is separate from conceptual completion.
 
 ## Known gaps (not future dates)
 

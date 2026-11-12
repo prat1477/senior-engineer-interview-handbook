@@ -23,6 +23,8 @@ OutOfMemoryError names the area: heap, metaspace, or unable to create thread.
 - Heap dump on heap OOM if policy allows.
 - Thread OOM is often native memory or thread count.
 - Correlate deploy and traffic.
+- High RSS can be stacks, direct/native memory, Metaspace, code cache, or heap—not just `-Xmx`.
+- NMT must be enabled at JVM startup; a heap dump is a point-in-time graph, not an allocation timeline.
 
 ## Interview traps
 

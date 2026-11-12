@@ -5,7 +5,7 @@ status: in-progress
 audience: all
 tags: [plan, week-1, java, spring]
 created: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-08
 ---
 
 # Week 1 — Core Java and Spring
@@ -17,7 +17,7 @@ Agreed 10-hour allocation. The week is not complete.
 | Core Java and Collections | 1.5 | **In progress** |
 | Streams, Lambdas and Coding | 1.5 | **Planned** |
 | Java Concurrency revision | 2 | **Planned** |
-| Spring Core: DI, Bean Lifecycle and AOP | 2 | **Planned** |
+| Spring Core: DI, Bean Lifecycle and AOP | 2 | **In progress** (IoC and DI covered conceptually; lifecycle and AOP sequence remains planned) |
 | Spring Boot mini implementation | 2 | **Planned** |
 | Recall and interview questions | 1 | **Planned** |
 | **Total** | **10** | |

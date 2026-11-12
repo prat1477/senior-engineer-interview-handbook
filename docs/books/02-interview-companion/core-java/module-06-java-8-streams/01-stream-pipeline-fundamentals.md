@@ -23,6 +23,8 @@ Streams are lazy pipelines: intermediate ops build a recipe; a terminal op runs 
 - collect/forEach/reduce terminal.
 - Source is not mutated by map.
 - One terminal per stream.
+- `findFirst()` returns `Optional`; `findAny()` need not preserve encounter order.
+- `map` is one-to-one; `flatMap` flattens zero-to-many child streams.
 
 ## Interview traps
 

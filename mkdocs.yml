@@ -399,7 +399,9 @@ nav:
       - "L22 Backend scenarios": concurrency/22-backend-concurrency-scenarios.md
       - "L23 AI concurrency": concurrency/23-ai-system-concurrency.md
       - "L24 Assessment": concurrency/24-senior-interview-assessment.md
-  - Spring and microservices: spring-microservices/index.md
+  - Spring and microservices:
+      - Curriculum: spring-microservices/index.md
+      - "Spring Core L1 - IoC and DI": spring-microservices/01-ioc-and-dependency-injection.md
   - Distributed systems:
       - distributed-systems/index.md
       - "Interview cheat sheet": books/02-interview-companion/distributed-systems/module-visual-quick-reference.md

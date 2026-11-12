@@ -32,6 +32,26 @@ Use `offer(timeout)` / `poll(timeout)` when you need bounded wait; handle interr
 
 1000-slot queue with **one** consumer still serializes processing — capacity bounds **memory**, not **parallelism**. Scale consumers (thread pool) separately.
 
+## `ArrayBlockingQueue` mechanics
+
+`ArrayBlockingQueue` is fixed-capacity FIFO with one `ReentrantLock` coordinating its circular
+array and the `notEmpty` / `notFull` conditions. `add` fails immediately when full, `offer` returns
+false, `put` blocks, and timed `offer` waits only for its timeout. On the consumer side, `poll`
+returns `null`, `take` blocks, and timed `poll` waits. The optional fairness flag can reduce
+barging but costs throughput.
+
+```mermaid
+flowchart LR
+  producer[producer] -->|put / timed offer| q[ArrayBlockingQueue capacity N]
+  q -->|take / timed poll| consumer[consumer workers]
+  q -->|full| backpressure[producer blocks, times out, or rejects]
+```
+
+This is **local** backpressure, not distributed backpressure. A Kafka consumer must not block its
+poll thread indefinitely on `put`: it can stop polling long enough to violate consumer-liveness
+settings such as `max.poll.interval.ms`, causing a rebalance. Pause/resume, bounded work, or an
+intentional overload policy is safer.
+
 ## Failure, retry, ack
 
 In-memory queue: message **lost** on JVM crash. Retry logic must be idempotent. No Kafka-style consumer group offset — you own application semantics.

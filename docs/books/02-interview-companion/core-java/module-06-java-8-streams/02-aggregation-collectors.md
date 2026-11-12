@@ -23,6 +23,7 @@ Collectors accumulate stream elements into lists, maps, groups, and summaries.
 - Downstream collectors (counting, summing).
 - toMap needs a merge function on key clash.
 - groupingBy is not thread-safe unless concurrent collector.
+- `maxBy` returns `Optional`; `collectingAndThen` can unwrap a known-nonempty group.
 
 ## Interview traps
 

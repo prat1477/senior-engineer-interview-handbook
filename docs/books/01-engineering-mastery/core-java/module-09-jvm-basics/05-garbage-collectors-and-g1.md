@@ -130,6 +130,48 @@ G1 divides the heap into **regions** (commonly 1–32 MB, configurable). Region 
 
 `-XX:MaxGCPauseMillis` influences **G1 pacing** — a **goal**, not a hard cap.
 
+## 5. G1 lifecycle, marking, and Full GC fallback
+
+Most ordinary objects begin in Eden, survive a young evacuation into Survivor regions, age, and
+may be promoted to Old regions. Humongous allocations are an important exception. Young and mixed
+collections both have stop-the-world evacuation pauses. A mixed collection includes young regions
+and selected old regions chosen using information from concurrent marking; it is not “a young GC
+that happens to scan all old objects.” Full GC is a serious stop-the-world whole-heap fallback
+with marking/compaction work and can be expensive in both pause time and CPU.
+
+```mermaid
+flowchart LR
+  eden[Eden allocation] --> young[young evacuation pause]
+  young --> survivor[Survivor; age]
+  survivor --> old[Old region]
+  old --> mark[concurrent marking]
+  mark --> mixed[mixed evacuation pauses]
+  pressure[allocation / evacuation failure] --> full[Full GC fallback]
+```
+
+G1's concurrent marking uses Snapshot-At-The-Beginning (SATB) style reasoning: it preserves a
+conservative view of objects reachable at the snapshot even while the application mutates the
+graph. An object that becomes unreachable after the snapshot can remain marked live until later.
+Concurrent marking data is not a substitute for whatever complete marking work a Full GC needs;
+Full GC is not simply the normal final stage of that concurrent cycle. Concurrent work and actual
+reclamation are distinct phases.
+
+`ParallelGCThreads` configures parallel pause work and `ConcGCThreads` concurrent background work
+(subject to JVM ergonomics/flags). They are JVM-managed workers, separate from application
+executors. CPU saturation can lengthen concurrent phases; a stop-the-world pause stops JVM
+application threads, not arbitrary processes on the host.
+
+### Log interpretation: do not diagnose from one line
+
+```text
+Pause Full (Allocation Failure) 3900M -> 3700M (4096M) 2450ms
+```
+
+This is a 2.45-second pause that reclaimed only 200 MB from a near-full heap: a large retained
+live set, allocation pressure, or a leak are hypotheses. Look for repeated events, allocation
+rate, old-gen trend, workload changes, and retained graphs before declaring a memory leak. Repeated
+Full GC increases latency/OOM risk; one event does not prove root cause.
+
 ## 5. Evaluation workflow
 
 1. Enable **GC logging** (`-Xlog:gc*`).

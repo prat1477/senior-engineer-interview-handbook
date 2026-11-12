@@ -1,18 +1,27 @@
 ---
 title: Spring Boot and Microservices
-description: Roadmap for senior backend and microservice reliability interviews.
-status: planned
+description: Spring Core, Spring Boot, and microservice reliability roadmap for senior backend interviews.
+status: in-progress
 audience: advanced
 tags: [spring, microservices]
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-11-08
 ---
 
 # Spring Boot and Microservices
 
-**Status: Planned** (Days 5–6). Focus on production behavior, not beginner tutorials.
+**Status: In progress** (Days 5–6). Spring Core Lesson 1 is covered conceptually; implementation assessment remains separate. Focus on production behavior, not beginner tutorials.
 
-## Lesson roadmap
+## Spring Core sequence
+
+| # | Topic | Status |
+| --- | --- | --- |
+| 1 | [Inversion of Control (IoC) and Dependency Injection (DI)](01-ioc-and-dependency-injection.md) | **Covered** (conceptual) |
+| 2 | Spring Bean Lifecycle | **Planned** |
+| 3 | Spring Bean Scopes | **Planned** |
+| 4 | BeanFactory vs ApplicationContext | **Planned** |
+
+## Spring Boot and microservices roadmap
 
 | # | Topic |
 | --- | --- |

@@ -23,6 +23,8 @@ G1 is a regional collector aimed at pause goals; other collectors optimize throu
 - Know your JDK default.
 - Don't tune blindly.
 - ZGC/Shenandoah are low-pause options on newer JDKs.
+- Young and mixed collections include stop-the-world evacuation pauses; Full GC is a fallback.
+- SATB concurrent marking is conservative; it is not the same as Full-GC marking.
 
 ## Interview traps
 

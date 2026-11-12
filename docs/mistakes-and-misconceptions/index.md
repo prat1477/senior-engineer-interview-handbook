@@ -49,6 +49,28 @@ Corrections from that session only. Correct answers are not listed here.
 
 Lessons: [composition](../books/01-engineering-mastery/core-java/module-01-java-object-model/02-composition-vs-inheritance.md), [interfaces](../books/01-engineering-mastery/core-java/module-01-java-object-model/03-interfaces-vs-abstract-classes.md), [immutability](../books/01-engineering-mastery/core-java/module-01-java-object-model/04-immutability-and-defensive-copying.md), [`equals` / `hashCode`](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/01-equals-and-hashcode-contracts.md), and [Java Records](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md).
 
+## Java, concurrency, JVM, and production practice corrections (2026-11-11 to 2026-11-12)
+
+These are constructive recall prompts, not severity labels. “Implemented after guidance” is not
+the same as independent algorithm discovery.
+
+| Topic | Earlier misunderstanding | Correct understanding | Revision link |
+| --- | --- | --- | --- |
+| One-transaction stock | Changed buy after a profitable sale; nested scan called O(n) | Buy changes only at a new minimum; nested scan is O(n²) | [DSA practice](../dsa/index.md) |
+| Unlimited stock trades | More splits always create more profit | Adjacent positive rises telescope across an increasing run | [DSA practice](../dsa/index.md) |
+| Streams | Omitted terminal `toList()` | `sorted()` is intermediate and returns a Stream | [Comparator](../books/01-engineering-mastery/core-java/module-04-collections/06-comparable-and-comparator.md) |
+| Thread pool | `maximumPoolSize=20` meant 20 extra threads | It is a total cap: 5 core + 15 additional in the scenario | [TPE](../concurrency/10-executors-and-thread-pool-executor.md) |
+| Kafka key | Proposed `transactionId` for account ordering | Use `accountId`; Kafka order is per partition | [Kafka](../kafka/index.md) |
+| CHM | Atomic mapping made `ArrayList` mutation safe | `computeIfAbsent` protects mapping, not returned mutable value | [Concurrent collections](../concurrency/09-concurrent-collections.md) |
+| Copy-on-write | Considered it for transaction appends | It is for read-heavy, write-light snapshot iteration | [Concurrent collections](../concurrency/09-concurrent-collections.md) |
+| `volatile` | Visibility understood but JIT mechanism unclear | Optimizations may reuse nonvolatile reads when the JMM permits | [JMM](../concurrency/02-java-memory-model.md) |
+| `LongAdder` | `sum()` sounded inaccurate | It is not an atomic snapshot; quiescent totals are maintained | [LongAdder](../concurrency/08-longadder.md) |
+| JVM memory | Identified only Metaspace outside heap | Stacks, code cache, direct/native memory and GC structures affect RSS | [Memory areas](../books/01-engineering-mastery/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md) |
+| Young GC | Frequent GC automatically meant severe pressure | Inspect pause time and allocation rate | [G1](../books/01-engineering-mastery/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md) |
+| P99 | Treated P99 as average/percentage improvement; reversed qualifying/exceeding counts | It is a percentile; for 10,000 measurements, about 9,900 qualify and up to 100 exceed | [Performance](../books/01-engineering-mastery/lld/module-05-lld/10-performance-scalability-and-optimization.md) |
+| Full GC / SATB | Unclear why marking can run again | Concurrent SATB marking and Full-GC marking are different work | [G1](../books/01-engineering-mastery/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md) |
+| Native memory | Assumed one reclaimer manages non-heap | Reclamation depends on area: GC, thread lifecycle, class unloading, Cleaner, or native free | [Memory areas](../books/01-engineering-mastery/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md) |
+
 ## Personal revision queue
 
 | Topic | Status | Notes |

@@ -51,6 +51,25 @@ flowchart LR
 
 **Trap:** HB gives visibility — not `count++` atomicity without atomics or locks.
 
+## State and collection picker
+
+| Need | Pick | Do not claim |
+| --- | --- | --- |
+| Stop flag / safe simple publication | `volatile` | atomic `count++` |
+| Exact atomic counter state | `AtomicInteger` | multi-field transaction |
+| Hot metric increments | `LongAdder` | atomic `sum()` snapshot |
+| Per-key atomic mapping | `ConcurrentHashMap` | value object's mutation is atomic |
+| Read-mostly listener list | `CopyOnWriteArrayList` | cheap high-rate writes |
+| Bounded local handoff | `ArrayBlockingQueue` | distributed backpressure |
+
+```mermaid
+flowchart LR
+  compute[computeIfAbsent key] --> list[ArrayList value]
+  list --> race[concurrent add races]
+  compute --> queue[ConcurrentLinkedQueue value]
+  queue --> safe[concurrent offer-safe handoff]
+```
+
 ## CompletableFuture composition
 
 | API | Shape | Interview line |

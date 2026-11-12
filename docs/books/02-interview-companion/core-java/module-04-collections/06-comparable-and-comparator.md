@@ -23,6 +23,7 @@ Comparable is the type's natural order; Comparator is an external order for a sp
 - Comparator.comparing for streams and sorts.
 - Inconsistent compareTo vs equals breaks SortedSet.
 - Multiple comparators for different UI sorts.
+- `reversed()` after `thenComparing()` reverses the whole composed comparator.
 
 ## Interview traps
 

@@ -183,6 +183,34 @@ jcmd <pid> VM.native_memory summary
 | **Heap dump** | Possible if configured | Unlikely |
 | **Heap % metric** | May be below `-Xmx` | RSS includes non-heap |
 
+## 7. Practical incident workflow
+
+| Symptom | First evidence | Distinguish before changing flags |
+| --- | --- | --- |
+| High heap / repeated Full GC | GC logs, heap info, heap dump | retained live set vs allocation churn |
+| High RSS with healthy heap | cgroup/RSS, NMT, thread count | direct/native/stacks vs heap |
+| Metaspace growth | class histogram, class loaders, NMT | loader retention vs normal dynamic loading |
+| High CPU / latency | JFR, GC logs, thread dump | GC work vs runnable app work vs contention |
+| Thread buildup | `Thread.print`, pool metrics | blocked dependency vs unbounded admission |
+
+`jcmd <pid> Thread.print` is a thread-state snapshot; `GC.heap_info` is not a heap dump, and
+`VM.native_memory summary` only has useful accounting when Native Memory Tracking was enabled at
+startup (for example `-XX:NativeMemoryTracking=summary`). Java Flight Recorder correlates CPU,
+allocation, locks, and GC over time; GC logs describe collection behavior; heap dumps describe
+the reachable object graph at one point. Choose the tool matching the question.
+
+### Suspicious retention trend
+
+```text
+Heap max: 4 GB
+Post-Full-GC: 2.1 GB -> 2.7 GB -> 3.3 GB -> 3.8 GB
+```
+
+This is suspicious because the retained baseline rises, but it is not conclusive. Compare incoming
+workload, concurrent/in-flight requests, intentional cache growth, and heap dumps at comparable
+points; then use retained-heap/dominator trends and allocation profiling to distinguish long-term
+retention from a high allocation rate.
+
 ## Common misconceptions
 
 | Myth | Reality |

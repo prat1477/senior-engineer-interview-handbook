@@ -52,6 +52,28 @@ A gate with four lanes (zones) is only faster if cars may pick any lane. If ever
 
 ---
 
+## Percentiles and an SLA are not averages
+
+P50 is the median observation, P95 is a near-tail observation, and P99 is further into the tail.
+They describe a latency distribution rather than averaging individual request times. A lower P99
+is an improvement because the near-tail got faster; it does **not** prove exactly 99% of individual
+requests became faster.
+
+For an SLA “P99 under 15 minutes” across 10,000 explicitly defined observations, about 9,900 must
+fall below the threshold and up to about 100 can exceed it under the usual percentile convention.
+Define the observation before interpreting it: transaction, Kafka batch, processing window, or
+end-to-end job. Do not silently equate a batch/process-window SLA with a per-transaction promise.
+
+```mermaid
+flowchart LR
+  fast[fastest 99 percent of measured observations] --> mark[P99 boundary]
+  mark --> slow[slowest 1 percent: tail investigation]
+```
+
+**Memory trick:** P99 is **near-tail performance, not average performance**. A 5–8 ms GC pause
+does not by itself explain a 2.5-second API P99; inspect database/external-call latency, executor
+or connection-pool queueing, lock contention, network delays, and CPU saturation before blaming GC.
+
 ## 2. Find the bottleneck first
 
 An entry API moves from **100 ms to 2 s**. That fact does not say the Java method is slow. Split the request before changing code.

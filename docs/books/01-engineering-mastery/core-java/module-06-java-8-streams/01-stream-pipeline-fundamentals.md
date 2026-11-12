@@ -162,6 +162,56 @@ Streams from ordered sources (`List`, `LinkedHashSet`) have **encounter order**.
 | `Collectors.toList()` | Java 8 (mutable `ArrayList`) |
 
 
+## Practice extension — second highest distinct salary and flattening
+
+```java
+Optional<Integer> secondHighest = employees.stream()
+    .map(Employee::salary)
+    .distinct()
+    .sorted(Comparator.reverseOrder())
+    .skip(1)
+    .findFirst();
+```
+
+`map` projects each employee to one salary. `distinct` retains one copy of each equal salary;
+`sorted(Comparator.reverseOrder())` materializes and orders the distinct values descending;
+`skip(1)` discards the maximum; `findFirst` short-circuits the remaining encounter-ordered
+stream. It returns `Optional` because fewer than two distinct salaries is a valid outcome.
+Use `orElse(value)`, lazy `orElseGet(supplier)`, or `orElseThrow()` according to the boundary
+contract. Prefer `findFirst()` when encounter order matters; `findAny()` may return any element
+and can be more flexible for parallel pipelines. Streams intentionally have no indexed `get()`:
+they can be lazy, generated, or non-sized. Avoid `toList().get(0)` when one result is needed.
+
+The pipeline is **O(n log n)** time in the number of distinct salaries and **O(n)** extra space
+in the worst case because sorting is stateful. A one-pass `max`-based solution can be better if
+only the answer matters, but this pipeline is clear interview code when the ordered distinct view
+is also meaningful.
+
+For nested data:
+
+```java
+List<List<Integer>> numbers = List.of(List.of(1, 2), List.of(3, 4));
+Stream<Stream<Integer>> mapped = numbers.stream().map(List::stream);
+List<Integer> flattened = numbers.stream().flatMap(List::stream).toList();
+// [1, 2, 3, 4]
+```
+
+`map` is one input to one output; its output here is a stream object per list. `flatMap` is one
+input to zero-or-many output elements and flattens the child streams. In a service, this is the
+difference between `orders.stream().map(Order::items)` and
+`orders.stream().flatMap(order -> order.items().stream())`.
+
+### What I should say in an interview
+
+“I use `map`, `distinct`, reverse `sorted`, `skip(1)`, and `findFirst` when I want the second
+highest *distinct* salary. The empty case is explicit through `Optional`; I do not materialize a
+list merely to call index zero.”
+
+### What not to say
+
+- “`findFirst` always means the highest value.” It only returns the first element of the current pipeline.
+- “Streams should provide `get(0)`.” A stream is not necessarily indexable or even finite.
+
 ## Key takeaways
 
 - Re-read the comparison tables and misconceptions in the canonical section.

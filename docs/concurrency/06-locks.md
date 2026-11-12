@@ -31,6 +31,20 @@ try {
 
 Explicit timeouts, multiple `Condition` objects, lock interruptibility.
 
+## Foundation-level decision guide
+
+`ReentrantLock` offers the same mutual-exclusion role as an intrinsic monitor while adding
+timed `tryLock`, interruptible acquisition (`lockInterruptibly`), optional fairness, and multiple
+`Condition` queues. Fair locks reduce barging/starvation risk but usually reduce throughput.
+Use a `Condition` only with its owning lock and await in a predicate loop. This is foundation
+coverage; deeper lock internals and coordination practice remain **pending**.
+
+| Need | Prefer |
+| --- | --- |
+| Simple scoped mutual exclusion | `synchronized` |
+| Timeout / cancellation while acquiring | `ReentrantLock` |
+| Separate wait sets / advanced coordination | `ReentrantLock` + `Condition` |
+
 ## Cross-links
 
 - [Lesson 18 — Deadlock](18-deadlock-livelock-starvation.md)
