@@ -11,8 +11,8 @@ Update this file after each study session. Status meanings:
 | **Deferred** | Belongs to a later curriculum (e.g. deep concurrency internals during Collections) |
 | **Needs revision** | Studied but you want another pass |
 
-**Last updated:** 2026-11-08
-**Current position:** Next Spring Core topic is **Lesson 2 — Spring Bean Lifecycle** ([Spring track](docs/spring-microservices/index.md)); Lesson 1 IoC and DI is **Covered** conceptually. [DSA arrays and hash maps](docs/dsa/index.md) remain planned. Java Records are **Covered** in [Module 2 Lesson 2](docs/books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md); Core Java Modules 2–9 stay **Covered**. [Java concurrency](docs/concurrency/index.md) lessons **1–24 documented** (handbook pass; not marked newly complete). Week 1 plan: [week-01](docs/week-01-core-java-spring.md). Skill scores: [mastery matrix](docs/tracking/mastery-matrix.md).
+**Last updated:** 2026-11-14
+**Current position:** Spring Boot internals, transaction propagation, JPA/Hibernate state, optimistic locking, batch processing, JDBC transactions, and cache consistency are **discussed / conceptually understood**; independent implementation and mixed-mock assessment remain pending. The next technical topic is **Spring Security / OAuth2 Resource Server / JWT verification and authorization**. [DSA arrays and hash maps](docs/dsa/index.md) remain planned. Java Records are **Covered** in [Module 2 Lesson 2](docs/books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md); Core Java Modules 2–9 stay **Covered**. [Java concurrency](docs/concurrency/index.md) lessons **1–24 documented** (handbook pass; not marked newly complete). Week 1 plan: [week-01](docs/week-01-core-java-spring.md). Skill scores: [mastery matrix](docs/tracking/mastery-matrix.md).
 
 ### Three-book rewrite (layout vs depth)
 
@@ -213,7 +213,7 @@ Coverage below is lesson status. Scores are in the [mastery matrix](docs/trackin
 
 | Track | Status |
 | --- | --- |
-| Spring Boot and microservices | **In progress** ([Spring Core L1 IoC and DI](docs/spring-microservices/01-ioc-and-dependency-injection.md) and [production PR review / caching](docs/spring-microservices/02-production-pr-review-caching-and-resilience.md) **Explained and understood**; remaining Spring lessons **Planned**) |
+| Spring Boot and microservices | **In progress** ([IoC / DI](docs/spring-microservices/01-ioc-and-dependency-injection.md), [production PR review / caching](docs/spring-microservices/02-production-pr-review-caching-and-resilience.md), and [internals / transactions / JPA / JDBC](docs/spring-microservices/03-spring-boot-internals-transactions-jpa.md) **Explained and understood**; Spring Security/JWT and independent validation remain pending) |
 | Distributed systems and system design | **In progress** ([DB concurrency](docs/distributed-systems/database-concurrency-and-isolation.md), [locks / Scylla](docs/distributed-systems/distributed-locks-fencing-and-scylladb.md), and [database scaling / CQRS](docs/distributed-systems/database-scaling-replication-and-cqrs.md) **Explained and understood**; broader design track **Planned**) |
 | Kafka | **In progress** ([ordering, idempotency, and outbox foundations](docs/kafka/index.md) documented; tuning and implementation practice pending) |
 | Data engineering / lakehouse | **Planned** (Spark Modules 1–10 + most of 11 **Covered** in Spark Handbook) |
@@ -262,6 +262,21 @@ This is a learning-status update, not a claim of independent production implemen
 - Additional Java coding/debugging exercises and full system-design interview execution.
 - Python and Agentic AI mocks.
 - Before the November 17 interview: focused revision of Java 21, Java 25 LTS, and relevant newer Java language/platform features.
+
+## November 14 Spring transactions, JPA, and JDBC update
+
+This documents conceptual work without upgrading it to independently demonstrated mastery.
+
+| Area | Evidence-based status | What remains |
+| --- | --- | --- |
+| Bean heap/container model, constructor injection, Boot startup, lifecycle and AOP proxies | **Discussed / conceptually understood** | Independently explain a lifecycle/proxy trace and review a configuration. |
+| `REQUIRED`, `REQUIRES_NEW`, rollback-only, checked exceptions, and outbox reasoning | **Discussed / conceptually understood** | Mixed propagation mock and independently chosen transaction boundaries. |
+| Persistence context, lazy loading, fetch strategy, dirty checking, and `@Version` | **Discussed / conceptually understood** | JPA/Hibernate coding implementation and query/performance review. |
+| JPQL bulk DML, Hibernate batching, JdbcTemplate batch counts, chunking | **Discussed / conceptually understood** | Production-grade batch writer, conflict classification, retries, and load testing. |
+| Spring JDBC transactions and PostgreSQL error/savepoint semantics | **Discussed / conceptually understood** | Hands-on failure-path implementation and database validation. |
+| Caffeine + Redis L1/L2, stale-fill race, and invalidation limits | **Discussed / conceptually understood** | Independently design/test the chosen freshness and fan-out protocol. |
+
+**Next session:** Spring Security / OAuth2 Resource Server / JWT verification and authorization.
 
 ## Spark Handbook alignment
 

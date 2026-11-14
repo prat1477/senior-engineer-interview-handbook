@@ -5,7 +5,7 @@ status: covered
 audience: practitioner
 tags: [book, mastery, java]
 created: 2026-10-18
-updated: 2026-11-08
+updated: 2026-11-14
 ---
 
 # Book 1 — Core Java Engineering Mastery
@@ -27,6 +27,16 @@ Each lesson follows the `templates/chapter-engineering-mastery.md` layout at the
 
 **Companion:** [Book 2 — Interview Companion](../02-interview-companion/index.md)  
 **Operations:** [Book 3 — Production Playbook](../03-production-playbook/index.md)
+
+## Spring and microservices (canonical Engineering Mastery lessons)
+
+Spring material keeps its canonical, detailed lessons in the Spring curriculum rather than
+duplicating them inside the Core Java module tree.
+
+| Topic | Canonical lesson |
+| --- | --- |
+| Production PR review, caching, and resilience | [Cache design and multi-pod behaviour](../../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| Boot internals, transactions, JPA/Hibernate, batching, and JDBC | [Spring internals and persistence](../../spring-microservices/03-spring-boot-internals-transactions-jpa.md) |
 
 ## LLD (module 05-lld)
 

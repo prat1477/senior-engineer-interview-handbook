@@ -4,8 +4,10 @@ A versioned, interview-focused handbook for **senior backend and data-platform e
 roles. It preserves interactive study sessions, tracks progress honestly, and follows a
 fixed 14-day preparation sequence without duplicating your existing Spark curriculum.
 
-> **Current focus:** Core Java object-model lessons from 2026-11-07 are documented (records still planned).
-> Modules 2–9 are covered. Next on the fixed roadmap: Day 1 DSA — arrays and hash maps.
+> **Current focus:** Spring Boot internals, transactions, JPA/Hibernate, JDBC batching, and cache
+> consistency are documented as conceptually covered; independent implementation and mocks remain
+> pending. Next technical topic: Spring Security / OAuth2 Resource Server / JWT verification and
+> authorization. The fixed roadmap sequence is unchanged.
 
 ## Who this is for
 

@@ -5,7 +5,7 @@ status: covered
 audience: advanced
 tags: [spring-boot, caching, redis, resilience, postgresql, production]
 created: 2026-11-12
-updated: 2026-11-12
+updated: 2026-11-14
 ---
 
 # Spring Boot Production PR Review, Caching, and Resilience
@@ -243,6 +243,144 @@ immutable `OrderView` DTOs or state clear synchronization/ownership. Likewise, m
 used by `equals`/`hashCode` after adding an object to `HashSet`/`HashMap` can make it unfindable.
 The distinction applies to maps, lists, Caffeine, and `CopyOnWriteArrayList`.
 
+## 8. Final production design: DTO projection, cache-aside, and API errors
+
+The review should not evolve the original code into a cache of managed entities. An API response
+is a deliberately small, immutable value:
+
+```java
+public record OrderResponse(
+    String orderId,
+    String status,
+    BigDecimal totalAmount
+) { }
+```
+
+```java
+@Query("""
+    SELECT new com.example.api.OrderResponse(o.orderId, o.status, o.totalAmount)
+    FROM Order o WHERE o.orderId = :id
+    """)
+Optional<OrderResponse> findResponseById(@Param("id") String id);
+```
+
+Constructor projection selects the fields required by this endpoint without returning a managed
+entity whose lazy associations can later leak into JSON serialization. It does not replace an
+entity graph where domain behaviour or updates are needed.
+
+```java
+@Service
+public final class OrderService {
+    private final OrderRepository repository;
+    private final Cache<String, OrderResponse> cache;
+
+    public OrderService(OrderRepository repository) {
+        this.repository = repository;
+        this.cache = Caffeine.newBuilder()
+            .maximumSize(50_000)
+            .expireAfterWrite(Duration.ofSeconds(30))
+            .recordStats()
+            .build();
+    }
+
+    public OrderResponse getOrder(String id) {
+        return cache.get(id, key -> repository.findResponseById(key)
+            .orElseThrow(() -> new OrderNotFoundException(key)));
+    }
+}
+```
+
+This is cache-aside: application code checks the cache, loads PostgreSQL on a miss, and populates
+the cache. Caffeine's `get(key, mappingFunction)` coordinates computation for the same local key;
+it does not coordinate across pods, turn the database/cache flow into one transaction, or make a
+failure permanent. `maximumSize(50_000)` and a 30-second TTL are illustrative values, not
+universal production defaults. Monitor cache size, hit/miss/load time, eviction, heap/old-gen,
+and the database fallback path.
+
+`Optional.orElseThrow()` without an explicit supplier normally produces `NoSuchElementException`.
+That is not a useful public API contract for ordinary absence. Translate expected business absence
+to 404 and keep infrastructure failures distinct:
+
+```java
+@RestControllerAdvice
+class ApiExceptionHandler {
+    @ExceptionHandler(OrderNotFoundException.class)
+    ProblemDetail orderNotFound(OrderNotFoundException ex) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problem.setTitle("Order not found");
+        problem.setDetail(ex.getMessage());
+        return problem;
+    }
+}
+```
+
+| Situation | Typical response |
+| --- | --- |
+| Order does not exist | 404 |
+| Invalid request | 400 |
+| Temporary overload / dependency incapacity | 503 |
+| Client quota exceeded | 429 |
+| Unexpected internal failure | 500 |
+
+Expected business outcomes (such as no order) should not look like a database outage. Conversely,
+do not map every unexpected persistence/network failure to a 404 merely because a repository call
+failed.
+
+## 9. L1 Caffeine + L2 Redis is an architecture, not a dependency list
+
+```mermaid
+flowchart TD
+  request[Spring Boot GET] --> l1{Caffeine L1}
+  l1 -->|hit| return1[return]
+  l1 -->|miss| l2{Redis L2}
+  l2 -->|hit| fill1[populate L1]
+  fill1 --> return2[return]
+  l2 -->|miss| db[(PostgreSQL)]
+  db --> fill2[populate Redis L2]
+  fill2 --> fill3[populate Caffeine L1]
+  fill3 --> return3[return]
+```
+
+Caffeine is local to one JVM. Redis is shared, but adding both libraries does not make Caffeine a
+distributed cache and Spring does not automatically supply a coherent L1/L2 protocol. An L2
+invalidation does not erase every pod's L1 entry: use expiry, explicit fan-out, or an application
+protocol. Missed invalidation events and late cache fills remain possible. A Kafka consumer group
+load-balances records among members; it does not broadcast each invalidation to every pod, so a
+fan-out design must use a suitable topology.
+
+| Choice | Prefer when | Cost / limit |
+| --- | --- | --- |
+| Caffeine only | hot, pod-local reads tolerate local staleness | every pod has a separate copy |
+| Redis only | a shared cache/TTL is worth a network hop | cache-aside and failure policies still required |
+| Caffeine + Redis | very hot data and reduced L2/network load justify coordination | invalidation fan-out, race handling, and operations increase materially |
+| Direct PostgreSQL | reads are cheap or must be authoritative | protect query/connections as load grows |
+
+Two levels are justified only when measurement shows a meaningful hot-read benefit and the
+freshness contract can carry the coherence complexity. Redis `GET`, `SET`, and `DEL` are each
+atomic, but the whole cache-aside sequence is not:
+
+```mermaid
+sequenceDiagram
+  participant A as Pod A GET
+  participant R as Redis
+  participant P as PostgreSQL
+  participant B as Pod B update
+  participant C as Pod C GET
+  A->>R: GET order:101 = miss
+  A->>P: SELECT -> PENDING
+  Note over A: pauses before SET
+  B->>P: UPDATE -> SHIPPED; COMMIT
+  B->>R: DEL order:101
+  A->>R: SET order:101 = PENDING
+  C->>R: GET -> PENDING
+  Note over P: actual value is SHIPPED
+```
+
+Version-aware values, retained version metadata/fencing, atomic conditional Redis scripts, and
+per-key coordination can reduce particular races. A deleted value may also delete the version a
+late writer needed for comparison, so “add a version field” is not a complete protocol. Use an
+authoritative primary read when strict read-after-write behaviour is required.
+
 ## Practice status and cross-links
 
 This material is **explained and understood**. A corrected `OrderService`, independent PR-review
@@ -253,3 +391,4 @@ pending.
 - [JVM cache retention](../books/01-engineering-mastery/core-java/module-09-jvm-basics/06-java-reference-types-and-memory-retention.md)
 - [Database concurrency](../distributed-systems/database-concurrency-and-isolation.md)
 - [Database scaling, replication, and CQRS](../distributed-systems/database-scaling-replication-and-cqrs.md)
+- [Spring internals, transactions, and JPA](03-spring-boot-internals-transactions-jpa.md)

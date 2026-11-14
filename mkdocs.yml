@@ -131,6 +131,7 @@ nav:
       - Book 2 — Interview Companion: books/02-interview-companion/index.md
       - Book 3 — Production Playbook: books/03-production-playbook/index.md
       - "Spring production (Companion)": books/02-interview-companion/spring-microservices/production-caching-and-resilience.md
+      - "Spring transactions and JPA (Companion)": books/02-interview-companion/spring-microservices/spring-boot-internals-transactions-jpa.md
       - "M1 Object model (Mastery)":
           - books/01-engineering-mastery/core-java/module-01-java-object-model/index.md
           - "01-oop-principles.md": books/01-engineering-mastery/core-java/module-01-java-object-model/01-oop-principles.md
@@ -404,6 +405,7 @@ nav:
       - Curriculum: spring-microservices/index.md
       - "Spring Core L1 - IoC and DI": spring-microservices/01-ioc-and-dependency-injection.md
       - "Production PR review, caching, and resilience": spring-microservices/02-production-pr-review-caching-and-resilience.md
+      - "Spring Boot internals, transactions, JPA, and JDBC": spring-microservices/03-spring-boot-internals-transactions-jpa.md
   - Distributed systems:
       - distributed-systems/index.md
       - "Interview cheat sheet": books/02-interview-companion/distributed-systems/module-visual-quick-reference.md

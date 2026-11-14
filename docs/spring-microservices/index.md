@@ -5,7 +5,7 @@ status: in-progress
 audience: advanced
 tags: [spring, microservices]
 created: 2026-10-15
-updated: 2026-11-08
+updated: 2026-11-14
 ---
 
 # Spring Boot and Microservices
@@ -17,9 +17,9 @@ updated: 2026-11-08
 | # | Topic | Status |
 | --- | --- | --- |
 | 1 | [Inversion of Control (IoC) and Dependency Injection (DI)](01-ioc-and-dependency-injection.md) | **Covered** (conceptual) |
-| 2 | Spring Bean Lifecycle | **Planned** |
-| 3 | Spring Bean Scopes | **Planned** |
-| 4 | BeanFactory vs ApplicationContext | **Planned** |
+| 2 | Spring Bean Lifecycle | **Covered conceptually** |
+| 3 | Spring Bean Scopes | **Covered conceptually** |
+| 4 | BeanFactory vs ApplicationContext | **Covered conceptually** |
 
 ## Spring Boot and microservices roadmap
 
@@ -47,5 +47,6 @@ updated: 2026-11-08
 | Page | Topic | Status |
 | --- | --- | --- |
 | [Production PR review, caching, and resilience](02-production-pr-review-caching-and-resilience.md) | Singleton cache safety, cache strategies/freshness, Redis failure, HikariCP, and HPA | **Covered conceptually**; independent implementation/pull-request mock pending |
+| [Spring Boot internals, transactions, JPA, and batch processing](03-spring-boot-internals-transactions-jpa.md) | Startup/lifecycle, proxy interception, propagation, persistence context, `@Version`, batching, JDBC, and PostgreSQL failure boundaries | **Discussed / conceptually understood**; independent mixed mock and implementation pending |
 
 Cross-links: [Kafka](../kafka/index.md), [Distributed systems](../distributed-systems/index.md), [database scaling](../distributed-systems/database-scaling-replication-and-cqrs.md).

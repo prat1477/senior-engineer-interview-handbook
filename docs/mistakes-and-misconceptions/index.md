@@ -5,7 +5,7 @@ status: draft
 audience: advanced
 tags: [revision, misconceptions]
 created: 2026-10-15
-updated: 2026-11-08
+updated: 2026-11-14
 ---
 
 # Mistakes, Misconceptions, and Revision Items
@@ -93,6 +93,29 @@ the same as independent algorithm discovery.
 
 The record discussion correctly recognized that a `List` component can be mutable. The later
 nested-object explanation deepened that point; it is not recorded as a fabricated misconception.
+
+## Spring transactions, JPA, and JDBC corrections (2026-11-14)
+
+These entries distinguish attention-to-code-review details from genuine gaps and preserve correct
+reasoning from the session.
+
+| Topic | What happened in practice | Correct understanding | Revision link |
+| --- | --- | --- | --- |
+| `REQUIRES_NEW` | Initially overlooked that the two methods were in the same class. | The annotation needs a call crossing the transactional proxy; self-invocation bypasses it. | [Proxy invocation](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#self-invocation-annotation-present-advice-absent) |
+| Transaction scopes | Initially described an internally invoked method as a child transaction. | An internal call does not create a separately proxied transaction scope. | [Propagation](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#3-propagation-rollback-rules-and-exception-paths) |
+| `UnexpectedRollbackException` | Initially expected normal outer completion after catching an inner failure. | A separate `REQUIRED` inner scope can mark the shared transaction rollback-only. | [Rollback-only](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#3-propagation-rollback-rules-and-exception-paths) |
+| Spring proxy implementation | Assumed proxy creation necessarily requires a custom classloader. | JDK/CGLIB proxy infrastructure is the defining mechanism, not a custom classloader. | [AOP proxies](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#2-aop-proxies-and-transaction-interception) |
+| Bean storage | Asked where a bean lives. | It is a heap object managed by `ApplicationContext`; the context is not separate heap memory. | [Beans](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#1-beans-the-container-and-boot-startup) |
+| Fetch plans | `EntityGraph` and DTO projection were unfamiliar. | They deliberately control entity loading or select API fields rather than relying on accidental lazy loading. | [Fetch design](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#4-persistence-context-lazy-loading-and-fetch-design) |
+| Dirty checking | Asked whether `@Transactional` itself causes dirty checking. | A managed entity/persistence context supplies change tracking; transaction scope usually keeps it usable. | [Persistence context](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#4-persistence-context-lazy-loading-and-fetch-design) |
+| JDBC transactions | Initially thought `@Transactional` might be JPA-only. | Spring transaction abstraction also coordinates JDBC/JdbcTemplate. | [Transactional JDBC](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#7-transactional-jdbc-chunking-and-postgresql-errors) |
+| PostgreSQL failures | Clarified zero-row conditional update versus constraint error. | A constraint error normally aborts the active PostgreSQL transaction; a zero count need not. | [PostgreSQL errors](../spring-microservices/03-spring-boot-internals-transactions-jpa.md#7-transactional-jdbc-chunking-and-postgresql-errors) |
+| Cache invalidation | Expected shared Redis deletion to make the next read fresh. | A late in-flight fill can write an older value after `DEL`. | [Stale fill](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+
+Correctly reasoned after clarification: debit and credit share one JDBC transaction and roll back
+together on a database error; checked exceptions commit by default; managed entities do not need
+an extra `save()` for dirty checking; Hibernate `@Version` uses a version predicate; and a
+cross-bean `REQUIRES_NEW` scope has an independent physical outcome.
 
 ## Personal revision queue
 

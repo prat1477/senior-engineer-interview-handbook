@@ -5,7 +5,7 @@ status: covered
 audience: advanced
 tags: [book, interview, companion, java]
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-11-14
 ---
 
 # Book 2 — Core Java Interview Companion
@@ -28,7 +28,7 @@ Cram from this book: each module has a **visual quick reference** (diagrams rend
 | 7 | [Optional](core-java/module-07-optional/index.md) | [quick ref](core-java/module-07-optional/module-visual-quick-reference.md) | [practice](core-java/module-07-optional/module-interview-practice.md) |
 | 8 | [Exceptions](core-java/module-08-exception-handling/index.md) | [quick ref](core-java/module-08-exception-handling/module-visual-quick-reference.md) | [practice](core-java/module-08-exception-handling/module-interview-practice.md) |
 | 9 | [JVM](core-java/module-09-jvm-basics/index.md) | [quick ref](core-java/module-09-jvm-basics/module-visual-quick-reference.md) | [practice](core-java/module-09-jvm-basics/module-interview-practice.md) |
-| Spring production | [caching and resilience](spring-microservices/production-caching-and-resilience.md) | same page | independent PR-review mock pending |
+| Spring production | [caching and resilience](spring-microservices/production-caching-and-resilience.md) | [internals, transactions, JPA, and JDBC](spring-microservices/spring-boot-internals-transactions-jpa.md) | independent PR-review, mixed-transaction mock, and implementation pending |
 | Concurrency (24 lessons) | [Companion index](concurrency/index.md) | [quick ref](concurrency/module-visual-quick-reference.md) | [practice](concurrency/module-interview-practice.md) |
 | LLD module 05 | [Companion index](lld/module-05-lld/index.md) | [quick ref](lld/module-05-lld/module-visual-quick-reference.md) | [practice](lld/module-05-lld/module-interview-practice.md) |
 | Distributed | [cheat sheet](distributed-systems/module-visual-quick-reference.md) | same | [canonical DB](../../distributed-systems/database-concurrency-and-isolation.md) |
