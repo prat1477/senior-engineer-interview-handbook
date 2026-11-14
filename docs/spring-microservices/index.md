@@ -42,4 +42,10 @@ updated: 2026-11-08
 | 15 | Observability — logs, metrics, traces |
 | 16 | Production debugging scenarios |
 
-Cross-links: [Kafka](../kafka/index.md), [Distributed systems](../distributed-systems/index.md).
+## Authored production deep dives
+
+| Page | Topic | Status |
+| --- | --- | --- |
+| [Production PR review, caching, and resilience](02-production-pr-review-caching-and-resilience.md) | Singleton cache safety, cache strategies/freshness, Redis failure, HikariCP, and HPA | **Covered conceptually**; independent implementation/pull-request mock pending |
+
+Cross-links: [Kafka](../kafka/index.md), [Distributed systems](../distributed-systems/index.md), [database scaling](../distributed-systems/database-scaling-replication-and-cqrs.md).

@@ -60,3 +60,33 @@ sequenceDiagram
 ```
 
 **Memory trick:** **Key -> Claim -> Debit -> Outbox -> Ack.**
+
+## Database scaling and read-model recall
+
+| Topic | 30-60 second answer | Common misconception |
+| --- | --- | --- |
+| Read replica | A read-only standby replays primary WAL and distributes same-schema reads; route critical read-after-write to primary because replicas can lag. | Replica read is automatically current. |
+| Physical vs logical | Physical replication copies database state/WAL; logical replication publishes selected row changes to subscribers. | Logical replication automatically builds CQRS. |
+| CQRS | Separate command/query models; databases may be separate but do not have to be. | Every read-heavy service needs CQRS. |
+| PostgreSQL partitioning | Splits one logical table for pruning/retention. | Native partitions are multi-machine shards. |
+| Sharding | Routes data across independent machines/primaries. | It is the same as partitioning. |
+| Replication | Keeps additional copies for HA/read capacity. | A replica is a writable shard. |
+
+```mermaid
+flowchart LR
+  primary[(primary)] -->|WAL| replica[(physical replica)]
+  primary -->|outbox / CDC| projection[query projection]
+  projection --> read[(read model)]
+```
+
+**Memory trick:** **Partitioning divides. Sharding distributes. Replication copies.**
+
+### Scaling order
+
+1. Explain plans, indexes, statistics, and query/transaction shape.
+2. Pool/admit connections; more connections do not create DB throughput.
+3. Add vertical capacity, caching, or same-schema replicas if their trade-offs fit.
+4. Use partitioning, logical replication, or CQRS for their actual problem—not as defaults.
+
+**Follow-ups:** What lag is acceptable? Why is a physical replica insufficient for a denormalized
+search screen? How would you rebuild an idempotent CQRS projection?

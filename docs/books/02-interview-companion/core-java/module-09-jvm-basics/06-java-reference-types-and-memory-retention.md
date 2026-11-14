@@ -27,6 +27,7 @@ Strong refs keep objects; soft, weak, and phantom refs allow earlier collection 
 ## Interview traps
 
 - WeakHashMap as an LRU.
+- `ConcurrentHashMap` means an unbounded singleton cache is GC-safe.
 
 ## Interview flow
 
@@ -57,6 +58,9 @@ A metadata cache keyed by Class should not pin class loaders; weak keys can help
 ## 30-second revision
 
 - Strong refs retain; weak refs do not replace a capacity policy.
+
+**Cache recall:** Objects strongly reachable from an unbounded singleton cache remain live to the
+GC. Bound size/weight/TTL and monitor old gen, evictions, hit/miss, and load latency.
 
 ## Memory hook
 

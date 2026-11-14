@@ -172,6 +172,84 @@ Import `java.util.List` and `java.util.Objects` for this code. `id > 0`, a nonbl
 
 The generated canonical constructor assigns every component. A developer may declare the full canonical constructor with the same component list and assign fields explicitly, or a **compact canonical constructor** (`public Employee { ... }`) when validation or normalization is sufficient. In a compact constructor, component fields are assigned automatically after the body, so reassigning `name` or `roles` changes the stored value. Constructor validation protects the record wherever Java code constructs it.
 
+### Constructor forms, normalization, and the independent exercise
+
+The implicit canonical constructor has one parameter for every component in declaration order. An
+explicit canonical constructor repeats that complete signature and must assign each component
+field exactly once after validation:
+
+```java
+public record Employee(String name, int age) {
+    public Employee(String name, int age) {
+        if (age < 0) throw new IllegalArgumentException("negative age");
+        this.name = name;
+        this.age = age;
+    }
+}
+```
+
+A compact canonical constructor omits the parameter list and explicit component assignments. Its
+parameters are implicitly available, may be normalized or defensively copied, and the compiler
+assigns the component fields after a normal body completion. Direct assignment to a component
+field such as `this.age = 18` is not allowed in a compact constructor.
+
+```java
+public record Employee(String name, int age) {
+    public Employee {
+        if (age < 18) throw new IllegalArgumentException("Underage");
+        age = 18;
+    }
+}
+
+System.out.println(new Employee("John", 25).age()); // 18
+```
+
+The printed value is **18**: the local constructor parameter is reassigned before the compiler's
+implicit field assignment. This question was explained but remains an **independent practice
+exercise**, not an independently solved assessment.
+
+### `List.copyOf` versus an unmodifiable view
+
+```java
+List<String> snapshot = List.copyOf(items);
+List<String> view = Collections.unmodifiableList(items);
+```
+
+`List.copyOf` creates an unmodifiable structural snapshot (and may reuse a suitable unmodifiable
+input), rejects null elements, and prevents later structural changes to the caller's original list
+from changing the stored list. `Collections.unmodifiableList(items)` is a read-only **view** of
+the same backing list: another holder of `items` can still mutate what callers observe. Neither
+operation deep-copies mutable elements.
+
+### Deep immutability needs immutable nested values
+
+```java
+public class OrderItem {
+    private int quantity;
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public int quantity() { return quantity; }
+}
+
+public record OrderView(String orderId, List<OrderItem> items) {
+    public OrderView { items = List.copyOf(items); }
+}
+```
+
+The list cannot be structurally changed through `items()`, but a caller retaining an `OrderItem`
+can call `setQuantity`; the changed value appears through `OrderView`. Map mutable JPA entities to
+immutable DTOs instead:
+
+```java
+public record OrderItemView(String productId, int quantity) { }
+public record SafeOrderView(String orderId, List<OrderItemView> items) {
+    public SafeOrderView { items = List.copyOf(items); }
+}
+```
+
+Here immutable nested components plus a defensive collection copy make the object graph suitable
+for safe sharing and caching. The earlier wording correction is precise: `OrderView` is shallowly
+immutable; the nested `OrderItem` was mutable. That verbal wording slip is not a conceptual error.
+
 ## 6. Jackson serialization and deserialization
 
 **Serialization** converts a Java object to a representation such as JSON. **Deserialization** converts JSON into a Java object. Neither word means network transmission: HTTP may carry JSON, but conversion and transport are separate concerns.

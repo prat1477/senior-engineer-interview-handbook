@@ -169,6 +169,18 @@ For production caches, **bounded** structures with explicit eviction (size, TTL,
 | "`PhantomReference.get()` returns the object" | Always **null** by design |
 | "Soft refs = LRU cache" | No ordering guarantee; pressure-dependent clearing |
 
+## 7. Singleton cache retention in a service
+
+```java
+private final ConcurrentHashMap<String, Order> cache = new ConcurrentHashMap<>();
+```
+
+An application singleton is long-lived; every strongly reachable key/value chain remains live to
+the GC. Millions of unique keys in an unbounded cache increase old-generation occupancy, GC work,
+and can cause `OutOfMemoryError` within each pod's heap budget. A concurrent map fixes neither
+retention nor an eviction policy. Bound cache size/weight/TTL, measure evictions and hit/miss/load
+latency, and correlate cache growth with old-gen and process RSS. See the [Spring cache review](../../../../spring-microservices/02-production-pr-review-caching-and-resilience.md).
+
 
 ## Key takeaways
 

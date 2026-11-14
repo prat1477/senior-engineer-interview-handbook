@@ -32,6 +32,7 @@ Records are **transparent data carriers**: the header defines their state and AP
 - Final component references do not make nested mutable objects immutable.
 - Jackson deserialization does not prove Bean Validation ran.
 - Serialization converts an object to JSON; HTTP transport sends that JSON.
+- `Collections.unmodifiableList(input)` is a view; `List.copyOf(input)` is an unmodifiable structural snapshot.
 
 ## Decision table
 
@@ -69,6 +70,34 @@ Records are **transparent data carriers**: the header defines their state and AP
 - Inheritance plus `equals` is a trap; records fit simple values and DTO contracts.
 - Compact constructor validates and normalizes. `@Valid` triggers Bean Validation.
 - DTO is an API contract; entity is a persistence model.
+
+## Canonical-constructor recall
+
+| Form | Remember |
+| --- | --- |
+| Implicit canonical | Compiler takes every component, in declaration order. |
+| Explicit canonical | Repeat full signature and assign every component field. |
+| Compact canonical | Validate/normalize parameters; compiler assigns component fields after body. |
+
+**Exercise — attempt independently:**
+
+```java
+public record Employee(String name, int age) {
+    public Employee {
+        if (age < 18) throw new IllegalArgumentException("Underage");
+        age = 18;
+    }
+}
+System.out.println(new Employee("John", 25).age());
+```
+
+Explain the output and why parameter reassignment is legal while direct component-field assignment
+is not. Do not look up the answer before attempting it.
+
+**Memory tricks:**
+
+- **Final fields do not make referenced objects immutable.**
+- **Copy the collection, then make its elements immutable for deep immutability.**
 
 ## Memory hook
 

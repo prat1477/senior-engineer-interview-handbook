@@ -20,6 +20,7 @@ updated: 2026-10-15
 | --- | --- |
 | [Database concurrency and isolation](database-concurrency-and-isolation.md) | Locks, MVCC, atomic SQL |
 | [Distributed locks, fencing, ScyllaDB](distributed-locks-fencing-and-scylladb.md) | Leases, LWT, hot partitions |
+| [Database scaling, replication, and CQRS](database-scaling-replication-and-cqrs.md) | Read replicas, WAL, physical/logical replication, CQRS, partitioning/sharding |
 
 Payment idempotency depth: [Concurrency L22](../concurrency/22-backend-concurrency-scenarios.md), [M8 idempotency](../books/01-engineering-mastery/core-java/module-08-exception-handling/03-production-spring-retries-idempotency.md).
 
@@ -36,6 +37,13 @@ Payment idempotency depth: [Concurrency L22](../concurrency/22-backend-concurren
 - Outbox, sagas, circuit breakers, backpressure
 - Hot partitions and bottlenecks
 - Observability in distributed systems
+
+## Future curriculum (not scheduled into immediate preparation)
+
+- **Database Selection — Choosing the Right Database for a Workload:** compare relational OLTP,
+  ScyllaDB/Cassandra, Redis, MongoDB, search engines, ClickHouse/warehouses, and CQRS projections
+  by access pattern, consistency, query flexibility, growth, hot partitions, durability, and
+  operations. This is a later HLD lesson, not a near-term calendar item.
 
 ## Design scenarios (planned deep dives)
 

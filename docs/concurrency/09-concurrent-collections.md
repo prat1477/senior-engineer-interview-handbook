@@ -79,6 +79,32 @@ Use it for high-frequency handoff with an explicit overload policy; never mistak
 order for processing completion order. `CopyOnWriteArrayList` gives snapshot iterators and suits
 event listeners/read-mostly registries, not high-frequency transaction appends.
 
+## `CopyOnWriteArrayList`: references are snapshotted, objects are not
+
+Every structural mutator (`add`, `remove`, `set`) creates and publishes a fresh backing-array
+snapshot. An iterator holds the array reference present when it was created, so it does not throw
+`ConcurrentModificationException` and does not see later additions/removals/replacements.
+
+```java
+list.set(0, new Order("SHIPPED")); // new backing array; old iterator keeps old array
+list.get(0).setStatus("SHIPPED"); // no list-level copy; same mutable Order changes
+```
+
+The second operation mutates the object referenced by the array. An old iterator and the current
+list can therefore both point at that same `Order` and observe its changed state. Snapshot
+iteration is shallow: it snapshots references, not a deep immutable object graph. The collection
+provides happens-before effects for actions before publishing/accessing an element, but safe
+publication does not make future unsynchronized mutations of that object safe.
+
+```mermaid
+flowchart LR
+  old[old iterator array] --> order[Same mutable Order]
+  current[current list array] --> order
+  order --> state[status can change without array copy]
+```
+
+**Memory trick:** **Snapshot of references != snapshot of object state.**
+
 ## Cross-links
 
 - [M3 — thread safety](../books/01-engineering-mastery/core-java/module-03-hashmap-internals/04-thread-safety-and-concurrent-patterns.md)

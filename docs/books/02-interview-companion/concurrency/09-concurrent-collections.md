@@ -34,6 +34,7 @@ Shared maps and queues in servers need safe publication, atomic single-key updat
 - CHM makes every compound workflow atomic — only single-key ops are.
 - Using `ConcurrentHashMap` size as exact count under heavy writes without understanding weak consistency.
 - Calling modern CHM “segment locked”; Java 17 uses bins, CAS, and localized synchronization.
+- Assuming a `CopyOnWriteArrayList` iterator freezes a mutable element's fields.
 
 ## Frequently asked questions
 
@@ -77,6 +78,14 @@ Payments or order processing on more than one instance: apply this lesson at the
 ## 30-second revision
 
 - CHM null ban; merge/computeIfAbsent; weak iterators; queues for producer-consumer ([Companion 17](17-producer-consumer-patterns.md)).
+
+## Copy-on-write recall
+
+`set(0, new Order(...))` publishes a new array, so an old iterator keeps its prior reference
+array. `get(0).setStatus(...)` mutates the shared `Order` and performs no list copy. Use it for
+read-mostly lists of listeners/immutable values, not a claim of deep snapshots.
+
+**Memory trick:** **Snapshot of references != snapshot of object state.**
 
 ## Memory hooks
 

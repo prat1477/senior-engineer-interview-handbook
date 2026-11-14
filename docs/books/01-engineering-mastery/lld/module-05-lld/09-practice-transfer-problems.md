@@ -163,7 +163,18 @@ If you cannot do this, restudy Lessons 2–8 and 10. Do not start another proble
 
 **Skills:** encapsulation, data structure, single-JVM concurrency.
 
-`LinkedHashMap` access-order LRU is already [Collections — access order](../../core-java/module-04-collections/11-linkedhashmap-access-order-and-lru.md). The LLD drill is the **object boundary**: `get` and `put` are the only mutators, capacity is fixed, and the map is not returned to callers. Synchronization on one cache is enough for one process. It does not make a shared Redis LRU. State that limit in the first minute.
+`LinkedHashMap` access-order LRU is already [Collections — access order](../../core-java/module-04-collections/11-linkedhashmap-lru-cache.md). The LLD drill is the **object boundary**: `get` and `put` are the only mutators, capacity is fixed, and the map is not returned to callers. Synchronization on one cache is enough for one process. It does not make a shared Redis LRU. State that limit in the first minute.
+
+#### Future implementation checklist (not yet studied)
+
+When this drill is scheduled, build the cache twice: first with an access-order `LinkedHashMap`, then with a `HashMap<K, Node>` plus a doubly linked list with head/tail sentinels. The second version should keep every operation `O(1)`:
+
+- `get`: find the node, move it to the most-recent end, and return its value (or miss);
+- `put`: update an existing key without changing size, or insert a new most-recent node and evict the least-recent node at capacity;
+- `remove`: unlink the node and remove its map entry;
+- list helpers: `unlink`, `appendMostRecent`, and `evictLeastRecent`; sentinels eliminate null endpoint cases.
+
+Explain the trade-off: `LinkedHashMap` is concise and appropriate when its behavior is enough; the explicit node list is useful for interview data-structure reasoning or custom policy hooks. Then discuss synchronization, read/write contention, bounded memory/weight/expiry, loader stampedes, metrics, and why production Java services usually prefer Caffeine rather than an interview cache. This is a future exercise, not a completed implementation.
 
 ### 6.6 Connection pool (next)
 

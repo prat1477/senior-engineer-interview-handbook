@@ -213,8 +213,8 @@ Coverage below is lesson status. Scores are in the [mastery matrix](docs/trackin
 
 | Track | Status |
 | --- | --- |
-| Spring Boot and microservices | **In progress** ([Spring Core L1 IoC and DI](docs/spring-microservices/01-ioc-and-dependency-injection.md) **Covered** conceptually; Bean Lifecycle, Scopes, BeanFactory vs ApplicationContext, and remaining Spring lessons **Planned**) |
-| Distributed systems and system design | **In progress** ([DB concurrency](docs/distributed-systems/database-concurrency-and-isolation.md), [locks / Scylla](docs/distributed-systems/distributed-locks-fencing-and-scylladb.md); broader design track **Planned**) |
+| Spring Boot and microservices | **In progress** ([Spring Core L1 IoC and DI](docs/spring-microservices/01-ioc-and-dependency-injection.md) and [production PR review / caching](docs/spring-microservices/02-production-pr-review-caching-and-resilience.md) **Explained and understood**; remaining Spring lessons **Planned**) |
+| Distributed systems and system design | **In progress** ([DB concurrency](docs/distributed-systems/database-concurrency-and-isolation.md), [locks / Scylla](docs/distributed-systems/distributed-locks-fencing-and-scylladb.md), and [database scaling / CQRS](docs/distributed-systems/database-scaling-replication-and-cqrs.md) **Explained and understood**; broader design track **Planned**) |
 | Kafka | **In progress** ([ordering, idempotency, and outbox foundations](docs/kafka/index.md) documented; tuning and implementation practice pending) |
 | Data engineering / lakehouse | **Planned** (Spark Modules 1–10 + most of 11 **Covered** in Spark Handbook) |
 | AWS and infrastructure | **Planned** |
@@ -237,6 +237,23 @@ This update records documentation and practice evidence without upgrading all to
 | JMM, atomics, collections, TPE | **Explained and understood** | Detailed CHM internals and deeper ReentrantLock internals remain **pending** for independent validation. |
 | Kafka ordering, SQL debit, idempotency, outbox | **Explained and understood** | Full distributed transaction implementation remains **pending**. |
 | JVM memory, G1, MAT, P99 | **Explained and understood** | Advanced G1 tuning, native-memory investigation, production GC-log analysis, and a JVM incident mock remain **pending**. |
+
+## November 12 Spring, caching, and database-scaling update
+
+This is a learning-status update, not a claim of independent production implementation.
+
+| Area | Evidence-based status | What remains |
+| --- | --- | --- |
+| Spring singleton state, `HashMap` / `ConcurrentHashMap`, DI, 404 handling | **Explained and understood** | Independently correct the complete `OrderService` and complete a timed PR review. |
+| Cache patterns, stale-fill races, Caffeine/Redis/DB choice | **Explained and understood** | Design and test strict-freshness and invalidation behaviour independently. |
+| Redis outage controls: circuit breaker, bulkhead, rate limit, shedding, queues | **Explained and understood** | Independently size/admit requests and implement a fallback policy. |
+| Multi-pod HikariCP budgets and HPA | **Explained and understood** | Perform a capacity calculation and load-test a constrained downstream database. |
+| PostgreSQL replicas, WAL, physical/logical replication, CQRS | **Explained and understood** | Configure and validate replication lag/failure behaviour hands-on. |
+| Partitioning, sharding, replication, Scylla, ClickHouse | **Explained and understood** | Independently choose a distribution design from workload constraints. |
+| Cache retention, mutable values, copy-on-write snapshots | **Explained and understood** | Write a small concurrency test that demonstrates the reference-versus-object distinction. |
+| Records, defensive copies, canonical constructors | **Explained and understood** | Complete the canonical-constructor validation exercise independently. |
+
+**Future, not studied or scheduled:** the [LRU cache implementation drill](docs/books/01-engineering-mastery/lld/module-05-lld/09-practice-transfer-problems.md) and [database-selection HLD lesson](docs/distributed-systems/database-scaling-replication-and-cqrs.md) are tracked for later; neither is marked complete.
 
 ### Remaining high-priority preparation
 

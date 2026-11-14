@@ -71,6 +71,29 @@ the same as independent algorithm discovery.
 | Full GC / SATB | Unclear why marking can run again | Concurrent SATB marking and Full-GC marking are different work | [G1](../books/01-engineering-mastery/core-java/module-09-jvm-basics/05-garbage-collectors-and-g1.md) |
 | Native memory | Assumed one reclaimer manages non-heap | Reclamation depends on area: GC, thread lifecycle, class unloading, Cleaner, or native free | [Memory areas](../books/01-engineering-mastery/core-java/module-09-jvm-basics/02-jvm-runtime-memory-areas.md) |
 
+## Caching, database scaling, and immutable-value corrections (2026-11-12)
+
+| Topic | Misconception / uncertainty | Correct understanding | Revision link |
+| --- | --- | --- | --- |
+| GET caching | One fresh DB read guarantees later GET accuracy | A cached value can become stale after the read | [Cache review](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| Redis | Redis is always non-durable | RDB/AOF persistence is configurable; durability remains a policy/trade-off | [Cache review](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| TTL | 30-second TTL always means at most 30 seconds stale versus DB | Delayed in-flight fills can repopulate older data after invalidation | [Stale-fill race](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| Write-through | Cache invalidation automatically is write-through | Write-through and cache-aside invalidation have different write contracts | [Cache strategies](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| HikariCP | Each pod pool limits cluster-wide DB concurrency | Local pools multiply across pods and rolling-deployment/HPA capacity | [DB protection](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| HPA | More pods necessarily increase system throughput | A downstream database can be the bottleneck and need budgets/shedding | [HPA](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| Queueing | Queueing fixes sustained database overload | It only absorbs a burst; sustainable throughput is unchanged | [Resilience](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| Read replica | Replica equals an independently modeled CQRS database | Physical replicas retain the same physical schema/index design; CQRS changes the model | [Replication/CQRS](../distributed-systems/database-scaling-replication-and-cqrs.md) |
+| PostgreSQL partitioning | Table partitions distribute automatically over machines | Native partitions are not distributed sharding | [Distribution](../distributed-systems/database-scaling-replication-and-cqrs.md) |
+| ClickHouse `PARTITION BY` | It determines machine-level distribution | Partitioning and shard distribution are separate | [Distribution](../distributed-systems/database-scaling-replication-and-cqrs.md) |
+| Thread-safe cache | Safe cache internals imply safe mutable cached object state | Element state, visibility, and immutability are separate | [Cache values](../spring-microservices/02-production-pr-review-caching-and-resilience.md) |
+| Copy-on-write | Snapshot iterator freezes the stored object | It snapshots array references, not mutable element state | [COW list](../concurrency/09-concurrent-collections.md) |
+| Record | Record is automatically deeply immutable | Records are shallowly immutable unless nested values are immutable/copied | [Records](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md) |
+| `List.copyOf` | It deep-copies mutable elements | It makes an unmodifiable structural copy, not an element deep copy | [Records](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md) |
+| Canonical constructor | New record concept requiring revision | It initializes all components; compact form validates/normalizes before implicit assignment | [Constructor forms](../books/01-engineering-mastery/core-java/module-02-equals-and-hashcode/02-inheritance-records-and-equality.md) |
+
+The record discussion correctly recognized that a `List` component can be mutable. The later
+nested-object explanation deepened that point; it is not recorded as a fabricated misconception.
+
 ## Personal revision queue
 
 | Topic | Status | Notes |
